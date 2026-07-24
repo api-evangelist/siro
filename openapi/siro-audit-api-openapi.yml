@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Audit API
+servers:
+- url: https://functions.siro.ai/api-externalApi
+  description: Siro API external API endpoint
+tags:
+- name: Audit
+paths:
+  /v1/audit/logs:
+    get:
+      summary: Get audit logs
+      description: Get audit logs for an organization.
+      parameters:
+      - schema:
+          type: string
+          description: Opaque cursor token for pagination.
+        required: false
+        description: Opaque cursor token for pagination.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 25
+          description: Number of results to return per page.
+        required: false
+        description: Number of results to return per page.
+        name: pageSize
+        in: query
+      responses:
+        '200':
+          description: Get audit logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    organizationId:
+                      type: string
+                    tokenId:
+                      type: string
+                    endpoint:
+                      type: string
+                    method:
+                      type: string
+                    ts:
+                      type: number
+                    body:
+                      type: object
+                      properties: {}
+                    userId:
+                      type: string
+                  required:
+                  - id
+                  - organizationId
+                  - tokenId
+                  - endpoint
+                  - method
+                  - ts
+                  - body
+      security:
+      - bearerAuth: []
+      tags:
+      - Audit
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Organization API token
+      description: 'Organization integration token from Siro admin (Person icon → API Tokens). Send Authorization: Bearer <organization-api-token>. This is not the OAuth access token used with api.siro.ai user-scoped endpoints.'
+      x-default: <organization-api-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

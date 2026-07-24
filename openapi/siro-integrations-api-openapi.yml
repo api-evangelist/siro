@@ -1,0 +1,3692 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Audit Integrations API
+servers:
+- url: https://functions.siro.ai/api-externalApi
+  description: Siro API external API endpoint
+tags:
+- name: Integrations
+paths:
+  /v1/integrations/accounts/{id}:
+    get:
+      summary: Get an account
+      description: Get an account
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get an account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  externalId:
+                    type: string
+                    description: The ID of the account in the external system (e.g. Salesforce)
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  addresses:
+                    type: array
+                    items:
+                      nullable: true
+                  phoneNumbers:
+                    type: array
+                    items:
+                      type: string
+                  emailAddresses:
+                    type: array
+                    items:
+                      type: string
+                  name:
+                    type: string
+                  createdAt:
+                    type: string
+                    description: The date the account was created
+                  updatedAt:
+                    type: string
+                    description: The date the account was last updated
+                required:
+                - id
+                - externalId
+                - addresses
+                - createdAt
+                - updatedAt
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    put:
+      summary: Update an account
+      description: Update an account
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+                phoneNumbers:
+                  type: array
+                  items:
+                    type: string
+                emailAddresses:
+                  type: array
+                  items:
+                    type: string
+                addresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      country:
+                        type: string
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      zip:
+                        type: string
+                    required:
+                    - country
+                    - street
+                    - city
+                    - state
+                    - zip
+      responses:
+        '200':
+          description: Update an account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  externalId:
+                    type: string
+                    description: The ID of the account in the external system (e.g. Salesforce)
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  addresses:
+                    type: array
+                    items:
+                      nullable: true
+                  phoneNumbers:
+                    type: array
+                    items:
+                      type: string
+                  emailAddresses:
+                    type: array
+                    items:
+                      type: string
+                  name:
+                    type: string
+                  createdAt:
+                    type: string
+                    description: The date the account was created
+                  updatedAt:
+                    type: string
+                    description: The date the account was last updated
+                required:
+                - id
+                - externalId
+                - addresses
+                - createdAt
+                - updatedAt
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    delete:
+      summary: Delete an account
+      description: Delete an accounts
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete an account
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/accounts:
+    get:
+      summary: Get accounts
+      description: Get accounts
+      responses:
+        '200':
+          description: Get accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    externalId:
+                      type: string
+                      description: The ID of the account in the external system (e.g. Salesforce)
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                    addresses:
+                      type: array
+                      items:
+                        nullable: true
+                    phoneNumbers:
+                      type: array
+                      items:
+                        type: string
+                    emailAddresses:
+                      type: array
+                      items:
+                        type: string
+                    name:
+                      type: string
+                    createdAt:
+                      type: string
+                      description: The date the account was created
+                    updatedAt:
+                      type: string
+                      description: The date the account was last updated
+                  required:
+                  - id
+                  - externalId
+                  - addresses
+                  - createdAt
+                  - updatedAt
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    post:
+      summary: Create an account
+      description: Create an account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - type: object
+                properties:
+                  externalId:
+                    type: string
+                    description: The ID of the account in the external system (e.g. Salesforce)
+                  name:
+                    type: string
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  phoneNumbers:
+                    type: array
+                    items:
+                      type: string
+                  emailAddresses:
+                    type: array
+                    items:
+                      type: string
+                  addresses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        country:
+                          type: string
+                        street:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        zip:
+                          type: string
+                      required:
+                      - country
+                      - street
+                      - city
+                      - state
+                      - zip
+                required:
+                - externalId
+                - latitude
+                - longitude
+              - type: object
+                properties:
+                  externalId:
+                    type: string
+                    description: The ID of the account in the external system (e.g. Salesforce)
+                  name:
+                    type: string
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  phoneNumbers:
+                    type: array
+                    items:
+                      type: string
+                  emailAddresses:
+                    type: array
+                    items:
+                      type: string
+                  addresses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        country:
+                          type: string
+                        street:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        zip:
+                          type: string
+                      required:
+                      - country
+                      - street
+                      - city
+                      - state
+                      - zip
+                required:
+                - externalId
+                - addresses
+      responses:
+        '200':
+          description: Create an account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  externalId:
+                    type: string
+                    description: The ID of the account in the external system (e.g. Salesforce)
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  addresses:
+                    type: array
+                    items:
+                      nullable: true
+                  phoneNumbers:
+                    type: array
+                    items:
+                      type: string
+                  emailAddresses:
+                    type: array
+                    items:
+                      type: string
+                  name:
+                    type: string
+                  createdAt:
+                    type: string
+                    description: The date the account was created
+                  updatedAt:
+                    type: string
+                    description: The date the account was last updated
+                required:
+                - id
+                - externalId
+                - addresses
+                - createdAt
+                - updatedAt
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/opportunities/{id}:
+    get:
+      summary: Get an opportunity
+      description: Get an opportunity
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get an opportunity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  externalId:
+                    type: string
+                    description: The ID of the opportunity in the external system (e.g. Salesforce)
+                  name:
+                    type: string
+                    nullable: true
+                    description: The name of the opportunity
+                  amount:
+                    type: number
+                    description: The dollar amount of the opportunity
+                  closedAt:
+                    type: string
+                    description: The closure date of the opportunity
+                  disposition:
+                    type: string
+                    description: '"WON" | "LOST" | "OPEN"'
+                  createdAt:
+                    type: string
+                    description: The date the opportunity was created
+                  updatedAt:
+                    type: string
+                    description: The date the opportunity was last updated
+                  recordingId:
+                    type: string
+                    description: The ID of the recording associated to the opportunity
+                  accountId:
+                    type: string
+                  organizationId:
+                    type: string
+                  account:
+                    nullable: true
+                  opportunityUsers:
+                    type: array
+                    items:
+                      nullable: true
+                required:
+                - id
+                - externalId
+                - createdAt
+                - updatedAt
+                - organizationId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    delete:
+      summary: Delete an opportunity
+      description: Delete an opportunity
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete an opportunity
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/opportunities:
+    get:
+      summary: Get opportunities
+      description: Get opportunities
+      parameters:
+      - schema:
+          type: string
+        required: false
+        name: cursor
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: recordingId
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: externalId
+        in: query
+      responses:
+        '200':
+          description: Get opportunities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        externalId:
+                          type: string
+                          description: The ID of the opportunity in the external system (e.g. Salesforce)
+                        name:
+                          type: string
+                          nullable: true
+                          description: The name of the opportunity
+                        amount:
+                          type: number
+                          description: The dollar amount of the opportunity
+                        closedAt:
+                          type: string
+                          description: The closure date of the opportunity
+                        disposition:
+                          type: string
+                          description: '"WON" | "LOST" | "OPEN"'
+                        createdAt:
+                          type: string
+                          description: The date the opportunity was created
+                        updatedAt:
+                          type: string
+                          description: The date the opportunity was last updated
+                        recordingId:
+                          type: string
+                          description: The ID of the recording associated to the opportunity
+                        accountId:
+                          type: string
+                        organizationId:
+                          type: string
+                        account:
+                          nullable: true
+                        opportunityUsers:
+                          type: array
+                          items:
+                            nullable: true
+                      required:
+                      - id
+                      - externalId
+                      - createdAt
+                      - updatedAt
+                      - organizationId
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - nullable: true
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type: number
+                    nullable: true
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/opportunity-users/{id}:
+    get:
+      summary: Get an opportunity user
+      description: Get an opportunity user
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get an opportunity user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  opportunityId:
+                    type: string
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  amountPercentage:
+                    type: number
+                  organizationId:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  integrationConnectionId:
+                    type: string
+                required:
+                - id
+                - opportunityId
+                - userId
+                - organizationId
+                - createdAt
+                - updatedAt
+                - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    put:
+      summary: Update an opportunity user
+      description: Update an opportunity user
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                opportunityId:
+                  type: string
+                userId:
+                  type: string
+                name:
+                  type: string
+                amountPercentage:
+                  type: number
+      responses:
+        '200':
+          description: Update an opportunity user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  opportunityId:
+                    type: string
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  amountPercentage:
+                    type: number
+                  organizationId:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  integrationConnectionId:
+                    type: string
+                required:
+                - id
+                - opportunityId
+                - userId
+                - organizationId
+                - createdAt
+                - updatedAt
+                - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    delete:
+      summary: Delete an opportunity user
+      description: Delete an opportunity user
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete an opportunity user
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/opportunity-users:
+    get:
+      summary: Get opportunity users
+      description: Get opportunity users
+      parameters:
+      - schema:
+          type: string
+        required: false
+        name: cursor
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: opportunityId
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: userId
+        in: query
+      responses:
+        '200':
+          description: Get opportunity users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    opportunityId:
+                      type: string
+                    userId:
+                      type: string
+                    name:
+                      type: string
+                    amountPercentage:
+                      type: number
+                    organizationId:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    integrationConnectionId:
+                      type: string
+                  required:
+                  - id
+                  - opportunityId
+                  - userId
+                  - organizationId
+                  - createdAt
+                  - updatedAt
+                  - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    post:
+      summary: Create an opportunity user
+      description: Create an opportunity user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                opportunityId:
+                  type: string
+                userId:
+                  type: string
+                name:
+                  type: string
+                amountPercentage:
+                  type: number
+      responses:
+        '200':
+          description: Create an opportunity user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  opportunityId:
+                    type: string
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  amountPercentage:
+                    type: number
+                  organizationId:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  integrationConnectionId:
+                    type: string
+                required:
+                - id
+                - opportunityId
+                - userId
+                - organizationId
+                - createdAt
+                - updatedAt
+                - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/sync/opportunities:
+    put:
+      summary: Sync an opportunity
+      description: Sync an opportunity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                  description: The ID of the opportunity in the external system
+                name:
+                  type: string
+                  description: The name of the opportunity
+                amount:
+                  type: number
+                  description: The dollar amount of the opportunity
+                closedAt:
+                  type: string
+                  description: The closure date of the opportunity in string format e.g. 2024-02-28 20:09:58.692
+                remoteCreatedAt:
+                  type: string
+                  description: date the opportunity was created
+                lastActivityAt:
+                  type: string
+                  description: date of last external update
+                deletedAt:
+                  type: string
+                  nullable: true
+                  format: date-time
+                  description: The datetime when this record was deleted in the external system
+                disposition:
+                  type: string
+                  enum:
+                  - OPEN
+                  - LOST
+                  - WON
+                  description: '"WON" | "LOST" | "OPEN"'
+                accountId:
+                  type: string
+                  nullable: true
+                  description: Internal SIRO accountId override for this opportunity. OPTIONAL -- only use if you know the internal value of the Account as it will override the account object args.
+                account:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the account in the external system.
+                    name:
+                      type: string
+                      description: The name of the account
+                    latitude:
+                      type: number
+                      description: The latitude of the account
+                    longitude:
+                      type: number
+                      description: The longitude of the account
+                    addresses:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          country:
+                            type: string
+                          street:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          zip:
+                            type: string
+                        required:
+                        - country
+                        - street
+                        - city
+                        - state
+                        - zip
+                      description: The address(es) associated to the account
+                    phoneNumbers:
+                      type: array
+                      items:
+                        type: string
+                      description: The phone number(s) for the account
+                    emailAddresses:
+                      type: array
+                      items:
+                        type: string
+                      description: The email address(es) for the account
+                    lastActivityAt:
+                      type: string
+                      description: The datetime of the last activity on this record in the external system
+                    deletedAt:
+                      type: string
+                      nullable: true
+                      format: date-time
+                      description: The datetime when this record was deleted in the external system
+                    owner:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                      required:
+                      - externalId
+                      description: The owner user of this record in the external system (optional)
+                    mergedToExternalId:
+                      type: string
+                      description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                    mergedFromExternalIds:
+                      type: array
+                      items:
+                        type: string
+                      description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                  description: 'The associated account for this opportunity. Note: supplying just an externalId will resolve to an already-synced account'
+                contact:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the contact in the external system
+                    name:
+                      type: string
+                      description: The name of the contact
+                    latitude:
+                      type: number
+                      description: The latitude of the contact
+                    longitude:
+                      type: number
+                      description: The longitude of the contact
+                    account:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                          description: The ID of the account in the external system.
+                        name:
+                          type: string
+                          description: The name of the account
+                        latitude:
+                          type: number
+                          description: The latitude of the account
+                        longitude:
+                          type: number
+                          description: The longitude of the account
+                        addresses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              country:
+                                type: string
+                              street:
+                                type: string
+                              city:
+                                type: string
+                              state:
+                                type: string
+                              zip:
+                                type: string
+                            required:
+                            - country
+                            - street
+                            - city
+                            - state
+                            - zip
+                          description: The address(es) associated to the account
+                        phoneNumbers:
+                          type: array
+                          items:
+                            type: string
+                          description: The phone number(s) for the account
+                        emailAddresses:
+                          type: array
+                          items:
+                            type: string
+                          description: The email address(es) for the account
+                        lastActivityAt:
+                          type: string
+                          description: The datetime of the last activity on this record in the external system
+                        deletedAt:
+                          type: string
+                          nullable: true
+                          format: date-time
+                          description: The datetime when this record was deleted in the external system
+                        owner:
+                          type: object
+                          nullable: true
+                          properties:
+                            externalId:
+                              type: string
+                          required:
+                          - externalId
+                          description: The owner user of this record in the external system (optional)
+                        mergedToExternalId:
+                          type: string
+                          description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                        mergedFromExternalIds:
+                          type: array
+                          items:
+                            type: string
+                          description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                      description: 'The associated account for this contact. Note: supplying just an externalId will resolve to an already-synced account'
+                    addresses:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          country:
+                            type: string
+                          street:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          zip:
+                            type: string
+                        required:
+                        - country
+                        - street
+                        - city
+                        - state
+                        - zip
+                      description: The address(es) associated with this contact
+                    phoneNumbers:
+                      type: array
+                      items:
+                        type: string
+                      description: The phone number(s) associated with this contact
+                    emailAddresses:
+                      type: array
+                      items:
+                        type: string
+                      description: The email address(es) associated with this contact
+                    lastActivityAt:
+                      type: string
+                      description: The datetime of the last activity on this record in the external system
+                    deletedAt:
+                      type: string
+                      nullable: true
+                      format: date-time
+                      description: The datetime when this record was deleted in the external system
+                    owner:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                      required:
+                      - externalId
+                      description: The owner of this record in the external system (optional)
+                    mergedToExternalId:
+                      type: string
+                      description: If this Contact was merged into another, the surviving Contact externalId. Will migrate all existing references from this Contact to the surviving Contact.
+                    mergedFromExternalIds:
+                      type: array
+                      items:
+                        type: string
+                      description: If other Contacts were merged into this one, their externalIds. Will migrate all existing references from those Contacts to this Contact.
+                  required:
+                  - externalId
+                  description: '(DEPRECATED IN FAVOR OF CONTACTS ARRAY) The associated contact for this opportunity. Note: supplying just an externalId will resolve to an already-synced contact'
+                opportunityContacts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the contact in the external system
+                      name:
+                        type: string
+                        description: The name of the contact
+                      latitude:
+                        type: number
+                        description: The latitude of the contact
+                      longitude:
+                        type: number
+                        description: The longitude of the contact
+                      account:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                            description: The ID of the account in the external system.
+                          name:
+                            type: string
+                            description: The name of the account
+                          latitude:
+                            type: number
+                            description: The latitude of the account
+                          longitude:
+                            type: number
+                            description: The longitude of the account
+                          addresses:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                country:
+                                  type: string
+                                street:
+                                  type: string
+                                city:
+                                  type: string
+                                state:
+                                  type: string
+                                zip:
+                                  type: string
+                              required:
+                              - country
+                              - street
+                              - city
+                              - state
+                              - zip
+                            description: The address(es) associated to the account
+                          phoneNumbers:
+                            type: array
+                            items:
+                              type: string
+                            description: The phone number(s) for the account
+                          emailAddresses:
+                            type: array
+                            items:
+                              type: string
+                            description: The email address(es) for the account
+                          lastActivityAt:
+                            type: string
+                            description: The datetime of the last activity on this record in the external system
+                          deletedAt:
+                            type: string
+                            nullable: true
+                            format: date-time
+                            description: The datetime when this record was deleted in the external system
+                          owner:
+                            type: object
+                            nullable: true
+                            properties:
+                              externalId:
+                                type: string
+                            required:
+                            - externalId
+                            description: The owner user of this record in the external system (optional)
+                          mergedToExternalId:
+                            type: string
+                            description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                          mergedFromExternalIds:
+                            type: array
+                            items:
+                              type: string
+                            description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                        description: 'The associated account for this contact. Note: supplying just an externalId will resolve to an already-synced account'
+                      addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            country:
+                              type: string
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            zip:
+                              type: string
+                          required:
+                          - country
+                          - street
+                          - city
+                          - state
+                          - zip
+                        description: The address(es) associated with this contact
+                      phoneNumbers:
+                        type: array
+                        items:
+                          type: string
+                        description: The phone number(s) associated with this contact
+                      emailAddresses:
+                        type: array
+                        items:
+                          type: string
+                        description: The email address(es) associated with this contact
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this record in the external system
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system
+                      owner:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                        required:
+                        - externalId
+                        description: The owner of this record in the external system (optional)
+                      mergedToExternalId:
+                        type: string
+                        description: If this Contact was merged into another, the surviving Contact externalId. Will migrate all existing references from this Contact to the surviving Contact.
+                      mergedFromExternalIds:
+                        type: array
+                        items:
+                          type: string
+                        description: If other Contacts were merged into this one, their externalIds. Will migrate all existing references from those Contacts to this Contact.
+                      isPrimary:
+                        type: boolean
+                    required:
+                    - externalId
+                  description: 'The associated contacts for this opportunity. Note: supplying just an externalId will resolve to an already-synced contact'
+                opportunityUsers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      externalId:
+                        type: string
+                        description: The user's externalId in the external system
+                      email:
+                        type: string
+                        description: The user's email, preferably their email in Siro
+                      shareOfSale:
+                        type: number
+                        description: The user's fractional share of the sale, e.g. 0.5 for 50% or 1 for 100% (Optional)
+                      name:
+                        type: string
+                        description: The name of the user, e.g. John Smith
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system (Optional)
+                    required:
+                    - externalId
+                  description: The users associated with this opportunity
+              required:
+              - externalId
+      responses:
+        '200':
+          description: Sync an opportunity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      externalId:
+                        type: string
+                        description: The ID of the opportunity in the external system (e.g. Salesforce)
+                      name:
+                        type: string
+                        nullable: true
+                        description: The name of the opportunity
+                      amount:
+                        type: number
+                        description: The dollar amount of the opportunity
+                      closedAt:
+                        type: string
+                        description: The closure date of the opportunity
+                      disposition:
+                        type: string
+                        description: '"WON" | "LOST" | "OPEN"'
+                      createdAt:
+                        type: string
+                        description: The date the opportunity was created
+                      updatedAt:
+                        type: string
+                        description: The date the opportunity was last updated
+                      recordingId:
+                        type: string
+                        description: The ID of the recording associated to the opportunity
+                      accountId:
+                        type: string
+                      organizationId:
+                        type: string
+                      account:
+                        nullable: true
+                      opportunityUsers:
+                        type: array
+                        items:
+                          nullable: true
+                    required:
+                    - id
+                    - externalId
+                    - createdAt
+                    - updatedAt
+                    - organizationId
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/sync/batch/opportunities:
+    put:
+      summary: Sync a batch of opportunities
+      description: Sync a batch of opportunities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  externalId:
+                    type: string
+                    description: The ID of the opportunity in the external system
+                  name:
+                    type: string
+                    description: The name of the opportunity
+                  amount:
+                    type: number
+                    description: The dollar amount of the opportunity
+                  closedAt:
+                    type: string
+                    description: The closure date of the opportunity in string format e.g. 2024-02-28 20:09:58.692
+                  remoteCreatedAt:
+                    type: string
+                    description: date the opportunity was created
+                  lastActivityAt:
+                    type: string
+                    description: date of last external update
+                  deletedAt:
+                    type: string
+                    nullable: true
+                    format: date-time
+                    description: The datetime when this record was deleted in the external system
+                  disposition:
+                    type: string
+                    enum:
+                    - OPEN
+                    - LOST
+                    - WON
+                    description: '"WON" | "LOST" | "OPEN"'
+                  accountId:
+                    type: string
+                    nullable: true
+                    description: Internal SIRO accountId override for this opportunity. OPTIONAL -- only use if you know the internal value of the Account as it will override the account object args.
+                  account:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the account in the external system.
+                      name:
+                        type: string
+                        description: The name of the account
+                      latitude:
+                        type: number
+                        description: The latitude of the account
+                      longitude:
+                        type: number
+                        description: The longitude of the account
+                      addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            country:
+                              type: string
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            zip:
+                              type: string
+                          required:
+                          - country
+                          - street
+                          - city
+                          - state
+                          - zip
+                        description: The address(es) associated to the account
+                      phoneNumbers:
+                        type: array
+                        items:
+                          type: string
+                        description: The phone number(s) for the account
+                      emailAddresses:
+                        type: array
+                        items:
+                          type: string
+                        description: The email address(es) for the account
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this record in the external system
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system
+                      owner:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                        required:
+                        - externalId
+                        description: The owner user of this record in the external system (optional)
+                      mergedToExternalId:
+                        type: string
+                        description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                      mergedFromExternalIds:
+                        type: array
+                        items:
+                          type: string
+                        description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                    description: 'The associated account for this opportunity. Note: supplying just an externalId will resolve to an already-synced account'
+                  contact:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the contact in the external system
+                      name:
+                        type: string
+                        description: The name of the contact
+                      latitude:
+                        type: number
+                        description: The latitude of the contact
+                      longitude:
+                        type: number
+                        description: The longitude of the contact
+                      account:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                            description: The ID of the account in the external system.
+                          name:
+                            type: string
+                            description: The name of the account
+                          latitude:
+                            type: number
+                            description: The latitude of the account
+                          longitude:
+                            type: number
+                            description: The longitude of the account
+                          addresses:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                country:
+                                  type: string
+                                street:
+                                  type: string
+                                city:
+                                  type: string
+                                state:
+                                  type: string
+                                zip:
+                                  type: string
+                              required:
+                              - country
+                              - street
+                              - city
+                              - state
+                              - zip
+                            description: The address(es) associated to the account
+                          phoneNumbers:
+                            type: array
+                            items:
+                              type: string
+                            description: The phone number(s) for the account
+                          emailAddresses:
+                            type: array
+                            items:
+                              type: string
+                            description: The email address(es) for the account
+                          lastActivityAt:
+                            type: string
+                            description: The datetime of the last activity on this record in the external system
+                          deletedAt:
+                            type: string
+                            nullable: true
+                            format: date-time
+                            description: The datetime when this record was deleted in the external system
+                          owner:
+                            type: object
+                            nullable: true
+                            properties:
+                              externalId:
+                                type: string
+                            required:
+                            - externalId
+                            description: The owner user of this record in the external system (optional)
+                          mergedToExternalId:
+                            type: string
+                            description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                          mergedFromExternalIds:
+                            type: array
+                            items:
+                              type: string
+                            description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                        description: 'The associated account for this contact. Note: supplying just an externalId will resolve to an already-synced account'
+                      addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            country:
+                              type: string
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            zip:
+                              type: string
+                          required:
+                          - country
+                          - street
+                          - city
+                          - state
+                          - zip
+                        description: The address(es) associated with this contact
+                      phoneNumbers:
+                        type: array
+                        items:
+                          type: string
+                        description: The phone number(s) associated with this contact
+                      emailAddresses:
+                        type: array
+                        items:
+                          type: string
+                        description: The email address(es) associated with this contact
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this record in the external system
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system
+                      owner:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                        required:
+                        - externalId
+                        description: The owner of this record in the external system (optional)
+                      mergedToExternalId:
+                        type: string
+                        description: If this Contact was merged into another, the surviving Contact externalId. Will migrate all existing references from this Contact to the surviving Contact.
+                      mergedFromExternalIds:
+                        type: array
+                        items:
+                          type: string
+                        description: If other Contacts were merged into this one, their externalIds. Will migrate all existing references from those Contacts to this Contact.
+                    required:
+                    - externalId
+                    description: '(DEPRECATED IN FAVOR OF CONTACTS ARRAY) The associated contact for this opportunity. Note: supplying just an externalId will resolve to an already-synced contact'
+                  opportunityContacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        externalId:
+                          type: string
+                          description: The ID of the contact in the external system
+                        name:
+                          type: string
+                          description: The name of the contact
+                        latitude:
+                          type: number
+                          description: The latitude of the contact
+                        longitude:
+                          type: number
+                          description: The longitude of the contact
+                        account:
+                          type: object
+                          nullable: true
+                          properties:
+                            externalId:
+                              type: string
+                              description: The ID of the account in the external system.
+                            name:
+                              type: string
+                              description: The name of the account
+                            latitude:
+                              type: number
+                              description: The latitude of the account
+                            longitude:
+                              type: number
+                              description: The longitude of the account
+                            addresses:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  country:
+                                    type: string
+                                  street:
+                                    type: string
+                                  city:
+                                    type: string
+                                  state:
+                                    type: string
+                                  zip:
+                                    type: string
+                                required:
+                                - country
+                                - street
+                                - city
+                                - state
+                                - zip
+                              description: The address(es) associated to the account
+                            phoneNumbers:
+                              type: array
+                              items:
+                                type: string
+                              description: The phone number(s) for the account
+                            emailAddresses:
+                              type: array
+                              items:
+                                type: string
+                              description: The email address(es) for the account
+                            lastActivityAt:
+                              type: string
+                              description: The datetime of the last activity on this record in the external system
+                            deletedAt:
+                              type: string
+                              nullable: true
+                              format: date-time
+                              description: The datetime when this record was deleted in the external system
+                            owner:
+                              type: object
+                              nullable: true
+                              properties:
+                                externalId:
+                                  type: string
+                              required:
+                              - externalId
+                              description: The owner user of this record in the external system (optional)
+                            mergedToExternalId:
+                              type: string
+                              description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                            mergedFromExternalIds:
+                              type: array
+                              items:
+                                type: string
+                              description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                          description: 'The associated account for this contact. Note: supplying just an externalId will resolve to an already-synced account'
+                        addresses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              country:
+                                type: string
+                              street:
+                                type: string
+                              city:
+                                type: string
+                              state:
+                                type: string
+                              zip:
+                                type: string
+                            required:
+                            - country
+                            - street
+                            - city
+                            - state
+                            - zip
+                          description: The address(es) associated with this contact
+                        phoneNumbers:
+                          type: array
+                          items:
+                            type: string
+                          description: The phone number(s) associated with this contact
+                        emailAddresses:
+                          type: array
+                          items:
+                            type: string
+                          description: The email address(es) associated with this contact
+                        lastActivityAt:
+                          type: string
+                          description: The datetime of the last activity on this record in the external system
+                        deletedAt:
+                          type: string
+                          nullable: true
+                          format: date-time
+                          description: The datetime when this record was deleted in the external system
+                        owner:
+                          type: object
+                          nullable: true
+                          properties:
+                            externalId:
+                              type: string
+                          required:
+                          - externalId
+                          description: The owner of this record in the external system (optional)
+                        mergedToExternalId:
+                          type: string
+                          description: If this Contact was merged into another, the surviving Contact externalId. Will migrate all existing references from this Contact to the surviving Contact.
+                        mergedFromExternalIds:
+                          type: array
+                          items:
+                            type: string
+                          description: If other Contacts were merged into this one, their externalIds. Will migrate all existing references from those Contacts to this Contact.
+                        isPrimary:
+                          type: boolean
+                      required:
+                      - externalId
+                    description: 'The associated contacts for this opportunity. Note: supplying just an externalId will resolve to an already-synced contact'
+                  opportunityUsers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        externalId:
+                          type: string
+                          description: The user's externalId in the external system
+                        email:
+                          type: string
+                          description: The user's email, preferably their email in Siro
+                        shareOfSale:
+                          type: number
+                          description: The user's fractional share of the sale, e.g. 0.5 for 50% or 1 for 100% (Optional)
+                        name:
+                          type: string
+                          description: The name of the user, e.g. John Smith
+                        deletedAt:
+                          type: string
+                          nullable: true
+                          format: date-time
+                          description: The datetime when this record was deleted in the external system (Optional)
+                      required:
+                      - externalId
+                    description: The users associated with this opportunity
+                required:
+                - externalId
+      responses:
+        '200':
+          description: Sync a batch of opportunities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        externalId:
+                          type: string
+                          description: The ID of the opportunity in the external system (e.g. Salesforce)
+                        name:
+                          type: string
+                          nullable: true
+                          description: The name of the opportunity
+                        amount:
+                          type: number
+                          description: The dollar amount of the opportunity
+                        closedAt:
+                          type: string
+                          description: The closure date of the opportunity
+                        disposition:
+                          type: string
+                          description: '"WON" | "LOST" | "OPEN"'
+                        createdAt:
+                          type: string
+                          description: The date the opportunity was created
+                        updatedAt:
+                          type: string
+                          description: The date the opportunity was last updated
+                        recordingId:
+                          type: string
+                          description: The ID of the recording associated to the opportunity
+                        accountId:
+                          type: string
+                        organizationId:
+                          type: string
+                        account:
+                          nullable: true
+                        opportunityUsers:
+                          type: array
+                          items:
+                            nullable: true
+                      required:
+                      - id
+                      - externalId
+                      - createdAt
+                      - updatedAt
+                      - organizationId
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/engagements/{id}:
+    get:
+      summary: Get an engagement
+      description: Get an engagement
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get an engagement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  externalId:
+                    type: string
+                    description: The ID of the engagement in the external system (e.g. Salesforce)
+                  engagementType:
+                    type: string
+                    description: The type of the engagement
+                  direction:
+                    type: string
+                    description: '"INBOUND" | "OUTBOUND"'
+                  subject:
+                    type: string
+                    description: The subject of the engagement
+                  content:
+                    type: string
+                    description: The content of the engagement
+                  startTime:
+                    type: string
+                    description: The start time of the engagement
+                  startTimeLocalized:
+                    type: string
+                    description: Localized dateTime of the engagement, without timezone info
+                  endTime:
+                    type: string
+                    description: The end time of the engagement
+                  createdAt:
+                    type: string
+                    description: The date the engagement was created
+                  updatedAt:
+                    type: string
+                    description: The date the engagement was last updated
+                  recordingId:
+                    type: string
+                    description: The ID of the recording associated to the engagement
+                  opportunityId:
+                    type: string
+                    description: The ID of the opportunity associated to the engagement
+                  accountId:
+                    type: string
+                  organizationId:
+                    type: string
+                  account:
+                    nullable: true
+                  engagementUsers:
+                    type: array
+                    items:
+                      nullable: true
+                required:
+                - id
+                - externalId
+                - engagementType
+                - createdAt
+                - updatedAt
+                - organizationId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    delete:
+      summary: Delete an engagement
+      description: Delete an engagement
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      - schema:
+          type: string
+          enum:
+          - internal
+          - external
+          description: Specifies whether the id path parameter is an internal engagement ID or an external ID from the source system. Defaults to internal.
+        required: false
+        description: Specifies whether the id path parameter is an internal engagement ID or an external ID from the source system. Defaults to internal.
+        name: idType
+        in: query
+      - schema:
+          type: string
+          description: Optional override to specify integration platform if organization has multiple integrations. Only used when idType=external.
+        required: false
+        description: Optional override to specify integration platform if organization has multiple integrations. Only used when idType=external.
+        name: integrationPlatform
+        in: query
+      responses:
+        '200':
+          description: Delete an engagement
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/engagements:
+    get:
+      summary: Get engagements
+      description: Get engagements
+      parameters:
+      - schema:
+          type: string
+        required: false
+        name: cursor
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: recordingId
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: externalId
+        in: query
+      responses:
+        '200':
+          description: Get engagements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        externalId:
+                          type: string
+                          description: The ID of the engagement in the external system (e.g. Salesforce)
+                        engagementType:
+                          type: string
+                          description: The type of the engagement
+                        direction:
+                          type: string
+                          description: '"INBOUND" | "OUTBOUND"'
+                        subject:
+                          type: string
+                          description: The subject of the engagement
+                        content:
+                          type: string
+                          description: The content of the engagement
+                        startTime:
+                          type: string
+                          description: The start time of the engagement
+                        startTimeLocalized:
+                          type: string
+                          description: Localized dateTime of the engagement, without timezone info
+                        endTime:
+                          type: string
+                          description: The end time of the engagement
+                        createdAt:
+                          type: string
+                          description: The date the engagement was created
+                        updatedAt:
+                          type: string
+                          description: The date the engagement was last updated
+                        recordingId:
+                          type: string
+                          description: The ID of the recording associated to the engagement
+                        opportunityId:
+                          type: string
+                          description: The ID of the opportunity associated to the engagement
+                        accountId:
+                          type: string
+                        organizationId:
+                          type: string
+                        account:
+                          nullable: true
+                        engagementUsers:
+                          type: array
+                          items:
+                            nullable: true
+                      required:
+                      - id
+                      - externalId
+                      - engagementType
+                      - createdAt
+                      - updatedAt
+                      - organizationId
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - nullable: true
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type: number
+                    nullable: true
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/users/{id}/engagements:
+    get:
+      summary: Get user engagement list
+      description: Get ordered engagement list for a specified user
+      parameters:
+      - schema:
+          type: string
+          description: Deprecated
+        required: false
+        description: Deprecated
+        name: cursor
+        in: query
+      - schema:
+          type: number
+        required: false
+        name: limit
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: startingAfter
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: startingBefore
+        in: query
+      responses:
+        '200':
+          description: Get user engagement list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    externalId:
+                      type: string
+                      description: The ID of the engagement in the external system (e.g. Salesforce)
+                    engagementType:
+                      type: string
+                      description: The type of the engagement
+                    direction:
+                      type: string
+                      description: '"INBOUND" | "OUTBOUND"'
+                    subject:
+                      type: string
+                      description: The subject of the engagement
+                    content:
+                      type: string
+                      description: The content of the engagement
+                    startTime:
+                      type: string
+                      description: The start time of the engagement
+                    startTimeLocalized:
+                      type: string
+                      description: Localized dateTime of the engagement, without timezone info
+                    endTime:
+                      type: string
+                      description: The end time of the engagement
+                    createdAt:
+                      type: string
+                      description: The date the engagement was created
+                    updatedAt:
+                      type: string
+                      description: The date the engagement was last updated
+                    recordingId:
+                      type: string
+                      description: The ID of the recording associated to the engagement
+                    opportunityId:
+                      type: string
+                      description: The ID of the opportunity associated to the engagement
+                    accountId:
+                      type: string
+                    organizationId:
+                      type: string
+                    account:
+                      nullable: true
+                    engagementUsers:
+                      type: array
+                      items:
+                        nullable: true
+                  required:
+                  - id
+                  - externalId
+                  - engagementType
+                  - createdAt
+                  - updatedAt
+                  - organizationId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/engagement-users/{id}:
+    get:
+      summary: Get an engagement user
+      description: Get an engagement user
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get an engagement user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  engagementId:
+                    type: string
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  organizationId:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  integrationConnectionId:
+                    type: string
+                required:
+                - id
+                - engagementId
+                - userId
+                - organizationId
+                - createdAt
+                - updatedAt
+                - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    put:
+      summary: Update an engagement user
+      description: Update an engagement user
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                userId:
+                  type: string
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Update an engagement user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  engagementId:
+                    type: string
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  organizationId:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  integrationConnectionId:
+                    type: string
+                required:
+                - id
+                - engagementId
+                - userId
+                - organizationId
+                - createdAt
+                - updatedAt
+                - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    delete:
+      summary: Delete an engagement user
+      description: Delete an engagement user
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete an engagement user
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/engagement-users:
+    get:
+      summary: Get engagement users
+      description: Get engagement users
+      parameters:
+      - schema:
+          type: string
+        required: false
+        name: cursor
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: engagementId
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: userId
+        in: query
+      responses:
+        '200':
+          description: Get engagement users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    engagementId:
+                      type: string
+                    userId:
+                      type: string
+                    name:
+                      type: string
+                    organizationId:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    integrationConnectionId:
+                      type: string
+                  required:
+                  - id
+                  - engagementId
+                  - userId
+                  - organizationId
+                  - createdAt
+                  - updatedAt
+                  - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+    post:
+      summary: Create an engagement user
+      description: Create an engagement user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                userId:
+                  type: string
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Create an engagement user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  engagementId:
+                    type: string
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  organizationId:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  integrationConnectionId:
+                    type: string
+                required:
+                - id
+                - engagementId
+                - userId
+                - organizationId
+                - createdAt
+                - updatedAt
+                - integrationConnectionId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/sync/engagements:
+    put:
+      summary: Sync an engagement
+      description: Sync an engagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                  description: The ID of the engagement in the external system
+                direction:
+                  type: string
+                  nullable: true
+                  enum:
+                  - INBOUND
+                  - OUTBOUND
+                  description: The direction of the engagement (INBOUND/OUTBOUND)
+                content:
+                  type: string
+                  nullable: true
+                  description: The content of the engagement
+                subject:
+                  type: string
+                  nullable: true
+                  description: The subject of the engagement
+                startTime:
+                  type: string
+                  nullable: true
+                  description: start dateTime of the engagement in UTC.
+                startTimeLocalized:
+                  type: string
+                  nullable: true
+                  description: Localized dateTime of the engagement, without timezone info. When present, the frontend will display this as-is without timezone conversion, overriding startTime for display purposes.
+                endTime:
+                  type: string
+                  nullable: true
+                  description: end dateTime of the engagement
+                remoteCreatedAt:
+                  type: string
+                  nullable: true
+                  description: external engagement creation datetime
+                remoteUpdatedAt:
+                  type: string
+                  nullable: true
+                  description: external engagement update datetime
+                deletedAt:
+                  type: string
+                  nullable: true
+                  format: date-time
+                  description: The datetime when this record was deleted in the external system
+                engagementTypeId:
+                  type: string
+                  nullable: true
+                  description: Internal SIRO engagementTypeId override for this engagement. OPTIONAL -- only use if you know the internal value of the engagement type as it will override the engagementType object args.
+                engagementType:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the engagement type in the external system (if applicable)
+                    name:
+                      type: string
+                      description: The name of the engagementType
+                    activityType:
+                      type: string
+                      enum:
+                      - MEETING
+                      - CALL
+                      - APPOINTMENT
+                      - EMAIL
+                      - TEXT
+                      - EVENT
+                      - SIRO_EVENT
+                      - SIRO_BOT_RECORDING
+                      description: 'Type of activity. Note: SIRO will only consider certain types as "Appointments" for our appointment flows: [MEETING, EVENT, APPOINTMENT]'
+                  required:
+                  - name
+                  - activityType
+                  description: The type of this engagement
+                account:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the account in the external system.
+                    name:
+                      type: string
+                      description: The name of the account
+                    latitude:
+                      type: number
+                      description: The latitude of the account
+                    longitude:
+                      type: number
+                      description: The longitude of the account
+                    addresses:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          country:
+                            type: string
+                          street:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          zip:
+                            type: string
+                        required:
+                        - country
+                        - street
+                        - city
+                        - state
+                        - zip
+                      description: The address(es) associated to the account
+                    phoneNumbers:
+                      type: array
+                      items:
+                        type: string
+                      description: The phone number(s) for the account
+                    emailAddresses:
+                      type: array
+                      items:
+                        type: string
+                      description: The email address(es) for the account
+                    lastActivityAt:
+                      type: string
+                      description: The datetime of the last activity on this record in the external system
+                    deletedAt:
+                      type: string
+                      nullable: true
+                      format: date-time
+                      description: The datetime when this record was deleted in the external system
+                    owner:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                      required:
+                      - externalId
+                      description: The owner user of this record in the external system (optional)
+                    mergedToExternalId:
+                      type: string
+                      description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                    mergedFromExternalIds:
+                      type: array
+                      items:
+                        type: string
+                      description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                  description: 'The associated account for this engagement. Note: supplying just an externalId will resolve to an already-synced account'
+                engagementUsers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      externalId:
+                        type: string
+                        description: The user's externalId in the external system
+                      email:
+                        type: string
+                        description: The user's email, preferably their email in Siro
+                      shareOfSale:
+                        type: number
+                        description: The user's fractional share of the sale, e.g. 0.5 for 50% or 1 for 100% (Optional)
+                      name:
+                        type: string
+                        description: The name of the user, e.g. John Smith
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system (Optional)
+                    required:
+                    - externalId
+                  description: The users associated with this engagement
+                opportunity:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the opportunity in the external system
+                    name:
+                      type: string
+                      description: The name of the opportunity
+                    amount:
+                      type: number
+                      description: The dollar amount of the opportunity
+                    closedAt:
+                      type: string
+                      description: The closure date of the opportunity
+                    remoteCreatedAt:
+                      type: string
+                      description: The datetime the opportunity was created in the external system
+                    lastActivityAt:
+                      type: string
+                      description: The datetime of the last activity on this opportunity
+                    disposition:
+                      type: string
+                      enum:
+                      - OPEN
+                      - LOST
+                      - WON
+                      description: The disposition of the opportunity (WON, LOST, or OPEN)
+                    copyEngagementRelationships:
+                      type: boolean
+                      description: When true, copies the available engagement relationships (contact, account, users)
+                  required:
+                  - externalId
+                  description: 'The associated opportunity for this engagement. Note: supplying just an externalId will resolve to an already-synced opportunity'
+                lead:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the lead in the external system
+                    firstName:
+                      type: string
+                      description: The first name of the lead
+                    lastName:
+                      type: string
+                      description: The last name of the lead
+                    latitude:
+                      type: number
+                      description: The latitude of the lead
+                    longitude:
+                      type: number
+                      description: The longitude of the lead
+                    addresses:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          country:
+                            type: string
+                          street:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          zip:
+                            type: string
+                        required:
+                        - country
+                        - street
+                        - city
+                        - state
+                        - zip
+                      description: The address(es) associated with this lead
+                    phoneNumbers:
+                      type: array
+                      items:
+                        type: string
+                      description: The phone number(s) associated with this lead
+                    emailAddresses:
+                      type: array
+                      items:
+                        type: string
+                      description: The email address(es) associated with this lead
+                    lastActivityAt:
+                      type: string
+                      description: The datetime of the last activity on this record in the external system
+                    deletedAt:
+                      type: string
+                      nullable: true
+                      format: date-time
+                      description: The datetime when this record was deleted in the external system
+                    owner:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                      required:
+                      - externalId
+                      description: The owner of this record in the external system (optional)
+                    mergedToExternalId:
+                      type: string
+                      description: If this Lead was merged into another, the surviving Lead externalId. Will migrate all existing references from this Lead to the surviving Lead.
+                    mergedFromExternalIds:
+                      type: array
+                      items:
+                        type: string
+                      description: If other Leads were merged into this one, their externalIds. Will migrate all existing references from those Leads to this Lead.
+                  required:
+                  - externalId
+                  description: The associated lead for this engagement
+                contact:
+                  type: object
+                  nullable: true
+                  properties:
+                    externalId:
+                      type: string
+                      description: The ID of the contact in the external system
+                    name:
+                      type: string
+                      description: The name of the contact
+                    latitude:
+                      type: number
+                      description: The latitude of the contact
+                    longitude:
+                      type: number
+                      description: The longitude of the contact
+                    account:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                          description: The ID of the account in the external system.
+                        name:
+                          type: string
+                          description: The name of the account
+                        latitude:
+                          type: number
+                          description: The latitude of the account
+                        longitude:
+                          type: number
+                          description: The longitude of the account
+                        addresses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              country:
+                                type: string
+                              street:
+                                type: string
+                              city:
+                                type: string
+                              state:
+                                type: string
+                              zip:
+                                type: string
+                            required:
+                            - country
+                            - street
+                            - city
+                            - state
+                            - zip
+                          description: The address(es) associated to the account
+                        phoneNumbers:
+                          type: array
+                          items:
+                            type: string
+                          description: The phone number(s) for the account
+                        emailAddresses:
+                          type: array
+                          items:
+                            type: string
+                          description: The email address(es) for the account
+                        lastActivityAt:
+                          type: string
+                          description: The datetime of the last activity on this record in the external system
+                        deletedAt:
+                          type: string
+                          nullable: true
+                          format: date-time
+                          description: The datetime when this record was deleted in the external system
+                        owner:
+                          type: object
+                          nullable: true
+                          properties:
+                            externalId:
+                              type: string
+                          required:
+                          - externalId
+                          description: The owner user of this record in the external system (optional)
+                        mergedToExternalId:
+                          type: string
+                          description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                        mergedFromExternalIds:
+                          type: array
+                          items:
+                            type: string
+                          description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                      description: 'The associated account for this contact. Note: supplying just an externalId will resolve to an already-synced account'
+                    addresses:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          country:
+                            type: string
+                          street:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          zip:
+                            type: string
+                        required:
+                        - country
+                        - street
+                        - city
+                        - state
+                        - zip
+                      description: The address(es) associated with this contact
+                    phoneNumbers:
+                      type: array
+                      items:
+                        type: string
+                      description: The phone number(s) associated with this contact
+                    emailAddresses:
+                      type: array
+                      items:
+                        type: string
+                      description: The email address(es) associated with this contact
+                    lastActivityAt:
+                      type: string
+                      description: The datetime of the last activity on this record in the external system
+                    deletedAt:
+                      type: string
+                      nullable: true
+                      format: date-time
+                      description: The datetime when this record was deleted in the external system
+                    owner:
+                      type: object
+                      nullable: true
+                      properties:
+                        externalId:
+                          type: string
+                      required:
+                      - externalId
+                      description: The owner of this record in the external system (optional)
+                    mergedToExternalId:
+                      type: string
+                      description: If this Contact was merged into another, the surviving Contact externalId. Will migrate all existing references from this Contact to the surviving Contact.
+                    mergedFromExternalIds:
+                      type: array
+                      items:
+                        type: string
+                      description: If other Contacts were merged into this one, their externalIds. Will migrate all existing references from those Contacts to this Contact.
+                  required:
+                  - externalId
+                  description: 'The associated contact for this engagement. Note: supplying just an externalId will resolve to an already-synced contact'
+              required:
+              - externalId
+      responses:
+        '200':
+          description: Sync an engagement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      externalId:
+                        type: string
+                        description: The ID of the engagement in the external system (e.g. Salesforce)
+                      engagementType:
+                        type: string
+                        description: The type of the engagement
+                      direction:
+                        type: string
+                        description: '"INBOUND" | "OUTBOUND"'
+                      subject:
+                        type: string
+                        description: The subject of the engagement
+                      content:
+                        type: string
+                        description: The content of the engagement
+                      startTime:
+                        type: string
+                        description: The start time of the engagement
+                      startTimeLocalized:
+                        type: string
+                        description: Localized dateTime of the engagement, without timezone info
+                      endTime:
+                        type: string
+                        description: The end time of the engagement
+                      createdAt:
+                        type: string
+                        description: The date the engagement was created
+                      updatedAt:
+                        type: string
+                        description: The date the engagement was last updated
+                      recordingId:
+                        type: string
+                        description: The ID of the recording associated to the engagement
+                      opportunityId:
+                        type: string
+                        description: The ID of the opportunity associated to the engagement
+                      accountId:
+                        type: string
+                      organizationId:
+                        type: string
+                      account:
+                        nullable: true
+                      engagementUsers:
+                        type: array
+                        items:
+                          nullable: true
+                    required:
+                    - id
+                    - externalId
+                    - engagementType
+                    - createdAt
+                    - updatedAt
+                    - organizationId
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/sync/engagements/soft-delete-removed:
+    post:
+      summary: Soft-delete engagements removed upstream within a window
+      description: Given an exhaustive set of engagement externalIds for a startTime window, soft-delete any engagements on this connection in that window that are not in the set.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                validExternalIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Exhaustive set of engagement externalIds currently present upstream for this window. Any engagement on this connection whose startTime falls in [fromTime, toTime] but is NOT in this list will be soft-deleted.
+                fromTime:
+                  type: string
+                  format: date-time
+                  description: Inclusive lower bound on engagement.startTime.
+                toTime:
+                  type: string
+                  format: date-time
+                  description: Inclusive upper bound on engagement.startTime.
+              required:
+              - validExternalIds
+              - fromTime
+              - toTime
+      responses:
+        '200':
+          description: Soft-delete engagements removed upstream within a window
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                    required:
+                    - success
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/sync/batch/engagements:
+    put:
+      summary: Sync a batch of engagements
+      description: Sync a batch of engagements
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  externalId:
+                    type: string
+                    description: The ID of the engagement in the external system
+                  direction:
+                    type: string
+                    nullable: true
+                    enum:
+                    - INBOUND
+                    - OUTBOUND
+                    description: The direction of the engagement (INBOUND/OUTBOUND)
+                  content:
+                    type: string
+                    nullable: true
+                    description: The content of the engagement
+                  subject:
+                    type: string
+                    nullable: true
+                    description: The subject of the engagement
+                  startTime:
+                    type: string
+                    nullable: true
+                    description: start dateTime of the engagement in UTC.
+                  startTimeLocalized:
+                    type: string
+                    nullable: true
+                    description: Localized dateTime of the engagement, without timezone info. When present, the frontend will display this as-is without timezone conversion, overriding startTime for display purposes.
+                  endTime:
+                    type: string
+                    nullable: true
+                    description: end dateTime of the engagement
+                  remoteCreatedAt:
+                    type: string
+                    nullable: true
+                    description: external engagement creation datetime
+                  remoteUpdatedAt:
+                    type: string
+                    nullable: true
+                    description: external engagement update datetime
+                  deletedAt:
+                    type: string
+                    nullable: true
+                    format: date-time
+                    description: The datetime when this record was deleted in the external system
+                  engagementTypeId:
+                    type: string
+                    nullable: true
+                    description: Internal SIRO engagementTypeId override for this engagement. OPTIONAL -- only use if you know the internal value of the engagement type as it will override the engagementType object args.
+                  engagementType:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the engagement type in the external system (if applicable)
+                      name:
+                        type: string
+                        description: The name of the engagementType
+                      activityType:
+                        type: string
+                        enum:
+                        - MEETING
+                        - CALL
+                        - APPOINTMENT
+                        - EMAIL
+                        - TEXT
+                        - EVENT
+                        - SIRO_EVENT
+                        - SIRO_BOT_RECORDING
+                        description: 'Type of activity. Note: SIRO will only consider certain types as "Appointments" for our appointment flows: [MEETING, EVENT, APPOINTMENT]'
+                    required:
+                    - name
+                    - activityType
+                    description: The type of this engagement
+                  account:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the account in the external system.
+                      name:
+                        type: string
+                        description: The name of the account
+                      latitude:
+                        type: number
+                        description: The latitude of the account
+                      longitude:
+                        type: number
+                        description: The longitude of the account
+                      addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            country:
+                              type: string
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            zip:
+                              type: string
+                          required:
+                          - country
+                          - street
+                          - city
+                          - state
+                          - zip
+                        description: The address(es) associated to the account
+                      phoneNumbers:
+                        type: array
+                        items:
+                          type: string
+                        description: The phone number(s) for the account
+                      emailAddresses:
+                        type: array
+                        items:
+                          type: string
+                        description: The email address(es) for the account
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this record in the external system
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system
+                      owner:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                        required:
+                        - externalId
+                        description: The owner user of this record in the external system (optional)
+                      mergedToExternalId:
+                        type: string
+                        description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                      mergedFromExternalIds:
+                        type: array
+                        items:
+                          type: string
+                        description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                    description: 'The associated account for this engagement. Note: supplying just an externalId will resolve to an already-synced account'
+                  engagementUsers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        externalId:
+                          type: string
+                          description: The user's externalId in the external system
+                        email:
+                          type: string
+                          description: The user's email, preferably their email in Siro
+                        shareOfSale:
+                          type: number
+                          description: The user's fractional share of the sale, e.g. 0.5 for 50% or 1 for 100% (Optional)
+                        name:
+                          type: string
+                          description: The name of the user, e.g. John Smith
+                        deletedAt:
+                          type: string
+                          nullable: true
+                          format: date-time
+                          description: The datetime when this record was deleted in the external system (Optional)
+                      required:
+                      - externalId
+                    description: The users associated with this engagement
+                  opportunity:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the opportunity in the external system
+                      name:
+                        type: string
+                        description: The name of the opportunity
+                      amount:
+                        type: number
+                        description: The dollar amount of the opportunity
+                      closedAt:
+                        type: string
+                        description: The closure date of the opportunity
+                      remoteCreatedAt:
+                        type: string
+                        description: The datetime the opportunity was created in the external system
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this opportunity
+                      disposition:
+                        type: string
+                        enum:
+                        - OPEN
+                        - LOST
+                        - WON
+                        description: The disposition of the opportunity (WON, LOST, or OPEN)
+                      copyEngagementRelationships:
+                        type: boolean
+                        description: When true, copies the available engagement relationships (contact, account, users)
+                    required:
+                    - externalId
+                    description: 'The associated opportunity for this engagement. Note: supplying just an externalId will resolve to an already-synced opportunity'
+                  lead:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the lead in the external system
+                      firstName:
+                        type: string
+                        description: The first name of the lead
+                      lastName:
+                        type: string
+                        description: The last name of the lead
+                      latitude:
+                        type: number
+                        description: The latitude of the lead
+                      longitude:
+                        type: number
+                        description: The longitude of the lead
+                      addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            country:
+                              type: string
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            zip:
+                              type: string
+                          required:
+                          - country
+                          - street
+                          - city
+                          - state
+                          - zip
+                        description: The address(es) associated with this lead
+                      phoneNumbers:
+                        type: array
+                        items:
+                          type: string
+                        description: The phone number(s) associated with this lead
+                      emailAddresses:
+                        type: array
+                        items:
+                          type: string
+                        description: The email address(es) associated with this lead
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this record in the external system
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system
+                      owner:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                        required:
+                        - externalId
+                        description: The owner of this record in the external system (optional)
+                      mergedToExternalId:
+                        type: string
+                        description: If this Lead was merged into another, the surviving Lead externalId. Will migrate all existing references from this Lead to the surviving Lead.
+                      mergedFromExternalIds:
+                        type: array
+                        items:
+                          type: string
+                        description: If other Leads were merged into this one, their externalIds. Will migrate all existing references from those Leads to this Lead.
+                    required:
+                    - externalId
+                    description: The associated lead for this engagement
+                  contact:
+                    type: object
+                    nullable: true
+                    properties:
+                      externalId:
+                        type: string
+                        description: The ID of the contact in the external system
+                      name:
+                        type: string
+                        description: The name of the contact
+                      latitude:
+                        type: number
+                        description: The latitude of the contact
+                      longitude:
+                        type: number
+                        description: The longitude of the contact
+                      account:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                            description: The ID of the account in the external system.
+                          name:
+                            type: string
+                            description: The name of the account
+                          latitude:
+                            type: number
+                            description: The latitude of the account
+                          longitude:
+                            type: number
+                            description: The longitude of the account
+                          addresses:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                country:
+                                  type: string
+                                street:
+                                  type: string
+                                city:
+                                  type: string
+                                state:
+                                  type: string
+                                zip:
+                                  type: string
+                              required:
+                              - country
+                              - street
+                              - city
+                              - state
+                              - zip
+                            description: The address(es) associated to the account
+                          phoneNumbers:
+                            type: array
+                            items:
+                              type: string
+                            description: The phone number(s) for the account
+                          emailAddresses:
+                            type: array
+                            items:
+                              type: string
+                            description: The email address(es) for the account
+                          lastActivityAt:
+                            type: string
+                            description: The datetime of the last activity on this record in the external system
+                          deletedAt:
+                            type: string
+                            nullable: true
+                            format: date-time
+                            description: The datetime when this record was deleted in the external system
+                          owner:
+                            type: object
+                            nullable: true
+                            properties:
+                              externalId:
+                                type: string
+                            required:
+                            - externalId
+                            description: The owner user of this record in the external system (optional)
+                          mergedToExternalId:
+                            type: string
+                            description: If this Account was merged into another, the surviving Account externalId. Will migrate all existing references from this Account to the surviving Account.
+                          mergedFromExternalIds:
+                            type: array
+                            items:
+                              type: string
+                            description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
+                        description: 'The associated account for this contact. Note: supplying just an externalId will resolve to an already-synced account'
+                      addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            country:
+                              type: string
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            zip:
+                              type: string
+                          required:
+                          - country
+                          - street
+                          - city
+                          - state
+                          - zip
+                        description: The address(es) associated with this contact
+                      phoneNumbers:
+                        type: array
+                        items:
+                          type: string
+                        description: The phone number(s) associated with this contact
+                      emailAddresses:
+                        type: array
+                        items:
+                          type: string
+                        description: The email address(es) associated with this contact
+                      lastActivityAt:
+                        type: string
+                        description: The datetime of the last activity on this record in the external system
+                      deletedAt:
+                        type: string
+                        nullable: true
+                        format: date-time
+                        description: The datetime when this record was deleted in the external system
+                      owner:
+                        type: object
+                        nullable: true
+                        properties:
+                          externalId:
+                            type: string
+                        required:
+                        - externalId
+                        description: The owner of this record in the external system (optional)
+                      mergedToExternalId:
+                        type: string
+                        description: If this Contact was merged into another, the surviving Contact externalId. Will migrate all existing references from this Contact to the surviving Contact.
+                      mergedFromExternalIds:
+                        type: array
+                        items:
+                          type: string
+                        description: If other Contacts were merged into this one, their externalIds. Will migrate all existing references from those Contacts to this Contact.
+                    required:
+                    - externalId
+                    description: 'The associated contact for this engagement. Note: supplying just an externalId will resolve to an already-synced contact'
+                required:
+                - externalId
+      responses:
+        '200':
+          description: Sync a batch of engagements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        externalId:
+                          type: string
+                          description: The ID of the engagement in the external system (e.g. Salesforce)
+                        engagementType:
+                          type: string
+                          description: The type of the engagement
+                        direction:
+                          type: string
+                          description: '"INBOUND" | "OUTBOUND"'
+                        subject:
+                          type: string
+                          description: The subject of the engagement
+                        content:
+                          type: string
+                          description: The content of the engagement
+                        startTime:
+                          type: string
+                          description: The start time of the engagement
+                        startTimeLocalized:
+                          type: string
+                          description: Localized dateTime of the engagement, without timezone info
+                        endTime:
+                          type: string
+                          description: The end time of the engagement
+                        createdAt:
+                          type: string
+                          description: The date the engagement was created
+                        updatedAt:
+                          type: string
+                          description: The date the engagement was last updated
+                        recordingId:
+                          type: string
+                          description: The ID of the recording associated to the engagement
+                        opportunityId:
+                          type: string
+                          description: The ID of the opportunity associated to the engagement
+                        accountId:
+                          type: string
+                        organizationId:
+                          type: string
+                        account:
+                          nullable: true
+                        engagementUsers:
+                          type: array
+                          items:
+                            nullable: true
+                      required:
+                      - id
+                      - externalId
+                      - engagementType
+                      - createdAt
+                      - updatedAt
+                      - organizationId
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/users:
+    get:
+      summary: List CRM users
+      description: List CRM users for the authenticated organization
+      parameters:
+      - schema:
+          type: string
+        required: false
+        name: cursor
+        in: query
+      - schema:
+          type: string
+        required: false
+        name: pageSize
+        in: query
+      responses:
+        '200':
+          description: List CRM users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      nullable: true
+                  cursor:
+                    nullable: true
+                required:
+                - data
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/users/{id}:
+    get:
+      summary: Get CRM user by id
+      description: Get a CRM user by id for the authenticated organization
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get CRM user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    nullable: true
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/batch/multimedia-events:
+    put:
+      summary: Batch sync multimedia events
+      description: Sync a batch of multimedia events for the authenticated organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  downloadUrl:
+                    type: string
+                  remoteCreatedAt:
+                    type: string
+                  externalUserId:
+                    type: string
+                  externalUserName:
+                    type: string
+                  externalEmailAddress:
+                    type: string
+                  externalId:
+                    type: string
+                  organizationId:
+                    type: string
+                  mimeType:
+                    type: string
+                  externalEventId:
+                    type: string
+                required:
+                - downloadUrl
+                - remoteCreatedAt
+                - externalUserId
+                - externalEmailAddress
+                - externalId
+                - organizationId
+                - mimeType
+                - externalEventId
+                additionalProperties: false
+      responses:
+        '201':
+          description: Batch sync multimedia events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    nullable: true
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/multimedia-events:
+    put:
+      summary: Sync multimedia event
+      description: Sync a single multimedia event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                downloadUrl:
+                  type: string
+                remoteCreatedAt:
+                  type: string
+                externalUserId:
+                  type: string
+                externalUserName:
+                  type: string
+                externalEmailAddress:
+                  type: string
+                externalId:
+                  type: string
+                organizationId:
+                  type: string
+                mimeType:
+                  type: string
+                externalEventId:
+                  type: string
+              required:
+              - downloadUrl
+              - remoteCreatedAt
+              - externalUserId
+              - externalEmailAddress
+              - externalId
+              - organizationId
+              - mimeType
+              - externalEventId
+              additionalProperties: false
+      responses:
+        '201':
+          description: Sync multimedia event
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    nullable: true
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+  /v1/integrations/briefs:
+    put:
+      summary: Create a brief
+      description: Create a brief
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                jobId:
+                  type: string
+                appointmentId:
+                  type: string
+                tenantId:
+                  type: string
+                technicianId:
+                  type: string
+                audioUrl:
+                  type: string
+                message:
+                  type: string
+              required:
+              - externalId
+              - jobId
+              - appointmentId
+              - tenantId
+              - technicianId
+              - audioUrl
+              - message
+      responses:
+        '200':
+          description: Create a brief
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  siroId:
+                    type: string
+                required:
+                - siroId
+      security:
+      - bearerAuth: []
+      tags:
+      - Integrations
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Organization API token
+      description: 'Organization integration token from Siro admin (Person icon → API Tokens). Send Authorization: Bearer <organization-api-token>. This is not the OAuth access token used with api.siro.ai user-scoped endpoints.'
+      x-default: <organization-api-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json
