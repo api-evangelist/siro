@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/siro-external-api-openapi.json
+format: http-status
+note: >-
+  Siro's External API does not declare application/problem+json (RFC 9457)
+  response bodies in its OpenAPI; errors are returned as standard HTTP status
+  codes with a JSON error envelope. The problem set below is derived from the
+  4xx/5xx responses declared across the External API operations.
+problems:
+- status: 400
+  title: Bad Request
+  meaning: Request payload or query parameters failed validation.
+  remediation: Verify required fields, ID references (id vs externalId + integrationConnectionId), and enum values (e.g. activityType).
+- status: 401
+  title: Unauthorized
+  meaning: Missing or invalid credentials.
+  remediation: 'Send a valid Authorization Bearer <organization-api-token> header, or a user-scoped x-siro-auth-token for recording/entity reads.'
+- status: 403
+  title: Forbidden
+  meaning: The authenticated principal is not permitted to access the requested organization or resource scope.
+  remediation: Confirm the token's org scope and role; org-group tokens require a selector for cross-org reads.
+- status: 404
+  title: Not Found
+  meaning: The referenced resource (recording, engagement, opportunity, account, user, team, org, connection, token) does not exist.
+  remediation: Confirm the resource id and that it belongs to the authorized organization.
+- status: 409
+  title: Conflict
+  meaning: The request conflicts with current resource state (e.g. duplicate or already-linked resource).
+  remediation: Reconcile state before retrying; use upsert/sync operations where provided.
+- status: 422
+  title: Unprocessable Entity
+  meaning: Semantically invalid request that cannot be processed as submitted.
+  remediation: Correct the offending fields per the endpoint's schema and retry.
+- status: 500
+  title: Internal Server Error
+  meaning: Unexpected server-side error.
+  remediation: Retry with backoff; contact customersuccess@siro.ai with the request details and organization id if it persists.

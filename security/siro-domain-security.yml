@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: siro.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 12 05:45:56 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: docs.siro.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 24 10:06:25 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: functions.siro.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 26 14:33:44 2026 GMT
+  hsts: null
+domains:
+- domain: siro.ai
+  dnssec: true
+  caa:
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  - 0 issue "ssl.com"
+  - 0 issuewild "comodoca.com"
+  - 0 issuewild "digicert.com; cansignhttpexchanges=yes"
+  - 0 issuewild "letsencrypt.org"
+  spf: true
+  dmarc: true
+  dmarc_policy: none

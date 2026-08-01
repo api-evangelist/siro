@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/siro-external-api-openapi.json + https://docs.siro.ai/getting-started
+note: >-
+  Packaged Agent Skills for the Siro External API. Siro's OpenAPI declares no
+  operationIds, so each step is grounded in a real, verified HTTP method + path
+  from openapi/siro-external-api-openapi.json.
+skills:
+- file: siro-sync-crm-and-link-recordings.md
+  name: Sync CRM engagements and link Siro recordings
+  api: openapi/siro-external-api-openapi.json
+  operations:
+  - 'PUT /v1/integrations/sync/engagements'
+  - 'PUT /v1/integrations/sync/opportunities'
+  - 'GET /v1/integrations/engagements/{id}'
+- file: siro-pull-conversation-insights.md
+  name: Pull recording summaries and AI entity extractions
+  api: openapi/siro-external-api-openapi.json
+  operations:
+  - 'POST /v1/core/oauth/apps'
+  - 'POST /v1/core/oauth/apps/{clientId}/access-token'
+  - 'GET /v1/core/recordings/{id}'
+  - 'GET /v1/core/recordings/{id}/summaries'

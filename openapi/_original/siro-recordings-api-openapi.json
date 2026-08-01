@@ -1,0 +1,636 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Recordings API"
+  },
+  "externalDocs": {
+    "description": "View the raw OpenAPI Specification in JSON format",
+    "url": "/openapi.json"
+  },
+  "components": {
+    "schemas": {},
+    "parameters": {},
+    "securitySchemes": {
+      "SiroAuthToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-siro-auth-token",
+        "description": "OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.",
+        "x-default": "<oauth-access-token>"
+      }
+    }
+  },
+  "paths": {
+    "/v1/core/recordings/upload": {
+      "post": {
+        "summary": "Create a recording from a phone call",
+        "description": "Creates a new recording from an external phone call source.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Download URL from the signed-urls endpoint (the `downloadUrl` returned by `POST /v1/core/recordings/signed-urls`)."
+                  },
+                  "fileType": {
+                    "type": "string",
+                    "description": "File type (limited to mp3, aac, wav)"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title of the recording."
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "ID of the user who created the recording."
+                  },
+                  "userEmail": {
+                    "type": "string",
+                    "description": "Email of the user who created the recording"
+                  },
+                  "userPhone": {
+                    "type": "string",
+                    "description": "Phone number of the user who created the recording"
+                  },
+                  "organizationId": {
+                    "type": "string",
+                    "description": "ID of the organization associated with the recording."
+                  },
+                  "conversationType": {
+                    "type": "string",
+                    "description": "Conversation type for the recording to be analyzed against. Falls back to default conversation type"
+                  },
+                  "dateCreated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "When the recording was created."
+                  },
+                  "discoverable": {
+                    "type": "boolean",
+                    "description": "Whether the recording is shared with the team."
+                  },
+                  "integrationConnectionId": {
+                    "type": "string",
+                    "description": "Integration Connection Id."
+                  },
+                  "crmObjects": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "objectType": {
+                          "type": "string",
+                          "enum": [
+                            "Opportunity",
+                            "Account",
+                            "Contact",
+                            "Lead",
+                            "Engagement",
+                            "Event",
+                            "ServiceAppointment"
+                          ]
+                        },
+                        "objectId": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "objectType",
+                        "objectId"
+                      ]
+                    },
+                    "description": "CRM objects to link to the recording."
+                  },
+                  "contactName": {
+                    "type": "string",
+                    "description": "Contact name for purposes of linking to CRM objects. Ignored if CRM objects are passed."
+                  },
+                  "contactPhone": {
+                    "type": "string",
+                    "description": "Contact phone number for purposes of linking to CRM objects. Ignored if CRM objects are passed."
+                  },
+                  "result": {
+                    "type": "string",
+                    "enum": [
+                      "closed",
+                      "not closed",
+                      "in progress"
+                    ]
+                  }
+                },
+                "required": [
+                  "fileUrl",
+                  "fileType"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a recording from a phone call",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "recordingId": {
+                          "type": "string",
+                          "description": "Recording ID"
+                        }
+                      },
+                      "required": [
+                        "recordingId"
+                      ]
+                    },
+                    "cursor": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "nullable": true
+                        }
+                      ]
+                    },
+                    "pageSize": {
+                      "type": "number"
+                    },
+                    "limit": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "hasNextPage": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - User not authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Authentication error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - User does not have access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Authorization error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Resource not found error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content - The request failed validation checks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issues": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "expected": {
+                            "type": "string"
+                          },
+                          "received": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            }
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "path",
+                          "message"
+                        ]
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "ZodError"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "issues",
+                    "name"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Internal server error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SiroAuthToken": []
+          }
+        ]
+      }
+    },
+    "/v1/core/recordings/signed-urls": {
+      "post": {
+        "summary": "Get a signed URL for uploading a recording",
+        "description": "Generate signed upload and download URLs for an audio file. The upload URL can be used to upload the file directly to cloud storage.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileType": {
+                    "type": "string",
+                    "description": "File type (limited to mp3, aac, wav)"
+                  },
+                  "fileSize": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "description": "Size of the file in bytes"
+                  }
+                },
+                "required": [
+                  "fileType",
+                  "fileSize"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Get a signed URL for uploading a recording",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uploadUrl": {
+                          "type": "string",
+                          "description": "Signed URL for uploading the file (PUT the body here)."
+                        },
+                        "uploadHeaders": {
+                          "type": "object",
+                          "properties": {
+                            "Content-Type": {
+                              "type": "string",
+                              "description": "MIME type for the file. Must be sent exactly when PUTting to `uploadUrl` (it is baked into the signature)."
+                            },
+                            "x-goog-content-length-range": {
+                              "type": "string",
+                              "description": "Allowed upload size range `0,<fileSize>`. Must be sent exactly when PUTting to `uploadUrl` (it is baked into the signature)."
+                            }
+                          },
+                          "required": [
+                            "Content-Type",
+                            "x-goog-content-length-range"
+                          ],
+                          "description": "Headers that must be included exactly as given when PUTting the file to `uploadUrl`."
+                        },
+                        "downloadUrl": {
+                          "type": "string",
+                          "description": "Pass this URL as `fileUrl` when creating the recording."
+                        },
+                        "expiresAt": {
+                          "type": "string",
+                          "description": "When the signed URLs expire (ISO 8601 date-time)."
+                        }
+                      },
+                      "required": [
+                        "uploadUrl",
+                        "uploadHeaders",
+                        "downloadUrl",
+                        "expiresAt"
+                      ]
+                    },
+                    "cursor": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "nullable": true
+                        }
+                      ]
+                    },
+                    "pageSize": {
+                      "type": "number"
+                    },
+                    "limit": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "hasNextPage": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - User not authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Authentication error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - User does not have access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Authorization error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Resource not found error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content - The request failed validation checks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issues": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "expected": {
+                            "type": "string"
+                          },
+                          "received": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                }
+                              ]
+                            }
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "path",
+                          "message"
+                        ]
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "ZodError"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "issues",
+                    "name"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Internal server error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SiroAuthToken": []
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.siro.ai/",
+      "description": "Siro API Gateway"
+    }
+  ]
+}

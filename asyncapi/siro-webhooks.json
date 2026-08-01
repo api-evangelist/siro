@@ -1,0 +1,215 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Siro Webhooks",
+    "description": "Outgoing webhook events emitted by Siro. Subscribe via Siro Admin dashboard."
+  },
+  "components": {
+    "schemas": {
+      "RecordingEventWebhookPayload": {
+        "type": "object",
+        "properties": {
+          "recordingId": {
+            "type": "string",
+            "description": "Siro Recording ID"
+          },
+          "siroUserId": {
+            "type": "string",
+            "description": "Siro Recording User ID"
+          },
+          "recordingProcessed": {
+            "type": "boolean",
+            "description": "Set to true if this recording has been fully processed"
+          },
+          "recordingLinked": {
+            "type": "boolean",
+            "description": "Set to true if this recording has been definitely linked to an external object"
+          },
+          "eventType": {
+            "type": "string",
+            "description": "Webhook event type. ie. integrations.recordingLinked, integrations.recordingProcessed"
+          },
+          "crm": {
+            "type": "object",
+            "properties": {
+              "integrationConnectionId": {
+                "type": "string",
+                "description": "Siro internal IntegrationConnection id for the CRM connection"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Internal Siro ID for the external object"
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "description": "External ID for the external object in the CRM"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "externalId"
+                  ]
+                },
+                "description": "CRM Engagement User(s) owning the recording"
+              },
+              "engagement": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Internal Siro ID for the external object"
+                  },
+                  "externalId": {
+                    "type": "string",
+                    "description": "External ID for the external object in the CRM"
+                  }
+                },
+                "required": [
+                  "id",
+                  "externalId"
+                ],
+                "description": "CRM Engagement tied to the recording"
+              },
+              "opportunity": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Internal Siro ID for the external object"
+                  },
+                  "externalId": {
+                    "type": "string",
+                    "description": "External ID for the external object in the CRM"
+                  }
+                },
+                "required": [
+                  "id",
+                  "externalId"
+                ],
+                "description": "CRM Opportunity tied to the recording"
+              },
+              "contacts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Internal Siro ID for the external object"
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "description": "External ID for the external object in the CRM"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "externalId"
+                  ]
+                },
+                "description": "CRM Contact(s) tied to the recording"
+              },
+              "account": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Internal Siro ID for the external object"
+                  },
+                  "externalId": {
+                    "type": "string",
+                    "description": "External ID for the external object in the CRM"
+                  }
+                },
+                "required": [
+                  "id",
+                  "externalId"
+                ],
+                "description": "CRM Account tied to the recording"
+              },
+              "lead": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Internal Siro ID for the external object"
+                  },
+                  "externalId": {
+                    "type": "string",
+                    "description": "External ID for the external object in the CRM"
+                  }
+                },
+                "required": [
+                  "id",
+                  "externalId"
+                ],
+                "description": "CRM Lead tied to the recording"
+              }
+            },
+            "required": [
+              "integrationConnectionId"
+            ]
+          }
+        },
+        "required": [
+          "recordingId",
+          "recordingProcessed",
+          "recordingLinked",
+          "eventType"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {},
+  "webhooks": {
+    "integrations.recordingProcessed": {
+      "post": {
+        "summary": "Recording processed",
+        "description": "Emitted when a recording has been fully processed. If the recording is also definitively linked to a CRM object at the time of processing, the `crm` field will be populated.",
+        "requestBody": {
+          "description": "Recording event payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordingEventWebhookPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2XX": {
+            "description": "Return any 2xx status to acknowledge receipt"
+          }
+        }
+      }
+    },
+    "integrations.recordingLinked": {
+      "post": {
+        "summary": "Recording linked",
+        "description": "Emitted when a recording has been definitively linked to a CRM object. The `crm` field is always populated on this event.",
+        "requestBody": {
+          "description": "Recording event payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordingEventWebhookPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2XX": {
+            "description": "Return any 2xx status to acknowledge receipt"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "provider": "siro",
+  "sources": [
+    "siro-audit-api-openapi.yml",
+    "siro-core-api-openapi.yml",
+    "siro-folders-api-openapi.yml",
+    "siro-integrations-api-openapi.yml"
+  ],
+  "outputs": [
+    "siro-audit-api-openapi.yml",
+    "siro-core-api-openapi.yml",
+    "siro-folders-api-openapi.yml",
+    "siro-integrations-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

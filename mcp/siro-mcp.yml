@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/siro-external-api-openapi.json
+note: >-
+  Siro publishes no official hosted/remote MCP server as of capture. This is a
+  DERIVED candidate tool list mapped from the External API operations, one tool
+  per marquee operation, so an MCP wrapper could be generated. Not an official
+  Siro server.
+server:
+  name: siro
+  transport: http
+  base_url: https://functions.siro.ai/api-externalApi
+  auth: bearer organization API token (Authorization); x-siro-auth-token for recording/entity reads
+tools:
+- name: sync_engagement
+  description: Sync an appointment/meeting into Siro so recordings can be linked.
+  source_operation: 'PUT /v1/integrations/sync/engagements'
+- name: sync_opportunity
+  description: Sync a deal (amount, disposition, customer context) into Siro.
+  source_operation: 'PUT /v1/integrations/sync/opportunities'
+- name: list_engagements
+  description: List synced engagements.
+  source_operation: 'GET /v1/integrations/engagements'
+- name: get_engagement
+  description: Retrieve an engagement and its linked recording.
+  source_operation: 'GET /v1/integrations/engagements/{id}'
+- name: list_opportunities
+  description: List synced opportunities.
+  source_operation: 'GET /v1/integrations/opportunities'
+- name: list_recordings
+  description: List recordings.
+  source_operation: 'GET /v1/core/recordings'
+- name: get_recording
+  description: Get a recording with optional summary and entity extractions.
+  source_operation: 'GET /v1/core/recordings/{id}'
+- name: get_recording_summaries
+  description: Fetch conversation summaries for a recording.
+  source_operation: 'GET /v1/core/recordings/{id}/summaries'
+- name: list_mobile_events
+  description: Query mobile events for the organization.
+  source_operation: 'GET /v1/core/mobile-events'
+- name: create_oauth_app
+  description: Create an OAuth application to mint user-scoped access tokens.
+  source_operation: 'POST /v1/core/oauth/apps'

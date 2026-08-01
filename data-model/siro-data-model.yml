@@ -1,0 +1,96 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/siro-external-api-openapi.json
+note: >-
+  Entity graph derived from the Siro External API path structure and documented
+  data model. The OpenAPI declares no components.schemas, so entities and
+  relationships are derived from resource paths and the getting-started guide.
+entities:
+- name: Organization
+  path: /v1/core/organizations
+  identity: id
+- name: Team
+  path: /v1/core/organizations/{orgId}/teams
+  identity: id
+- name: User
+  path: /v1/core/users
+  identity: id
+  note: Siro workspace login identity.
+- name: Recording
+  path: /v1/core/recordings
+  identity: id
+  note: Captured/transcribed sales conversation; carries summaries and entity extractions.
+- name: Engagement
+  path: /v1/integrations/engagements
+  identity: id
+  external_identity: externalId
+  note: Scheduled appointment/meeting synced from the CRM; recordings link to it.
+- name: Opportunity
+  path: /v1/integrations/opportunities
+  identity: id
+  external_identity: externalId
+  note: Deal with amount and disposition synced from the CRM.
+- name: Account
+  path: /v1/integrations/accounts
+  identity: id
+  external_identity: externalId
+  note: Customer account, nested in engagement/opportunity payloads.
+- name: EngagementUser
+  path: /v1/integrations/engagement-users
+  identity: id
+- name: OpportunityUser
+  path: /v1/integrations/opportunity-users
+  identity: id
+- name: IntegrationConnection
+  path: /v1/core/integrations/connections
+  identity: id
+- name: OAuthApp
+  path: /v1/core/oauth/apps
+  identity: clientId
+- name: AuthToken
+  path: /v1/core/auth/tokens
+  identity: id
+- name: MobileEvent
+  path: /v1/core/mobile-events
+  identity: id
+relationships:
+- from: Team
+  to: Organization
+  type: belongs_to
+  via: orgId
+- from: Recording
+  to: Engagement
+  type: belongs_to
+  via: crm.engagement
+- from: Recording
+  to: Opportunity
+  type: belongs_to
+  via: crm.opportunity
+- from: Recording
+  to: Account
+  type: belongs_to
+  via: crm.account
+- from: Engagement
+  to: Account
+  type: has_one
+  via: account
+- from: Opportunity
+  to: Account
+  type: has_one
+  via: account
+- from: Engagement
+  to: EngagementUser
+  type: has_many
+  via: engagement-users
+- from: Opportunity
+  to: OpportunityUser
+  type: has_many
+  via: opportunity-users
+- from: Recording
+  to: Summary
+  type: has_many
+  via: /v1/core/recordings/{id}/summaries
+- from: OAuthApp
+  to: Organization
+  type: belongs_to
+  via: owner

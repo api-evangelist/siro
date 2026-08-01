@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/siro-external-api-openapi.json, openapi/siro-folders-api-openapi.json, openapi/siro-openapi-original.json,
+  openapi/siro-recordings-api-openapi.json
+docs: https://docs.siro.ai/getting-started
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: Organization API token
+  description: 'Organization integration token from Siro admin (Person icon → API Tokens). Send
+    Authorization: Bearer <organization-api-token>. This is not the OAuth access token used
+    with api.siro.ai user-scoped endpoints.'
+  sources:
+  - openapi/siro-external-api-openapi.json
+  - openapi/siro-openapi-original.json
+- name: SiroAuthToken
+  type: apiKey
+  in: header
+  parameter: x-siro-auth-token
+  description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine).
+    Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
+  sources:
+  - openapi/siro-folders-api-openapi.json
+  - openapi/siro-recordings-api-openapi.json

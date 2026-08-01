@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.siro.ai/getting-started
+docs: https://docs.siro.ai
+summary: Cross-cutting request/response semantics for the Siro External API.
+authentication:
+  style: bearer-token + apiKey-header
+  detail: >-
+    Organization API token via `Authorization: Bearer <token>` for sync and
+    general operations; user-scoped OAuth access token via `x-siro-auth-token`
+    header for recording details and entity extractions.
+  see: authentication/siro-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    Siro does not document a dedicated idempotency-key header. Write flows are
+    modeled as PUT sync/upsert operations (sync/engagements, sync/opportunities,
+    accounts, engagement-users, opportunity-users) which are naturally idempotent
+    on the resource key (Siro `id`, or `externalId` + `integrationConnectionId`).
+pagination:
+  styles:
+  - cursor
+  - page
+  params:
+  - cursor
+  - page
+  - pageSize
+  - limit
+  detail: >-
+    List endpoints support cursor-based and page-based pagination. Where both a
+    cursor and a page are provided the cursor takes precedence. Example:
+    GET /v1/core/mobile-events?pageSize=100.
+identity_references:
+  siro_id: id
+  external_id: externalId
+  detail: >-
+    Resources carry a Siro-internal UUID (`id`) and the caller's CRM-native
+    identifier (`externalId`). Target by external reference by sending
+    `externalId` together with `integrationConnectionId`.
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: All External API paths are versioned under /v1 (e.g. /v1/integrations, /v1/core).
+rate_limiting:
+  limit: 1000 requests per API token per minute
+  see: rate-limits/siro-rate-limits.yml
+errors:
+  envelope: json
+  format: http-status
+  see: errors/siro-problem-types.yml
+webhooks:
+  transport: svix
+  signature_headers:
+  - svix-id
+  - svix-timestamp
+  - svix-signature
+  events:
+  - integrations.recordingProcessed
+  - integrations.recordingLinked
+  see: asyncapi/siro-webhooks.json

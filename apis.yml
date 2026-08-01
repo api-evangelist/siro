@@ -1,8 +1,32 @@
 aid: siro
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/siro.png
 name: Siro
-description: 'Siro is a company surfaced as a portfolio company of crv, index-ventures and added to the
-  API Evangelist network as a stub for enrichment. Sector: sales. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Siro is an AI sales coaching platform for in-person and field sales teams.
+  Reps record their live sales conversations from the Siro mobile app, and Siro
+  transcribes each conversation, surfaces coaching insights, generates scorecards
+  and summaries, and extracts structured fields (budget, objections, decision
+  makers, timelines) that are pushed back into the team's CRM. Siro publishes a
+  documented REST API and webhook surface that enables fully bidirectional,
+  custom CRM integrations: syncing appointments/engagements, opportunities and
+  accounts into Siro, matching recordings to CRM entities, and pulling recording
+  details, summaries, entity extractions and coaching scorecards back out. The
+  platform ships prebuilt integrations for Salesforce, HubSpot, Microsoft
+  Dynamics, Pipedrive, Zoho, SalesRabbit, Leap SalesPro, Hatch, CompanyCam and a
+  range of dealership DMS and home-services tools. Siro is backed by CRV and
+  Index Ventures.
 url: https://raw.githubusercontent.com/api-evangelist/siro/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -13,16 +37,169 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Sales
-apis: []
+- Sales Coaching
+- Conversation Intelligence
+- Field Sales
+- CRM
+- AI
+- Speech to Text
+- Webhooks
+- Integrations
+apis:
+- aid: siro:siro-audit-api
+  name: Siro Audit API
+  description: The Audit API from Siro — 1 operation(s) for audit.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-audit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.siro.ai
+  - type: GettingStarted
+    url: https://docs.siro.ai/getting-started
+  - type: APIReference
+    url: https://docs.siro.ai/api-references/get-recordings
+  - type: Authentication
+    url: authentication/siro-authentication.yml
+  - type: Webhooks
+    url: asyncapi/siro-webhooks.json
+  - type: RateLimits
+    url: rate-limits/siro-rate-limits.yml
+- aid: siro:siro-core-api
+  name: Siro Core API
+  description: The Core API from Siro — 23 operation(s) for core.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Core
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-core-api-openapi.yml
+  - type: Documentation
+    url: https://docs.siro.ai
+  - type: GettingStarted
+    url: https://docs.siro.ai/getting-started
+  - type: APIReference
+    url: https://docs.siro.ai/api-references/get-recordings
+  - type: Authentication
+    url: authentication/siro-authentication.yml
+  - type: Webhooks
+    url: asyncapi/siro-webhooks.json
+  - type: RateLimits
+    url: rate-limits/siro-rate-limits.yml
+- aid: siro:siro-folders-api
+  name: Siro Folders API
+  description: The Folders API from Siro — 2 operation(s) for folders.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-folders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.siro.ai
+  - type: GettingStarted
+    url: https://docs.siro.ai/getting-started
+  - type: APIReference
+    url: https://docs.siro.ai/api-references/get-recordings
+  - type: Authentication
+    url: authentication/siro-authentication.yml
+  - type: Webhooks
+    url: asyncapi/siro-webhooks.json
+  - type: RateLimits
+    url: rate-limits/siro-rate-limits.yml
+- aid: siro:siro-integrations-api
+  name: Siro Integrations API
+  description: The Integrations API from Siro — 21 operation(s) for integrations.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.siro.ai
+  - type: GettingStarted
+    url: https://docs.siro.ai/getting-started
+  - type: APIReference
+    url: https://docs.siro.ai/api-references/get-recordings
+  - type: Authentication
+    url: authentication/siro-authentication.yml
+  - type: Webhooks
+    url: asyncapi/siro-webhooks.json
+  - type: RateLimits
+    url: rate-limits/siro-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/siro-domain-security.yml
 - type: Website
   url: https://siro.ai/
+- type: DeveloperPortal
+  url: https://docs.siro.ai
+- type: Documentation
+  url: https://docs.siro.ai
+- type: APIReference
+  url: https://docs.siro.ai/api-references/get-recordings
+- type: GettingStarted
+  url: https://docs.siro.ai/getting-started
+- type: Quickstart
+  url: https://docs.siro.ai/phones-integration-getting-started
+- type: Support
+  url: https://docs.siro.ai/support
+- type: Blog
+  url: https://www.siro.ai/insights
+- type: Login
+  url: https://app.siro.ai/
+- type: Integrations
+  url: https://www.siro.ai/integrations
+- type: TermsOfService
+  url: https://www.siro.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.siro.ai/privacy-policy
+- type: TrustCenter
+  url: https://trust.siro.ai/
+- type: LLMsTxt
+  url: llms/siro-llms.txt
+- type: Authentication
+  url: authentication/siro-authentication.yml
+- type: Webhooks
+  url: asyncapi/siro-webhooks.json
+- type: RateLimits
+  url: rate-limits/siro-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/siro-problem-types.yml
+- type: Conventions
+  url: conventions/siro-conventions.yml
+- type: Lifecycle
+  url: lifecycle/siro-lifecycle.yml
+- type: DataModel
+  url: data-model/siro-data-model.yml
+- type: Conformance
+  url: conformance/siro-conformance.yml
+- type: MCPServer
+  url: mcp/siro-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/siro-external-api-overlay.yaml
+- type: WellKnown
+  url: well-known/siro-well-known.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1

@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: probed
+source: live probes of Siro hosts
+note: >-
+  Probed /.well-known/{security.txt,openid-configuration,oauth-authorization-server,api-catalog,ai-plugin.json}
+  across siro.ai, www.siro.ai, api.siro.ai, functions.siro.ai, docs.siro.ai and app.siro.ai.
+  No well-known discovery documents are published (all 404). Absence is valid, recorded data.
+hosts:
+- host: https://siro.ai
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://api.siro.ai
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+- host: https://functions.siro.ai
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}

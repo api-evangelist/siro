@@ -1,0 +1,14 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.siro.ai/rate-limits
+docs: https://docs.siro.ai/rate-limits
+summary: >-
+  Siro applies a fixed per-API-token request ceiling across the External API.
+  Limits are enforced per API token per minute; exceeding the ceiling returns an
+  error response and callers should back off and retry.
+rate_limits:
+- scope: per-api-token
+  window: minute
+  limit_count: 1000
+  unit: requests
+  notes: 1000 requests per API token per minute (docs.siro.ai/rate-limits).

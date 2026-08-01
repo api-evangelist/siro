@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.siro.ai
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.siro.ai/getting-started
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No public deprecation/sunset policy documented at time of capture.
+sla:
+  url: null
+status_page: null
+support:
+  contact: customersuccess@siro.ai
+  docs: https://docs.siro.ai/support
+deprecated_operations: []

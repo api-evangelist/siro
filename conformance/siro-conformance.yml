@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/siro-external-api-openapi.json, asyncapi/siro-webhooks.json, https://docs.siro.ai
+standards:
+- id: oauth2
+  conforms: partial
+  evidence: >-
+    OAuth application + user-scoped access-token flow documented
+    (POST /v1/core/oauth/apps, POST .../access-token; x-siro-auth-token header),
+    but OpenAPI declares http-bearer/apiKey securitySchemes rather than an
+    oauth2 flows object.
+- id: bearer-token-auth
+  conforms: true
+  evidence: openapi securityScheme type http scheme bearer (organization API token)
+- id: api-key-auth
+  conforms: true
+  evidence: openapi securityScheme type apiKey in header (x-siro-auth-token)
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: no application/problem+json responses declared; plain HTTP status + JSON envelope
+- id: webhooks
+  conforms: true
+  evidence: OpenAPI 3.1 webhooks object (integrations.recordingProcessed, integrations.recordingLinked) with Svix signature verification
+- id: pagination
+  conforms: true
+  evidence: cursor- and page-based pagination across list endpoints (cursor/page/pageSize/limit params)
+- id: rate-limiting
+  conforms: true
+  evidence: documented 1000 requests per API token per minute
+- id: idempotency
+  conforms: false
+  evidence: no idempotency-key header documented; write flows modeled as PUT upsert/sync

@@ -1,0 +1,14 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Siro External API
+  version: 1.0.0
+extends: openapi/siro-external-api-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: siro
+    x-apievangelist-category: [Sales Coaching, Conversation Intelligence, CRM]
+    x-apievangelist-auth: bearer-org-token + x-siro-auth-token (OAuth)
+    x-apievangelist-rate-limit: 1000 requests per API token per minute
+    x-apievangelist-webhooks: asyncapi/siro-webhooks.json
+    x-apievangelist-docs: https://docs.siro.ai
