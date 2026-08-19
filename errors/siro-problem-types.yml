@@ -1,12 +1,15 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: derived
-source: openapi/siro-external-api-openapi.json
+source: openapi/_original/siro-external-api-openapi.json, openapi/_original/siro-platform-api-openapi.json
 format: http-status
 note: >-
-  Siro's External API does not declare application/problem+json (RFC 9457)
-  response bodies in its OpenAPI; errors are returned as standard HTTP status
-  codes with a JSON error envelope. The problem set below is derived from the
-  4xx/5xx responses declared across the External API operations.
+  Siro's APIs do not declare application/problem+json (RFC 9457) response bodies in any published
+  OpenAPI; errors are returned as standard HTTP status codes with a JSON error envelope. The
+  problem set below is derived from the 4xx/5xx responses declared across both surfaces — the
+  External API on functions.siro.ai (69 operations) and the Platform API on api.siro.ai
+  (145 operations, harvested 2026-08-13). The api.siro.ai gateway returns
+  {"code":404,"message":"The current request is not defined by this API."} for unrouted paths.
+  429 was added in the 2026-08-13 round from the Platform API's declared responses.
 problems:
 - status: 400
   title: Bad Request
@@ -32,6 +35,11 @@ problems:
   title: Unprocessable Entity
   meaning: Semantically invalid request that cannot be processed as submitted.
   remediation: Correct the offending fields per the endpoint's schema and retry.
+- status: 429
+  title: Too Many Requests
+  meaning: The API token exceeded the published ceiling of 1000 requests per minute.
+  remediation: Back off and retry. See rate-limits/siro-rate-limits.yml — Siro documents the limit but publishes no X-RateLimit-*/RateLimit-* response headers or Retry-After contract, so a client cannot read remaining quota from a response.
+  source: openapi/_original/siro-platform-api-openapi.json
 - status: 500
   title: Internal Server Error
   meaning: Unexpected server-side error.

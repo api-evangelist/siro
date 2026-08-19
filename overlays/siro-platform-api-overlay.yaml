@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Siro Platform API (api.siro.ai gateway)
+  version: 1.0.0
+extends: openapi/_original/siro-platform-api-openapi.json
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: >-
+    https://docs.siro.ai/specs/openapi-internalApi.json — harvested verbatim 2026-08-13, 106 paths /
+    145 operations, servers[] https://api.siro.ai/. Discovered via the "## OpenAPI Specs" section of
+    Siro's own https://docs.siro.ai/llms.txt. Ownership: servers[] names api.siro.ai, the host Siro's
+    published Agent Skill documents as the user-scoped base URL, and the spec's only securityScheme is
+    Siro's own x-siro-auth-token header.
+  note: >-
+    The upstream document declares no operationIds and no tags, so no per-operation targets are
+    asserted here. This overlay records only what API Evangelist can state truthfully about the
+    document as a whole; the original is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: siro
+    x-apievangelist-api: Siro Platform API
+    x-apievangelist-base: https://api.siro.ai/
+    x-apievangelist-category: [Sales Coaching, Conversation Intelligence, Speech to Text, CRM]
+    x-apievangelist-auth: 'x-siro-auth-token: <oauth-access-token> (user-scoped OAuth access token)'
+    x-apievangelist-rate-limit: 1000 requests per API token per minute
+    x-apievangelist-docs: https://docs.siro.ai
+    x-apievangelist-spec-source: https://docs.siro.ai/specs/openapi-internalApi.json
+    x-apievangelist-operations: 145
+    x-apievangelist-gaps: [no-operationIds, no-tags, no-info-contact, no-info-license]
+- target: $.servers
+  update:
+  - url: https://api.siro.ai/
+    description: Siro API Gateway — user-scoped surface (recordings, extractions, scorecards, followups)

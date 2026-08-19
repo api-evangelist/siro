@@ -1,24 +1,68 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: probed
 source: live probes of Siro hosts
-note: >-
-  Probed /.well-known/{security.txt,openid-configuration,oauth-authorization-server,api-catalog,ai-plugin.json}
-  across siro.ai, www.siro.ai, api.siro.ai, functions.siro.ai, docs.siro.ai and app.siro.ai.
-  No well-known discovery documents are published (all 404). Absence is valid, recorded data.
+supersedes:
+  generated: '2026-07-21'
+  note: >-
+    The 2026-07-21 round probed only the classic discovery paths (security.txt, openid-configuration,
+    oauth-authorization-server, api-catalog, ai-plugin.json) and recorded a clean sweep of 404s.
+    The 2026-08-13 round re-probed including the agent paths and found docs.siro.ai serving TWO
+    real documents under /.well-known/ — an A2A agent card and an Agent Skill. The WellKnown
+    pointer in apis.yml is therefore justified by a 200 carrying a real document, not by this
+    file's existence.
+summary: >-
+  Siro serves no classic well-known discovery surface — no security.txt, no OIDC or OAuth
+  authorization-server metadata, no api-catalog, no ai-plugin.json, on any host. What it does
+  serve, from the documentation host only, is the agent-discovery pair its docs platform emits:
+  /.well-known/agent-card.json and /.well-known/agent-skills/siro/skill.md. Neither API host
+  (functions.siro.ai, api.siro.ai) publishes anything at /.well-known/.
 hosts:
-- host: https://siro.ai
+- host: https://docs.siro.ai
   documents:
+  - {path: /.well-known/agent-card.json, status: 200, file: ../a2a/siro-agent-card.json, content_type: application/json, note: 'A2A agent card — see a2a/siro-a2a.yml'}
+  - {path: /.well-known/agent-skills/siro/skill.md, status: 200, file: ../skills/siro-siro-skill.md, content_type: text/markdown, note: 'Provider-published Agent Skill, 13.6KB — see skills/_index.yml'}
+  - {path: /.well-known/agent.json, status: 404}
   - {path: /.well-known/security.txt, status: 404}
   - {path: /.well-known/openid-configuration, status: 404}
   - {path: /.well-known/oauth-authorization-server, status: 404}
   - {path: /.well-known/api-catalog, status: 404}
   - {path: /.well-known/ai-plugin.json, status: 404}
-- host: https://api.siro.ai
+- host: https://functions.siro.ai
   documents:
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
   - {path: /.well-known/security.txt, status: 404}
   - {path: /.well-known/openid-configuration, status: 404}
   - {path: /.well-known/oauth-authorization-server, status: 404}
-- host: https://functions.siro.ai
+- host: https://api.siro.ai
   documents:
+  - {path: /.well-known/agent-card.json, status: 404, note: 'gateway returns {"code":404,"message":"The current request is not defined by this API."}'}
+  - {path: /.well-known/agent.json, status: 404}
   - {path: /.well-known/security.txt, status: 404}
   - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+- host: https://siro.ai
+  documents:
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://www.siro.ai
+  documents:
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/security.txt, status: 404}
+- host: https://app.siro.ai
+  documents:
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+security_txt:
+  published: false
+  note: >-
+    No SecurityTxt pointer is emitted — every /.well-known/security.txt probe 404s. See
+    security/siro-trust-center.yml for the published compliance posture and
+    security/siro-domain-security.yml for the probed transport posture.
+checked: '2026-08-13'

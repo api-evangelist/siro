@@ -1,18 +1,41 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://docs.siro.ai
 versioning:
   scheme: uri-path
   current: v1
   docs: https://docs.siro.ai/getting-started
+  note: >-
+    Both surfaces are versioned under /v1 — https://functions.siro.ai/api-externalApi/v1 and
+    https://api.siro.ai/v1. No version-negotiation header, date-pinning or version train is
+    published, and no second version line exists.
 deprecation:
   policy_url: null
   sunset_header: null
-  note: No public deprecation/sunset policy documented at time of capture.
+  note: >-
+    No public deprecation/sunset policy. Re-checked 2026-08-13 against both published specs:
+    zero of the 214 operations carry `deprecated: true`, and neither the docs nor the specs
+    mention Sunset or Deprecation headers (RFC 8594). No Deprecation pointer is emitted.
+changelog:
+  url: null
+  note: >-
+    No dated changelog. https://www.siro.ai/changelog and https://docs.siro.ai/changelog both 404
+    on 2026-08-13, and the site sitemap contains no changelog or release-notes URL. No ChangeLog
+    pointer is emitted and no changelog/ artifact is written.
 sla:
   url: null
+  note: No published SLA or uptime target.
 status_page: null
+status_page_probe:
+  note: >-
+    No status page. status.siro.ai does not resolve (DNS failure, curl exit 6), and neither
+    siro.ai nor docs.siro.ai links a status/uptime page. No StatusPage pointer is emitted.
+  checked: '2026-08-13'
 support:
   contact: customersuccess@siro.ai
   docs: https://docs.siro.ai/support
 deprecated_operations: []
+x-evidence:
+- {url: 'https://status.siro.ai/', http_status: 0, note: DNS does not resolve}
+- {url: 'https://www.siro.ai/changelog', http_status: 404}
+- {url: 'https://docs.siro.ai/changelog', http_status: 404}

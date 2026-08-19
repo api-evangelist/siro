@@ -1,21 +1,49 @@
-generated: '2026-07-21'
-method: generated
-source: openapi/siro-external-api-openapi.json + https://docs.siro.ai/getting-started
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.siro.ai/.well-known/agent-skills/siro/skill.md (provider-published, saved verbatim)
+  + openapi/_original/siro-external-api-openapi.json (API Evangelist generated skills)
 note: >-
-  Packaged Agent Skills for the Siro External API. Siro's OpenAPI declares no
-  operationIds, so each step is grounded in a real, verified HTTP method + path
-  from openapi/siro-external-api-openapi.json.
+  Siro PUBLISHES its own Agent Skill at /.well-known/agent-skills/siro/skill.md on the docs host,
+  advertised by the skills[] array of its A2A agent card (a2a/siro-a2a.yml). That document is
+  saved verbatim as siro-siro-skill.md and is the authoritative skill — method searched. The two
+  API Evangelist skills from the 2026-07-21 round are retained alongside it; they are narrower,
+  flow-scoped, and generated. Siro's OpenAPI declares no operationIds, so every step in the
+  generated skills is grounded in a verified HTTP method + path.
 skills:
+- file: siro-siro-skill.md
+  name: Siro
+  method: searched
+  provider_published: true
+  source: https://docs.siro.ai/.well-known/agent-skills/siro/skill.md
+  fetched: '2026-08-13'
+  http_status: 200
+  description: >-
+    Use when building CRM integrations, syncing sales conversations and appointment data,
+    retrieving AI-generated insights from recordings, setting up webhooks for real-time event
+    processing, or uploading phone recordings to Siro for analysis and coaching.
+  api: openapi/_original/siro-external-api-openapi.json
+  covers:
+  - CRM integration and bidirectional sync
+  - Phone recording upload
+  - Conversation insights, extractions and scorecards
+  - Webhook subscription and handling
+  - Deep-link recording triggers
+  - OAuth app and token management
 - file: siro-sync-crm-and-link-recordings.md
   name: Sync CRM engagements and link Siro recordings
-  api: openapi/siro-external-api-openapi.json
+  method: generated
+  provider_published: false
+  api: openapi/_original/siro-external-api-openapi.json
   operations:
   - 'PUT /v1/integrations/sync/engagements'
   - 'PUT /v1/integrations/sync/opportunities'
   - 'GET /v1/integrations/engagements/{id}'
 - file: siro-pull-conversation-insights.md
   name: Pull recording summaries and AI entity extractions
-  api: openapi/siro-external-api-openapi.json
+  method: generated
+  provider_published: false
+  api: openapi/_original/siro-external-api-openapi.json
   operations:
   - 'POST /v1/core/oauth/apps'
   - 'POST /v1/core/oauth/apps/{clientId}/access-token'

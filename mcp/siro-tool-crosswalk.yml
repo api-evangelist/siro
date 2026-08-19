@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/siro-mcp-tools.json + openapi/_original/siro-external-api-openapi.json + openapi/_original/siro-platform-api-openapi.json
+summary: >-
+  Siro has both a live remote MCP server and published OpenAPI, so this crosswalk is emitted —
+  and it records a total divergence. Every one of the three MCP tools is a documentation tool
+  (search the docs corpus, read a docs page, submit docs feedback) served by Siro's Mintlify docs
+  deployment. None of them is backed by a Siro API operation, and none of the 214 published REST
+  operations is reachable through MCP. Coverage is 0/214. An agent connected to
+  https://docs.siro.ai/mcp can READ ABOUT the Siro API; it cannot CALL it.
+surfaces:
+  openapi:
+  - file: openapi/_original/siro-external-api-openapi.json
+    base: https://functions.siro.ai/api-externalApi
+    operations: 69
+    auth: 'Authorization: Bearer <organization-api-token>'
+    gated: false
+    note: Public spec, served at https://docs.siro.ai/specs/openapi-externalApi.json. No operationIds declared.
+  - file: openapi/_original/siro-platform-api-openapi.json
+    base: https://api.siro.ai/
+    operations: 145
+    auth: 'x-siro-auth-token: <oauth-access-token>'
+    gated: false
+    note: >-
+      Public spec, served at https://docs.siro.ai/specs/openapi-internalApi.json and linked from
+      Siro's own llms.txt. Carries the recordings, utterances, extractions, scorecards, followups,
+      folders, sessions, agents and billing surfaces. No operationIds declared.
+  graphql:
+    endpoint: null
+    note: No GraphQL surface published. /v1/billing-graph is a REST path group, not GraphQL.
+  mcp:
+    url: https://docs.siro.ai/mcp
+    gated: false
+    note: tools/list answers anonymously; full inputSchema captured verbatim in mcp/siro-mcp-tools.json.
+crosswalk: []
+mcp_only:
+- tool: search_starter_kit
+  reason: >-
+    Documentation semantic search over the Siro docs corpus. Backed by the Mintlify docs index,
+    not by any Siro API operation. No REST equivalent exists — Siro publishes no docs-search endpoint.
+- tool: query_docs_filesystem_starter_kit
+  reason: >-
+    Read-only virtual-filesystem query (rg/cat/head/jq) over documentation pages and OpenAPI specs.
+    Served entirely by the docs platform; there is no Siro API operation behind it.
+- tool: submit_feedback
+  reason: >-
+    Writes documentation feedback to the docs platform. Not a Siro product write — no operation in
+    either OpenAPI accepts documentation feedback.
+rest_only:
+- capability: Recordings and audio
+  base: https://api.siro.ai/
+  note: >-
+    Recording list/detail, utterances, redacted-audio signed URLs, upload signed URLs, phone-call
+    recording creation, CRM link create/replace/remove. No MCP tool.
+- capability: Conversation intelligence
+  base: https://api.siro.ai/
+  note: Summaries, entity extractions, followups, conversation configurations. No MCP tool.
+- capability: Coaching scorecards
+  base: https://api.siro.ai/
+  note: Available metrics, metric values, scorecard instances, evaluated instances. No MCP tool.
+- capability: CRM sync (engagements, opportunities, accounts)
+  base: https://functions.siro.ai/api-externalApi
+  note: >-
+    PUT sync/engagements, PUT sync/opportunities, engagement/opportunity/account CRUD and their
+    user join objects — the core bidirectional integration surface. No MCP tool.
+- capability: Integration connections
+  base: https://functions.siro.ai/api-externalApi
+  note: Connection CRUD plus the Salesforce connection upsert. No MCP tool.
+- capability: Identity, tokens and OAuth apps
+  base: https://functions.siro.ai/api-externalApi
+  note: OAuth app CRUD, access-token mint/revoke, org-scoped token CRUD, GET identity. No MCP tool.
+- capability: Org, team, user and folder administration
+  base: both
+  note: Organization/team/user CRUD, folders and folder items. No MCP tool.
+- capability: Audit
+  base: https://functions.siro.ai/api-externalApi
+  note: GET /v1/audit/logs. No MCP tool.
+- capability: Billing, licenses, invoices, subscription
+  base: https://api.siro.ai/
+  note: >-
+    /v1/billing-graph, /v1/licenses, /v1/invoices, /v1/subscription, /v1/portal — 18 operations.
+    No MCP tool.
+- capability: Agents, sessions, jobs, suggested questions
+  base: https://api.siro.ai/
+  note: 15 operations on Siro's own in-product agent surface. No MCP tool.
+coverage:
+  mcp_tools_total: 3
+  mcp_tools_bound_to_rest: 0
+  mcp_only: 3
+  rest_operations_total: 214
+  rest_operations_with_a_tool: 0
+  rest_operations_only: 214
+  bound_fraction: 0.0
+finding: >-
+  Siro's MCP presence is a documentation server, not an API server. Scored as a bare "MCP present"
+  boolean this would look like an agent-callable Siro; the crosswalk is what keeps that claim
+  honest. Closing the gap would mean an MCP server over the External API — the derived candidate
+  tool list in mcp/siro-mcp.yml under candidate_tools is the shape it would take.

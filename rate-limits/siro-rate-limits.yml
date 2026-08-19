@@ -1,9 +1,9 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://docs.siro.ai/rate-limits
 docs: https://docs.siro.ai/rate-limits
 summary: >-
-  Siro applies a fixed per-API-token request ceiling across the External API.
+  Siro applies a fixed per-API-token request ceiling across both published surfaces.
   Limits are enforced per API token per minute; exceeding the ceiling returns an
   error response and callers should back off and retry.
 rate_limits:
@@ -11,4 +11,25 @@ rate_limits:
   window: minute
   limit_count: 1000
   unit: requests
+  status_on_exhaustion: 429
   notes: 1000 requests per API token per minute (docs.siro.ai/rate-limits).
+response_headers:
+  published: false
+  checked: '2026-08-13'
+  searched:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - RateLimit-Limit
+  - RateLimit-Remaining
+  - RateLimit-Reset
+  - Retry-After
+  note: >-
+    Siro documents the number but publishes no runtime signal. Neither published OpenAPI
+    (openapi/_original/siro-external-api-openapi.json, 69 ops;
+    openapi/_original/siro-platform-api-openapi.json, 145 ops) declares a single X-RateLimit-*,
+    RateLimit-* or Retry-After response header on any operation, and the rate-limits docs page
+    names none. Both specs do declare a 429 response, so a client learns it was throttled only
+    after being throttled — it cannot read remaining quota or a reset time from a successful
+    response, and has no server-supplied backoff interval. This is the gap that matters to an
+    agent; the 1000/min figure alone is not a runtime contract.

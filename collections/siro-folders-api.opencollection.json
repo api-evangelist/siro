@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Swagger Audit Folders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all folders for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/folders",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID to get folders for"
+              }
+            ]
+          },
+          "docs": "Get all folders and folder items for a given user"
+        },
+        {
+          "info": {
+            "name": "Create a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/folders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new folder in the requested organization"
+        },
+        {
+          "info": {
+            "name": "Delete a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/folders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a folder and all its items from the requested organization"
+        },
+        {
+          "info": {
+            "name": "Get folder items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/folders/:id/items",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the folder"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID the folder belongs to"
+              }
+            ]
+          },
+          "docs": "Get all items in a specific folder"
+        },
+        {
+          "info": {
+            "name": "Add item to folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/folders/:id/items",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the folder"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a recording item to a specific folder"
+        },
+        {
+          "info": {
+            "name": "Delete a folder item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/folders/:id/items",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the folder"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a specific item from a folder"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

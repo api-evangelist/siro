@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: probed
+source: https://docs.siro.ai/.well-known/agent-card.json
+description: >-
+  A2A Agent Card observed at /.well-known/agent-card.json on docs.siro.ai. Provider-published
+  by construction — served from a host Siro controls; nothing here is derived or generated.
+  The card is emitted by Siro's documentation platform (Mintlify) for the Siro docs project
+  rather than hand-authored, which is why its name and provider.organization still carry the
+  Mintlify template default "Starter Kit" while the single declared skill describes Siro's
+  own product surface in detail.
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.siro.ai
+  notes: >-
+    Probed both the canonical /.well-known/agent-card.json and the legacy /.well-known/agent.json
+    on every Siro host. Only the documentation host serves a card. functions.siro.ai (the External
+    API base), api.siro.ai (the gateway base), siro.ai, www.siro.ai and app.siro.ai all 404 on both
+    paths, so the API surfaces themselves advertise no agent card.
+ownership:
+  verdict: siro
+  evidence: >-
+    Served from docs.siro.ai, the documentation host wired into apis.yml as DeveloperPortal and
+    Documentation. The card's url, provider.url and documentationUrl all resolve to
+    https://docs.siro.ai/, and its one skill (id "siro", name "Siro") describes Siro's CRM
+    integration, recording-sync and coaching-insight surface and links to a skill document on the
+    same host. The literal name "Starter Kit" is the unchanged Mintlify project template default,
+    not a different company.
+conformance:
+  spec: A2A 1.0.0
+  grade: flavored
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  deviations:
+  - supportedInterfaces-instead-of-additionalInterfaces
+  - protocol-version-0.3-pre-1.0
+  - name-and-provider-organization-are-mintlify-template-default
+  - url-points-at-the-docs-site-not-an-a2a-endpoint
+  grade_note: >-
+    All three structural hard checks pass, but the card uses the pre-1.0 supportedInterfaces
+    field name and declares protocolVersion 0.3 rather than a 1.0 line version, and the advertised
+    url is the documentation site rather than an A2A task endpoint — an agent can discover Siro
+    from this card but cannot task it over A2A. Graded flavored on the same basis as the
+    structurally identical Mintlify card recorded at all/seekr/a2a/seekr-a2a.yml.
+card:
+  name: Starter Kit
+  url: https://docs.siro.ai/
+  version: 1.0.0
+  organization: Starter Kit
+  documentation_url: https://docs.siro.ai/
+  capabilities:
+    streaming: false
+    pushNotifications: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - text/plain
+  skills: 1
+  skill_ids:
+  - siro
+  file: siro-agent-card.json
+related:
+  agent_skill: skills/siro-siro-skill.md
+  agent_skill_source: https://docs.siro.ai/.well-known/agent-skills/siro/skill.md
+  mcp: mcp/siro-mcp.yml
+  well_known: well-known/siro-well-known.yml
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://docs.siro.ai/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  note: Verbatim body saved to siro-agent-card.json. No field inferred.
+  misses:
+  - {url: 'https://docs.siro.ai/.well-known/agent.json', http_status: 404}
+  - {url: 'https://functions.siro.ai/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://functions.siro.ai/.well-known/agent.json', http_status: 404}
+  - {url: 'https://api.siro.ai/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://api.siro.ai/.well-known/agent.json', http_status: 404}
+  - {url: 'https://siro.ai/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://siro.ai/.well-known/agent.json', http_status: 404}
+  - {url: 'https://www.siro.ai/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://www.siro.ai/.well-known/agent.json', http_status: 404}
+  - {url: 'https://app.siro.ai/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://app.siro.ai/.well-known/agent.json', http_status: 404}

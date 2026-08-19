@@ -1,0 +1,767 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Swagger Audit Integrations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an account"
+        },
+        {
+          "info": {
+            "name": "Update an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an account"
+        },
+        {
+          "info": {
+            "name": "Delete an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an accounts"
+        },
+        {
+          "info": {
+            "name": "Get accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/accounts",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get accounts"
+        },
+        {
+          "info": {
+            "name": "Create an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an account"
+        },
+        {
+          "info": {
+            "name": "Get an opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an opportunity"
+        },
+        {
+          "info": {
+            "name": "Delete an opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an opportunity"
+        },
+        {
+          "info": {
+            "name": "Get opportunities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunities",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recordingId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get opportunities"
+        },
+        {
+          "info": {
+            "name": "Get an opportunity user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunity-users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an opportunity user"
+        },
+        {
+          "info": {
+            "name": "Update an opportunity user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunity-users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an opportunity user"
+        },
+        {
+          "info": {
+            "name": "Delete an opportunity user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunity-users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an opportunity user"
+        },
+        {
+          "info": {
+            "name": "Get opportunity users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunity-users",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "opportunityId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get opportunity users"
+        },
+        {
+          "info": {
+            "name": "Create an opportunity user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/opportunity-users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an opportunity user"
+        },
+        {
+          "info": {
+            "name": "Sync an opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/sync/opportunities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sync an opportunity"
+        },
+        {
+          "info": {
+            "name": "Sync a batch of opportunities",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/sync/batch/opportunities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sync a batch of opportunities"
+        },
+        {
+          "info": {
+            "name": "Get an engagement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagements/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an engagement"
+        },
+        {
+          "info": {
+            "name": "Delete an engagement",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagements/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "idType",
+                "value": "",
+                "type": "query",
+                "description": "Specifies whether the id path parameter is an internal engagement ID or an external ID from the source system. Defaults to internal."
+              },
+              {
+                "name": "integrationPlatform",
+                "value": "",
+                "type": "query",
+                "description": "Optional override to specify integration platform if organization has multiple integrations. Only used when idType=external."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an engagement"
+        },
+        {
+          "info": {
+            "name": "Get engagements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagements",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recordingId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get engagements"
+        },
+        {
+          "info": {
+            "name": "Get user engagement list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/users/:id/engagements",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startingAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startingBefore",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get ordered engagement list for a specified user"
+        },
+        {
+          "info": {
+            "name": "Get an engagement user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagement-users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an engagement user"
+        },
+        {
+          "info": {
+            "name": "Update an engagement user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagement-users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an engagement user"
+        },
+        {
+          "info": {
+            "name": "Delete an engagement user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagement-users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an engagement user"
+        },
+        {
+          "info": {
+            "name": "Get engagement users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagement-users",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "engagementId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get engagement users"
+        },
+        {
+          "info": {
+            "name": "Create an engagement user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/engagement-users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an engagement user"
+        },
+        {
+          "info": {
+            "name": "Sync an engagement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/sync/engagements",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sync an engagement"
+        },
+        {
+          "info": {
+            "name": "Soft-delete engagements removed upstream within a window",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/sync/engagements/soft-delete-removed",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Given an exhaustive set of engagement externalIds for a startTime window, soft-delete any engagements on this connection in that window that are not in the set."
+        },
+        {
+          "info": {
+            "name": "Sync a batch of engagements",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/sync/batch/engagements",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sync a batch of engagements"
+        },
+        {
+          "info": {
+            "name": "List CRM users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/users",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List CRM users for the authenticated organization"
+        },
+        {
+          "info": {
+            "name": "Get CRM user by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a CRM user by id for the authenticated organization"
+        },
+        {
+          "info": {
+            "name": "Batch sync multimedia events",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/batch/multimedia-events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sync a batch of multimedia events for the authenticated organization"
+        },
+        {
+          "info": {
+            "name": "Sync multimedia event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/multimedia-events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sync a single multimedia event"
+        },
+        {
+          "info": {
+            "name": "Create a brief",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/integrations/briefs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a brief"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

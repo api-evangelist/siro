@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: searched
+probe: true
+url: https://trust.siro.ai/
+platform: Vanta
+summary: >-
+  Siro operates a Vanta-hosted trust center at trust.siro.ai and has published its security and
+  compliance posture in a dated post on its own site. SOC 2 Type 1 is achieved; SOC 2 Type 2 was
+  stated as in progress as of 2025-04-29.
+certifications:
+- name: SOC 2 Type 1
+  status: achieved
+  evidence: >-
+    "Siro has achieved SOC 2 Type 1 compliance" —
+    https://www.siro.ai/insights/siros-security-posture-and-soc-2-journey (published 2025-04-29)
+- name: SOC 2 Type 2
+  status: in-progress
+  evidence: >-
+    "we're already hard at work on the SOC 2 Type 2 audit process" — same post, no target date given.
+security_posture:
+  encryption_at_rest: true
+  encryption_in_transit: true
+  transit_protocol: TLS/SSL
+  hosting: Google Cloud Platform
+  region: US central
+  data_deletion: >-
+    Deletion on request, with backups purged in accordance with stated retention policies
+    ("delete means delete").
+  penetration_testing: not-published
+  iso_27001: >-
+    Referenced only as a Google Cloud certification, NOT claimed by Siro. Not recorded as a Siro
+    certification.
+  hipaa_gdpr_ccpa: not-published
+vulnerability_disclosure:
+  published: false
+  note: >-
+    No security.txt on any Siro host (all /.well-known/security.txt probes 404), no bug bounty on
+    HackerOne/Bugcrowd/Intigriti, and no /security or /responsible-disclosure page — www.siro.ai/security
+    returns 404. probe-security-programs.py returned "vdp=none". No Security pointer is emitted;
+    see security/siro-domain-security.yml for the probed transport posture.
+evidence:
+- {source: 'https://trust.siro.ai/', http_status: 200, keywords: [trust center, vanta], note: 'Vanta-hosted SPA; the certification list is rendered client-side from app.vanta.com and is not present in the served HTML, so certifications were taken from Siro''s own dated post rather than scraped from the widget.'}
+- {source: 'https://www.siro.ai/insights/siros-security-posture-and-soc-2-journey', http_status: 200, published: '2025-04-29'}
+- {source: 'https://www.siro.ai/security', http_status: 404}
+- {source: 'https://www.siro.ai/.well-known/security.txt', http_status: 404}

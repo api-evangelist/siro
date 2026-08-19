@@ -1,32 +1,89 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/siro-external-api-openapi.json, asyncapi/siro-webhooks.json, https://docs.siro.ai
+generated: '2026-08-13'
+method: searched
+source: >-
+  openapi/_original/siro-external-api-openapi.json, openapi/_original/siro-platform-api-openapi.json,
+  asyncapi/siro-webhooks.json, https://docs.siro.ai, https://docs.siro.ai/mcp,
+  https://docs.siro.ai/.well-known/agent-card.json,
+  https://www.siro.ai/insights/siros-security-posture-and-soc-2-journey
 standards:
 - id: oauth2
   conforms: partial
   evidence: >-
-    OAuth application + user-scoped access-token flow documented
-    (POST /v1/core/oauth/apps, POST .../access-token; x-siro-auth-token header),
-    but OpenAPI declares http-bearer/apiKey securitySchemes rather than an
-    oauth2 flows object.
+    OAuth application + user-scoped access-token flow documented and implemented
+    (POST /v1/core/oauth/apps, POST /v1/core/oauth/apps/{clientId}/access-token; x-siro-auth-token
+    header), but neither OpenAPI declares an oauth2 securityScheme with a flows object, and no
+    /.well-known/oauth-authorization-server metadata is served. No scopes are defined anywhere,
+    so scopes/ is intentionally absent rather than empty.
 - id: bearer-token-auth
   conforms: true
   evidence: openapi securityScheme type http scheme bearer (organization API token)
 - id: api-key-auth
   conforms: true
   evidence: openapi securityScheme type apiKey in header (x-siro-auth-token)
+- id: openapi-3
+  conforms: true
+  evidence: >-
+    Four OpenAPI 3.0.0 documents published at docs.siro.ai (openapi.json, specs/openapi-externalApi.json,
+    specs/openapi-internalApi.json, openapi-internal.json) plus an OpenAPI 3.1.0 webhooks document
+    at webhooks.json. All are listed in Siro's own llms.txt.
 - id: rfc9457-problem-details
   conforms: false
   evidence: no application/problem+json responses declared; plain HTTP status + JSON envelope
 - id: webhooks
   conforms: true
-  evidence: OpenAPI 3.1 webhooks object (integrations.recordingProcessed, integrations.recordingLinked) with Svix signature verification
+  evidence: >-
+    OpenAPI 3.1 webhooks object (integrations.recordingProcessed, integrations.recordingLinked)
+    with Svix signature verification (svix-id / svix-timestamp / svix-signature)
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    The event surface is described with the OpenAPI 3.1 webhooks object, not AsyncAPI. No
+    AsyncAPI document is published. Recorded as absence, not as a gap to fabricate.
 - id: pagination
   conforms: true
   evidence: cursor- and page-based pagination across list endpoints (cursor/page/pageSize/limit params)
 - id: rate-limiting
   conforms: true
-  evidence: documented 1000 requests per API token per minute
+  evidence: >-
+    Documented 1000 requests per API token per minute (https://docs.siro.ai/rate-limits); both
+    specs declare 429 responses.
 - id: idempotency
   conforms: false
-  evidence: no idempotency-key header documented; write flows modeled as PUT upsert/sync
+  evidence: >-
+    No idempotency-key header documented and none present in either spec. Write flows are modeled
+    as PUT upsert/sync on (externalId + integrationConnectionId), which is naturally idempotent on
+    the resource key but is not an idempotency contract. No Idempotency pointer is emitted.
+- id: mcp
+  conforms: partial
+  evidence: >-
+    A live remote MCP server answers tools/list anonymously at https://docs.siro.ai/mcp, but it is
+    the documentation server — 3 docs-search/read/feedback tools, 0 of Siro's 214 REST operations.
+    See mcp/siro-tool-crosswalk.yml.
+- id: a2a
+  conforms: partial
+  evidence: >-
+    An A2A agent card is served at https://docs.siro.ai/.well-known/agent-card.json. Graded
+    "flavored" — all three structural hard checks pass but it uses the pre-1.0 supportedInterfaces
+    field, declares protocolVersion 0.3, and advertises the docs site rather than an A2A endpoint.
+    See a2a/siro-a2a.yml.
+- id: agent-skills
+  conforms: true
+  evidence: >-
+    Provider-published Agent Skill served at
+    https://docs.siro.ai/.well-known/agent-skills/siro/skill.md and advertised in the agent card's
+    skills[]. Saved verbatim at skills/siro-siro-skill.md.
+- id: llms-txt
+  conforms: true
+  evidence: https://docs.siro.ai/llms.txt (200) and https://docs.siro.ai/llms-full.txt (200)
+- id: soc2
+  conforms: partial
+  evidence: >-
+    SOC 2 Type 1 achieved; SOC 2 Type 2 stated as in progress as of 2025-04-29
+    (https://www.siro.ai/insights/siros-security-posture-and-soc-2-journey). Vanta-hosted trust
+    center at https://trust.siro.ai/. See security/siro-trust-center.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: no /.well-known/security.txt on any Siro host (all 404)
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no deprecation or sunset policy published; no Sunset/Deprecation headers documented

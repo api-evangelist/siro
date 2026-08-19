@@ -1,0 +1,24 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.siro.ai/
+docs: https://www.siro.ai/demo
+plan_count: 0
+summary: >-
+  Siro publishes no pricing page and no plan tiers. Every commercial path on siro.ai routes to a
+  "Book a demo" form; /pricing, /plans and /request-demo all return 404 and no price, currency,
+  billing period, seat minimum, included quota or overage figure appears anywhere on the public
+  site or in the API documentation. The API itself carries no separate metering or paid tier —
+  API access is a capability of a Siro workspace, and the only published usage ceiling is the
+  rate limit (1000 requests per API token per minute, see rate-limits/siro-rate-limits.yml).
+model: contact-sales
+plans: []
+note: >-
+  plan_count 0 is a measured absence, not a gap in this pass. Recorded so the enterprise
+  "contact us" posture is legible as data rather than as a missing file.
+x-evidence:
+- {url: 'https://www.siro.ai/pricing', http_status: 404, checked: '2026-08-13'}
+- {url: 'https://siro.ai/pricing', http_status: 404, checked: '2026-08-13'}
+- {url: 'https://www.siro.ai/plans', http_status: 404, checked: '2026-08-13'}
+- {url: 'https://www.siro.ai/request-demo', http_status: 404, checked: '2026-08-13'}
+- {url: 'https://www.siro.ai/demo', http_status: 200, checked: '2026-08-13', note: 'book-a-demo form; no prices'}
+- {url: 'https://www.siro.ai/sitemap.xml', http_status: 200, checked: '2026-08-13', note: 'pages/posts/guides sitemaps contain no pricing URL'}

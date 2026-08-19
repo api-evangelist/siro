@@ -1,45 +1,93 @@
-generated: '2026-07-21'
-method: derived
-status: candidate
-source: openapi/siro-external-api-openapi.json
-note: >-
-  Siro publishes no official hosted/remote MCP server as of capture. This is a
-  DERIVED candidate tool list mapped from the External API operations, one tool
-  per marquee operation, so an MCP wrapper could be generated. Not an official
-  Siro server.
+generated: '2026-08-13'
+method: probed
+status: published
+source: https://docs.siro.ai/mcp
+supersedes:
+  method: derived
+  generated: '2026-07-21'
+  note: >-
+    The 2026-07-21 round found no server and derived a candidate tool list from the External API
+    operations. A live remote MCP server was found on 2026-08-13 at https://docs.siro.ai/mcp, so
+    this file is upgraded derived -> probed. The derived candidate list is retained below under
+    candidate_tools because the live server does NOT expose the API operations.
+summary: >-
+  Siro serves a live, anonymous, remote MCP server from its documentation host. It is the
+  Mintlify documentation server: its three tools search and read the Siro docs corpus and submit
+  docs feedback. It exposes NO Siro API operations — an agent can read Siro's documentation
+  through MCP but cannot sync an engagement, pull a recording, or read a scorecard through it.
+  That distinction is the whole finding; recording this as "Siro has an MCP server" without it
+  would overstate the agent surface.
+deployment:
+  mode: remote
+  endpoint: https://docs.siro.ai/mcp
+  auth: none
+  verified: probed
+  transport: streamable-http
+  response_content_type: text/event-stream
+  probe: >-
+    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} with
+    Accept: application/json, text/event-stream -> HTTP 200, 3 tools with full inputSchema,
+    no authentication challenge.
 server:
-  name: siro
-  transport: http
-  base_url: https://functions.siro.ai/api-externalApi
-  auth: bearer organization API token (Authorization); x-siro-auth-token for recording/entity reads
+  name: Starter Kit
+  vendor: Mintlify (Siro's documentation platform)
+  scope: documentation
+  url: https://docs.siro.ai/mcp
+  tools_file: siro-mcp-tools.json
+  tool_count: 3
 tools:
-- name: sync_engagement
-  description: Sync an appointment/meeting into Siro so recordings can be linked.
-  source_operation: 'PUT /v1/integrations/sync/engagements'
-- name: sync_opportunity
-  description: Sync a deal (amount, disposition, customer context) into Siro.
-  source_operation: 'PUT /v1/integrations/sync/opportunities'
-- name: list_engagements
-  description: List synced engagements.
-  source_operation: 'GET /v1/integrations/engagements'
-- name: get_engagement
-  description: Retrieve an engagement and its linked recording.
-  source_operation: 'GET /v1/integrations/engagements/{id}'
-- name: list_opportunities
-  description: List synced opportunities.
-  source_operation: 'GET /v1/integrations/opportunities'
-- name: list_recordings
-  description: List recordings.
-  source_operation: 'GET /v1/core/recordings'
-- name: get_recording
-  description: Get a recording with optional summary and entity extractions.
-  source_operation: 'GET /v1/core/recordings/{id}'
-- name: get_recording_summaries
-  description: Fetch conversation summaries for a recording.
-  source_operation: 'GET /v1/core/recordings/{id}/summaries'
-- name: list_mobile_events
-  description: Query mobile events for the organization.
-  source_operation: 'GET /v1/core/mobile-events'
-- name: create_oauth_app
-  description: Create an OAuth application to mint user-scoped access tokens.
-  source_operation: 'POST /v1/core/oauth/apps'
+- name: search_starter_kit
+  title: Search documentation
+  description: >-
+    Semantic search across the Siro documentation corpus; returns contextual content with titles
+    and direct links to documentation pages.
+  input_schema: {query: string (required)}
+  annotations: {readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false}
+  backs_api_operation: false
+- name: query_docs_filesystem_starter_kit
+  description: >-
+    Read-only shell-like query (rg/grep/find/tree/ls/cat/head/tail/jq and friends) against a
+    virtualized in-memory filesystem containing only the Siro documentation pages and OpenAPI
+    specs. Stateless per call, 30KB output cap, no writes and no network.
+  input_schema: {command: string (required)}
+  backs_api_operation: false
+- name: submit_feedback
+  title: Submit documentation feedback
+  description: Submit feedback about a Siro documentation page.
+  input_schema: {path: string (required), feedback: string (required)}
+  backs_api_operation: false
+note_on_naming: >-
+  Every tool is named "*_starter_kit" and the server identifies itself as "Starter Kit" because
+  Siro never renamed the Mintlify project from its template default. The same default surfaces in
+  https://docs.siro.ai/llms.txt (H1 "# Starter Kit") and in the A2A agent card. It is Siro's
+  deployment on Siro's host; the name is an unchanged template value, not another company.
+candidate_tools:
+  method: derived
+  status: candidate
+  source: openapi/_original/siro-external-api-openapi.json
+  note: >-
+    NOT published by Siro. A derived mapping showing what an MCP wrapper over the Siro External
+    API could expose, retained from the 2026-07-21 round. Do not present these as callable.
+  tools:
+  - {name: sync_engagement, source_operation: 'PUT /v1/integrations/sync/engagements'}
+  - {name: sync_opportunity, source_operation: 'PUT /v1/integrations/sync/opportunities'}
+  - {name: list_engagements, source_operation: 'GET /v1/integrations/engagements'}
+  - {name: get_engagement, source_operation: 'GET /v1/integrations/engagements/{id}'}
+  - {name: list_opportunities, source_operation: 'GET /v1/integrations/opportunities'}
+  - {name: list_recordings, source_operation: 'GET /v1/core/recordings'}
+  - {name: get_recording, source_operation: 'GET /v1/core/recordings/{id}'}
+  - {name: get_recording_summaries, source_operation: 'GET /v1/core/recordings/{id}/summaries'}
+  - {name: list_mobile_events, source_operation: 'GET /v1/core/mobile-events'}
+  - {name: create_oauth_app, source_operation: 'POST /v1/core/oauth/apps'}
+related:
+  crosswalk: mcp/siro-tool-crosswalk.yml
+  agent_card: a2a/siro-a2a.yml
+  agent_skill: skills/siro-siro-skill.md
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://docs.siro.ai/mcp
+  http_status: 200
+  method: POST tools/list
+  misses:
+  - {url: 'https://mcp.siro.ai/mcp', http_status: 0, note: host does not resolve}
+  - {url: 'https://docs.siro.ai/sse', http_status: 405, note: method not allowed}

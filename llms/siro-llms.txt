@@ -2,10 +2,14 @@
 
 ## Docs
 
-- [Auto/Mate](https://docs.siro.ai/Integrations/Auto_Mate.md): Connect your Auto/Mate DMS to Siro using 3rd party authorization forms coordinated by your Siro CSM.
+- [Quickstart Guide: Building a Custom API CRM Integration](https://docs.siro.ai/getting-started.md): Learn how to build a custom API CRM integration with Siro. Sync appointments, automatically link recordings to CRM records, and pull extracted conversation data back to your system.
+- [Quickstart Guide: Building a Custom API Phone Integration](https://docs.siro.ai/phones-integration-getting-started.md): Learn how to build a custom API phone integration with Siro. Get phone call recordings from your VoIP/Phone System into Siro so they're treated as native recordings with full AI insights and coaching.
+- [Rate Limits](https://docs.siro.ai/rate-limits.md): How rate limits work with the Siro API
+- [Support](https://docs.siro.ai/support.md): How to get help with the Siro API
 - [Integrating with Siro](https://docs.siro.ai/Integrations/Available_Integrations.md): Learn what tools you can connect with Siro to make your conversational data even more valuable.
-- [CDK Drive](https://docs.siro.ai/Integrations/CDK_Drive.md): Connect CDK Drive to Siro through Siro's Fortellis Marketplace App.
+- [Auto/Mate](https://docs.siro.ai/Integrations/Auto_Mate.md): Connect your Auto/Mate DMS to Siro using 3rd party authorization forms coordinated by your Siro CSM.
 - [CompanyCam](https://docs.siro.ai/Integrations/CompanyCam.md): See how you as an account admin can easily connect CompanyCam and Siro to get even more out of both tools.
+- [CDK Drive](https://docs.siro.ai/Integrations/CDK_Drive.md): Connect CDK Drive to Siro through Siro's Fortellis Marketplace App.
 - [Dealertrack](https://docs.siro.ai/Integrations/Dealertrack.md): Authorize Siro in Dealertrack Opentrack as a certified vendor for each required data method.
 - [Hatch](https://docs.siro.ai/Integrations/Hatch.md): See how you as an account admin can easily connect Hatch and Siro to get even more out of both tools.
 - [HubSpot](https://docs.siro.ai/Integrations/Hubspot.md): See how you as an account admin can easily connect HubSpot and Siro to get even more out of both tools.
@@ -14,104 +18,98 @@
 - [LeadPerfection](https://docs.siro.ai/Integrations/LeadPerfection.md): See how you as an account admin can easily connect LeadPerfection and Siro to get even more out of both tools.
 - [Leap SalesPro](https://docs.siro.ai/Integrations/Leap_SalesPro.md): See how you as an account admin can easily connect Leap SalesPro and Siro to get even more out of both tools.
 - [Microsoft Dynamics](https://docs.siro.ai/Integrations/Microsoft_Dynamics.md): See how you as an account admin can easily connect MSFT Dynamics and Siro to get even more out of both tools.
-- [PBS](https://docs.siro.ai/Integrations/PBS.md): Connect your PBS DMS to Siro using dealership authorization forms coordinated by your Siro CSM.
 - [Paradigm Vendo](https://docs.siro.ai/Integrations/Paradigm_Vendo.md): See how you as an account admin can easily connect Paradigm Vendo and Siro to get even more out of both tools.
+- [PBS](https://docs.siro.ai/Integrations/PBS.md): Connect your PBS DMS to Siro using dealership authorization forms coordinated by your Siro CSM.
 - [Pipedrive](https://docs.siro.ai/Integrations/Pipedrive.md): See how you as an account admin can easily connect Pipedrive and Siro to get even more out of both tools.
 - [SalesRabbit](https://docs.siro.ai/Integrations/SalesRabbit.md): See how you as an account admin can easily connect SalesRabbit and Siro to get even more out of both tools.
 - [Salesforce](https://docs.siro.ai/Integrations/Salesforce.md)
 - [Tekion](https://docs.siro.ai/Integrations/Tekion.md): Approve Siro in Tekion's Integration Hub to connect your Tekion ARC DMS data to Siro.
 - [Zoho CRM](https://docs.siro.ai/Integrations/Zoho.md): See how you as an account admin can easily connect Zoho CRM and Siro to get even more out of both tools.
-- [Create a new team for an org](https://docs.siro.ai/api-references/create-a-team.md): Create a new team for an org
-- [Create an account](https://docs.siro.ai/api-references/create-an-account.md): Create an account
-- [Create an engagement user](https://docs.siro.ai/api-references/create-an-engagement-user.md): Create an engagement user
-- [Create a new integration connection for a given org](https://docs.siro.ai/api-references/create-an-integration-connection.md): Create a new integration connection for a given org
-- [Create a new OAuth access token for a given OAuth app.](https://docs.siro.ai/api-references/create-an-oauth-access-token.md): This endpoint creates a new OAuth access token at the user scope.
-- [Create a new OAuth application for an organization](https://docs.siro.ai/api-references/create-an-oauth-app.md): This endpoint generates the client_id and client_secret you will need to generate OAuth tokens at a user scope.
-- [Create an opportunity user](https://docs.siro.ai/api-references/create-an-opportunity-user.md): Create an opportunity user
-- [Create a new authentication token for an organization.](https://docs.siro.ai/api-references/create-an-org-scoped-token.md): Create a new authentication token for an organization. Can only be used with org-group tokens.
-- [Create an organization](https://docs.siro.ai/api-references/create-organization.md): Create a specific organization
-- [Create user](https://docs.siro.ai/api-references/create-user.md): Create user
-- [Hard-delete a single team within a single org](https://docs.siro.ai/api-references/delete-a-team.md): Hard-delete a single team within a single org
-- [Delete an account](https://docs.siro.ai/api-references/delete-an-account.md): Delete an accounts
-- [Delete an engagement](https://docs.siro.ai/api-references/delete-an-engagement.md): Delete an engagement
-- [Delete an engagement user](https://docs.siro.ai/api-references/delete-an-engagement-user.md): Delete an engagement user
-- [Delete a single integration connection within a single org](https://docs.siro.ai/api-references/delete-an-integration-connection.md): Delete a single integration connection within a single org
-- [Revoke an OAuth access token for a given OAuth app. ](https://docs.siro.ai/api-references/delete-an-oauth-access-token.md): Soft-delete (revoke) an OAuth access token for a given OAuth app.
-- [Delete an OAuth application by id.](https://docs.siro.ai/api-references/delete-an-oauth-app.md): This endpoint will soft-delete an oauth app and revoke all associated tokens.
-- [Delete an opportunity](https://docs.siro.ai/api-references/delete-an-opportunity.md): Delete an opportunity
-- [Delete an opportunity user](https://docs.siro.ai/api-references/delete-an-opportunity-user.md): Delete an opportunity user
-- [Delete a single authentication token by ID](https://docs.siro.ai/api-references/delete-an-org-scoped-token.md): Delete a single authentication token within a given org by ID. Can only be used with org-group tokens.
-- [Remove CRM link from a recording](https://docs.siro.ai/api-references/delete-recording-crm-link.md): Removes the link between the recording and the specified CRM object.
-- [Get a single team within a given org](https://docs.siro.ai/api-references/get-a-team.md): Get a single team within a given org
-- [Get accounts](https://docs.siro.ai/api-references/get-accounts.md): Get accounts
-- [Get an engagement](https://docs.siro.ai/api-references/get-an-engagement.md): Get an engagement
-- [Get an engagement user](https://docs.siro.ai/api-references/get-an-engagement-user.md): Get an engagement user
-- [Get a single integration connection within a single org](https://docs.siro.ai/api-references/get-an-integration-connection.md): Get a single integration connection within a single org
-- [Get a specific OAuth access token by id.](https://docs.siro.ai/api-references/get-an-oauth-access-token.md): This endpoint returns a specific OAuth access token by id.
+- [Get mobile events for an org](https://docs.siro.ai/api-references/get-mobile-events.md): Get mobile events for an organization with optional filtering
+- [Get mobile event by ID](https://docs.siro.ai/api-references/get-mobile-events-id.md): Get a specific mobile event by its ID
 - [Get a specific OAuth app](https://docs.siro.ai/api-references/get-an-oauth-app.md): This endpoint returns the OAuth app with the given client ID.
-- [Get an opportunity](https://docs.siro.ai/api-references/get-an-opportunity.md): Get an opportunity
-- [Get an opportunity user](https://docs.siro.ai/api-references/get-an-opportunity-user.md): Get an opportunity user
+- [Get all OAuth apps for an organization](https://docs.siro.ai/api-references/get-oauth-apps.md): This endpoint returns all registered OAuth apps for a given owner meeting the specified filters.Results can be returned using either a cursor-based pagination or a page-based pagination.If both a cursor and a page are provided, the cursor will be used.By default, results are sorted by dateCreated in…
+- [Create a new OAuth application for an organization](https://docs.siro.ai/api-references/create-an-oauth-app.md): This endpoint generates the client_id and client_secret you will need to generate OAuth tokens at a user scope.
+- [Delete an OAuth application by id.](https://docs.siro.ai/api-references/delete-an-oauth-app.md): This endpoint will soft-delete an oauth app and revoke all associated tokens.
+- [Get a specific OAuth access token by id.](https://docs.siro.ai/api-references/get-an-oauth-access-token.md): This endpoint returns a specific OAuth access token by id.
+- [Get all OAuth access tokens for a given OAuth app.](https://docs.siro.ai/api-references/get-oauth-access-tokens.md): This endpoint returns all OAuth access tokens for a given OAuth app.
+- [Create a new OAuth access token for a given OAuth app.](https://docs.siro.ai/api-references/create-an-oauth-access-token.md): This endpoint creates a new OAuth access token at the user scope.
+- [Revoke an OAuth access token for a given OAuth app. ](https://docs.siro.ai/api-references/delete-an-oauth-access-token.md): Soft-delete (revoke) an OAuth access token for a given OAuth app.
 - [Get a single authentication token by ID](https://docs.siro.ai/api-references/get-an-org-scoped-token.md): Get a single authentication token within a given org by ID
-- [Get audit logs](https://docs.siro.ai/api-references/get-audit-logs.md)
-- [Get conversation configurations](https://docs.siro.ai/api-references/get-conversation-configurations.md): Retrieves conversation configurations for an organization. Users can only access configurations for their own organization unless they are organization admins.
-- [Get engagement users](https://docs.siro.ai/api-references/get-engagement-users.md): Get engagement users
+- [List all tokens for a given org.](https://docs.siro.ai/api-references/get-org-scoped-tokens.md): List all tokens for a given org. Can be used with org-scoped or org-group token. If org-group token, must pass selector.
+- [Create a new authentication token for an organization.](https://docs.siro.ai/api-references/create-an-org-scoped-token.md): Create a new authentication token for an organization. Can only be used with org-group tokens.
+- [Delete a single authentication token by ID](https://docs.siro.ai/api-references/delete-an-org-scoped-token.md): Delete a single authentication token within a given org by ID. Can only be used with org-group tokens.
+- [Get all integration connections for a single org](https://docs.siro.ai/api-references/get-integration-connections.md): Returns all integration connections for an org, optionally filtered by platform
+- [Get a single integration connection within a single org](https://docs.siro.ai/api-references/get-an-integration-connection.md): Get a single integration connection within a single org
+- [Create a new integration connection for a given org](https://docs.siro.ai/api-references/create-an-integration-connection.md): Create a new integration connection for a given org
+- [Update a single integration connection within a given org](https://docs.siro.ai/api-references/update-an-integration-connection.md): Update a single integration connection within a given org
+- [Delete a single integration connection within a single org](https://docs.siro.ai/api-references/delete-an-integration-connection.md): Delete a single integration connection within a single org
+- [Upsert Salesforce integration authentication details](https://docs.siro.ai/api-references/upsert-a-salesforce-integration-connection.md): Upsert Salesforce integration authentication details
+- [Create an organization](https://docs.siro.ai/api-references/create-organization.md): Create a specific organization
+- [Get organizations](https://docs.siro.ai/api-references/get-organizations.md): Get organizations
+- [Get an organization](https://docs.siro.ai/api-references/get-organization.md): Get a specific organization
+- [Update an organization](https://docs.siro.ai/api-references/update-organization.md): Update a specific organization
+- [Get recording](https://docs.siro.ai/api-references/get-recording.md): Get a recording by id
+- [Get recordings](https://docs.siro.ai/api-references/get-recordings.md): Get recordings
+- [Get recording summaries](https://docs.siro.ai/api-references/get-recording-summaries.md): Get recording summaries
+- [Get all teams for an org](https://docs.siro.ai/api-references/get-teams.md): Returns all teams for an org with pagination
+- [Get a single team within a given org](https://docs.siro.ai/api-references/get-a-team.md): Get a single team within a given org
+- [Create a new team for an org](https://docs.siro.ai/api-references/create-a-team.md): Create a new team for an org
+- [Update a single team within a single org](https://docs.siro.ai/api-references/update-a-team.md): Update a single team within a single org
+- [Hard-delete a single team within a single org](https://docs.siro.ai/api-references/delete-a-team.md): Hard-delete a single team within a single org
+- [Get users](https://docs.siro.ai/api-references/get-users.md): Get users
+- [Create user](https://docs.siro.ai/api-references/create-user.md): Create user
+- [Get user](https://docs.siro.ai/api-references/get-user.md): Get user
+- [Update user](https://docs.siro.ai/api-references/update-user.md): Update user
+- [Delete an account](https://docs.siro.ai/api-references/delete-an-account.md): Delete an accounts
+- [Get accounts](https://docs.siro.ai/api-references/get-accounts.md): Get accounts
+- [Create an account](https://docs.siro.ai/api-references/create-an-account.md): Create an account
+- [Get an opportunity](https://docs.siro.ai/api-references/get-an-opportunity.md): Get an opportunity
+- [Delete an opportunity](https://docs.siro.ai/api-references/delete-an-opportunity.md): Delete an opportunity
+- [Get opportunities](https://docs.siro.ai/api-references/get-opportunities.md): Get opportunities
+- [Get an opportunity user](https://docs.siro.ai/api-references/get-an-opportunity-user.md): Get an opportunity user
+- [Update an opportunity user](https://docs.siro.ai/api-references/update-an-opportunity-user.md): Update an opportunity user
+- [Delete an opportunity user](https://docs.siro.ai/api-references/delete-an-opportunity-user.md): Delete an opportunity user
+- [Get opportunity users](https://docs.siro.ai/api-references/get-opportunity-users.md): Get opportunity users
+- [Create an opportunity user](https://docs.siro.ai/api-references/create-an-opportunity-user.md): Create an opportunity user
+- [Sync an opportunity](https://docs.siro.ai/api-references/sync-an-opportunity.md): Sync an opportunity
+- [Get an engagement](https://docs.siro.ai/api-references/get-an-engagement.md): Get an engagement
+- [Delete an engagement](https://docs.siro.ai/api-references/delete-an-engagement.md): Delete an engagement
 - [Get engagements](https://docs.siro.ai/api-references/get-engagements.md): Get engagements
+- [Get an engagement user](https://docs.siro.ai/api-references/get-an-engagement-user.md): Get an engagement user
+- [Update an engagement user](https://docs.siro.ai/api-references/update-an-engagement-user.md): Update an engagement user
+- [Delete an engagement user](https://docs.siro.ai/api-references/delete-an-engagement-user.md): Delete an engagement user
+- [Get engagement users](https://docs.siro.ai/api-references/get-engagement-users.md): Get engagement users
+- [Create an engagement user](https://docs.siro.ai/api-references/create-an-engagement-user.md): Create an engagement user
+- [Sync an engagement](https://docs.siro.ai/api-references/sync-an-engagement.md): Sync an engagement
+- [Get conversation configurations](https://docs.siro.ai/api-references/get-conversation-configurations.md): Retrieves conversation configurations for an organization. Users can only access configurations for their own organization unless they are organization admins.
+- [Get details about your current auth token](https://docs.siro.ai/api-references/get-identity.md): Returns metadata about the auth token used to make this API call
+- [Get audit logs](https://docs.siro.ai/api-references/get-audit-logs.md)
+- [Get recordings](https://docs.siro.ai/api-references/get-recordings-list.md): Get recordings with optional filtering and pagination
+- [Get recording by ID](https://docs.siro.ai/api-references/get-recording-details.md): Get a single recording by ID with optional related data
+- [Get recording utterances](https://docs.siro.ai/api-references/get-recording-utterances.md): Get utterances for a specific recording with pagination support
+- [Download redacted recording audio (signed URL)](https://docs.siro.ai/api-references/post-recording-audio-signed-url.md): Returns a short-lived signed URL to download the **redacted** recording audio (typically `.m4a`). Call **`POST`** with an empty body after the recording exists. **Authentication:** user-scoped **`x-siro-auth-token`** (OAuth access token). This is **not** the org-wide upload flow—use **`POST /v1/core…
+- [Create or replace CRM link on a recording](https://docs.siro.ai/api-references/put-recording-crm-link.md): Links the recording to a CRM Account, Contact, Lead, Opportunity, or Engagement (server clears prior links as needed).
+- [Remove CRM link from a recording](https://docs.siro.ai/api-references/delete-recording-crm-link.md): Removes the link between the recording and the specified CRM object.
+- [Scorecard metrics for one recording](https://docs.siro.ai/scorecards-metrics-for-recording.md): How to retrieve coaching scorecard results for a single call or consultation.
+- [Get available scorecard metrics](https://docs.siro.ai/api-references/get-scorecard-metrics-available.md): Get available scorecard metrics for an organization, conversation type, organization group, or all metrics (Siro admin only).The user must have appropriate access to the requested scope.
+- [Get scorecard metrics values](https://docs.siro.ai/api-references/get-scorecard-metrics-values.md): Get scorecard metrics values for an organization and conversation typewithin a specified time range and filter criteria. The user must have access to the requested organization.
+- [Get scorecard instances](https://docs.siro.ai/api-references/get-scorecard-instances.md): Get scorecard instances for an organization with optional filtering.
 - [Get evaluated scorecard instance](https://docs.siro.ai/api-references/get-evaluated-scorecard-instance.md): Get an evaluated scorecard instance with computed metrics and scores for a specific time period and filter criteria. The user must have access to the organization that owns the scorecard instance.
 - [Get entity extractions for a recording](https://docs.siro.ai/api-references/get-extractions.md): Get entity extractions for a recording
 - [Get followups](https://docs.siro.ai/api-references/get-followups.md): Retrieve followups with filtering and pagination support. Admins and coaches can access followups for their organization/teams, while regular users can only see their own followups.
-- [Get details about your current auth token](https://docs.siro.ai/api-references/get-identity.md): Returns metadata about the auth token used to make this API call
-- [Get all integration connections for a single org](https://docs.siro.ai/api-references/get-integration-connections.md): Returns all integration connections for an org, optionally filtered by platform
-- [Get mobile events for an org](https://docs.siro.ai/api-references/get-mobile-events.md): Get mobile events for an organization with optional filtering
-- [Get mobile event by ID](https://docs.siro.ai/api-references/get-mobile-events-id.md): Get a specific mobile event by its ID
-- [Get all OAuth access tokens for a given OAuth app.](https://docs.siro.ai/api-references/get-oauth-access-tokens.md): This endpoint returns all OAuth access tokens for a given OAuth app.
-- [Get all OAuth apps for an organization](https://docs.siro.ai/api-references/get-oauth-apps.md): This endpoint returns all registered OAuth apps for a given owner meeting the specified filters.Results can be returned using either a cursor-based pagination or a page-based pagination.If both a cursor and a page are provided, the cursor will be used.By default, results are sorted by dateCreated in…
-- [Get opportunities](https://docs.siro.ai/api-references/get-opportunities.md): Get opportunities
-- [Get opportunity users](https://docs.siro.ai/api-references/get-opportunity-users.md): Get opportunity users
-- [List all tokens for a given org.](https://docs.siro.ai/api-references/get-org-scoped-tokens.md): List all tokens for a given org. Can be used with org-scoped or org-group token. If org-group token, must pass selector.
-- [Get an organization](https://docs.siro.ai/api-references/get-organization.md): Get a specific organization
-- [Get organizations](https://docs.siro.ai/api-references/get-organizations.md): Get organizations
-- [Get recording](https://docs.siro.ai/api-references/get-recording.md): Get a recording by id
-- [Get recording by ID](https://docs.siro.ai/api-references/get-recording-details.md): Get a single recording by ID with optional related data
-- [Get recording summaries](https://docs.siro.ai/api-references/get-recording-summaries.md): Get recording summaries
-- [Get recording utterances](https://docs.siro.ai/api-references/get-recording-utterances.md): Get utterances for a specific recording with pagination support
-- [Get recordings](https://docs.siro.ai/api-references/get-recordings.md): Get recordings
-- [Get recordings](https://docs.siro.ai/api-references/get-recordings-list.md): Get recordings with optional filtering and pagination
-- [Get scorecard instances](https://docs.siro.ai/api-references/get-scorecard-instances.md): Get scorecard instances for an organization with optional filtering.
-- [Get available scorecard metrics](https://docs.siro.ai/api-references/get-scorecard-metrics-available.md): Get available scorecard metrics for an organization, conversation type, organization group, or all metrics (Siro admin only).The user must have appropriate access to the requested scope.
-- [Get scorecard metrics values](https://docs.siro.ai/api-references/get-scorecard-metrics-values.md): Get scorecard metrics values for an organization and conversation typewithin a specified time range and filter criteria. The user must have access to the requested organization.
-- [Get all teams for an org](https://docs.siro.ai/api-references/get-teams.md): Returns all teams for an org with pagination
-- [Get user](https://docs.siro.ai/api-references/get-user.md): Get user
-- [Get users](https://docs.siro.ai/api-references/get-users.md): Get users
-- [Download redacted recording audio (signed URL)](https://docs.siro.ai/api-references/post-recording-audio-signed-url.md): Returns a short-lived signed URL to download the **redacted** recording audio (typically `.m4a`). Call **`POST`** with an empty body after the recording exists. **Authentication:** user-scoped **`x-siro-auth-token`** (OAuth access token). This is **not** the org-wide upload flow—use **`POST /v1/core…
 - [Get a signed URL for uploading a recording](https://docs.siro.ai/api-references/post-recordings-signed-urls.md): Generate signed upload and download URLs for an audio file. The upload URL can be used to upload the file directly to cloud storage.
 - [Create a recording from a phone call](https://docs.siro.ai/api-references/post-recordings-upload.md): Creates a new recording from an external phone call source.
-- [Create or replace CRM link on a recording](https://docs.siro.ai/api-references/put-recording-crm-link.md): Links the recording to a CRM Account, Contact, Lead, Opportunity, or Engagement (server clears prior links as needed).
-- [Sync an engagement](https://docs.siro.ai/api-references/sync-an-engagement.md): Sync an engagement
-- [Sync an opportunity](https://docs.siro.ai/api-references/sync-an-opportunity.md): Sync an opportunity
-- [Update a single team within a single org](https://docs.siro.ai/api-references/update-a-team.md): Update a single team within a single org
-- [Update an engagement user](https://docs.siro.ai/api-references/update-an-engagement-user.md): Update an engagement user
-- [Update a single integration connection within a given org](https://docs.siro.ai/api-references/update-an-integration-connection.md): Update a single integration connection within a given org
-- [Update an opportunity user](https://docs.siro.ai/api-references/update-an-opportunity-user.md): Update an opportunity user
-- [Update an organization](https://docs.siro.ai/api-references/update-organization.md): Update a specific organization
-- [Update user](https://docs.siro.ai/api-references/update-user.md): Update user
-- [Upsert Salesforce integration authentication details](https://docs.siro.ai/api-references/upsert-a-salesforce-integration-connection.md): Upsert Salesforce integration authentication details
-- [Recording linked](https://docs.siro.ai/api-references/webhook-recording-linked.md): Emitted when a recording has been definitively linked to a CRM object. The `crm` field is always populated on this event.
 - [Recording processed](https://docs.siro.ai/api-references/webhook-recording-processed.md): Emitted when a recording has been fully processed. If the recording is also definitively linked to a CRM object at the time of processing, the `crm` field will be populated.
-- [Quickstart Guide: Building a Custom API CRM Integration](https://docs.siro.ai/getting-started.md): Learn how to build a custom API CRM integration with Siro. Sync appointments, automatically link recordings to CRM records, and pull extracted conversation data back to your system.
-- [Quickstart Guide: Building a Custom API Phone Integration](https://docs.siro.ai/phones-integration-getting-started.md): Learn how to build a custom API phone integration with Siro. Get phone call recordings from your VoIP/Phone System into Siro so they're treated as native recordings with full AI insights and coaching.
-- [Rate Limits](https://docs.siro.ai/rate-limits.md): How rate limits work with the Siro API
-- [Scorecard metrics for one recording](https://docs.siro.ai/scorecards-metrics-for-recording.md): How to retrieve coaching scorecard results for a single call or consultation.
-- [Support](https://docs.siro.ai/support.md): How to get help with the Siro API
-- [Deep Links](https://docs.siro.ai/triggering-recordings/deep-links.md): Triggering recordings from your app
+- [Recording linked](https://docs.siro.ai/api-references/webhook-recording-linked.md): Emitted when a recording has been definitively linked to a CRM object. The `crm` field is always populated on this event.
 - [Overview](https://docs.siro.ai/triggering-recordings/overview.md)
+- [Deep Links](https://docs.siro.ai/triggering-recordings/deep-links.md): Triggering recordings from your app
 
 ## OpenAPI Specs
 
-- [webhooks](https://docs.siro.ai/webhooks.json)
-- [openapi-recordingsApi](https://docs.siro.ai/specs/openapi-recordingsApi.json)
-- [openapi-externalApi](https://docs.siro.ai/specs/openapi-externalApi.json)
 - [openapi-internalApi](https://docs.siro.ai/specs/openapi-internalApi.json)
-- [openapi-foldersApi](https://docs.siro.ai/specs/openapi-foldersApi.json)
+- [webhooks](https://docs.siro.ai/webhooks.json)
+- [openapi-externalApi](https://docs.siro.ai/specs/openapi-externalApi.json)
 - [openapi](https://docs.siro.ai/openapi.json)
 - [openapi-internal](https://docs.siro.ai/openapi-internal.json)
 - [test](https://docs.siro.ai/test.json)

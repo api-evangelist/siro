@@ -1,0 +1,1175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Swagger Audit Core API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Core",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get recording",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/recordings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "showCrmLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include CRM link IDs for the recording (integration connection, users, engagement, opportunity, contacts, account, lead)."
+              },
+              {
+                "name": "showSummary",
+                "value": "",
+                "type": "query",
+                "description": "Include the recording summary results."
+              },
+              {
+                "name": "showEntityExtractions",
+                "value": "",
+                "type": "query",
+                "description": "Include the recording entity extractions."
+              },
+              {
+                "name": "showEvaluationScore",
+                "value": "",
+                "type": "query",
+                "description": "Include the scorecard evaluation score for the recording."
+              },
+              {
+                "name": "showFollowups",
+                "value": "",
+                "type": "query",
+                "description": "Include followups for the recording. List returns id/score summaries; GET by id returns the full followup payload."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a recording by id"
+        },
+        {
+          "info": {
+            "name": "Get recordings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/recordings",
+            "params": [
+              {
+                "name": "createdAt:gt",
+                "value": "",
+                "type": "query",
+                "description": "Return results created strictly after the given date (exclusive). Format: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). Example: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "createdAt:lt",
+                "value": "",
+                "type": "query",
+                "description": "Return results created strictly before the given date (exclusive). Format: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). Example: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "updatedAt:gte",
+                "value": "",
+                "type": "query",
+                "description": "Return results updated at or after the given date (inclusive). Use this for incremental polling. Format: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). Example: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "updatedAt:gt",
+                "value": "",
+                "type": "query",
+                "description": "Return results updated strictly after the given date (exclusive). Format: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). Example: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "updatedAt:lt",
+                "value": "",
+                "type": "query",
+                "description": "Return results updated strictly before the given date (exclusive). Format: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). Example: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "updatedAt:lte",
+                "value": "",
+                "type": "query",
+                "description": "Return results updated at or before the given date (inclusive). Format: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). Example: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page (default is 25)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination."
+              },
+              {
+                "name": "isProcessingDone",
+                "value": "",
+                "type": "query",
+                "description": "Filter by processing status."
+              },
+              {
+                "name": "isEntityExtractionDone",
+                "value": "",
+                "type": "query",
+                "description": "Filter by entity extraction status."
+              },
+              {
+                "name": "isSummaryDone",
+                "value": "",
+                "type": "query",
+                "description": "Filter by summary status."
+              },
+              {
+                "name": "showCrmLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include CRM link IDs for the recording (integration connection, users, engagement, opportunity, contacts, account, lead)."
+              },
+              {
+                "name": "showSummary",
+                "value": "",
+                "type": "query",
+                "description": "Include the recording summary results."
+              },
+              {
+                "name": "showEntityExtractions",
+                "value": "",
+                "type": "query",
+                "description": "Include the recording entity extractions."
+              },
+              {
+                "name": "showEvaluationScore",
+                "value": "",
+                "type": "query",
+                "description": "Include the scorecard evaluation score for the recording."
+              },
+              {
+                "name": "showFollowups",
+                "value": "",
+                "type": "query",
+                "description": "Include followups for the recording. List returns id/score summaries; GET by id returns the full followup payload."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get recordings"
+        },
+        {
+          "info": {
+            "name": "Get recording summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/recordings/:id/summaries",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get recording summaries"
+        },
+        {
+          "info": {
+            "name": "Get users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/users",
+            "params": [
+              {
+                "name": "disabled",
+                "value": "",
+                "type": "query",
+                "description": "Optionally filter by users which you have disabled."
+              },
+              {
+                "name": "excludeSiroUsers",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude users with Siro emails (including bot users)"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query",
+                "description": "Optionally filter to Siro user linked to external system with this external Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get users"
+        },
+        {
+          "info": {
+            "name": "Create user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create user"
+        },
+        {
+          "info": {
+            "name": "Get user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get user"
+        },
+        {
+          "info": {
+            "name": "Update user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update user"
+        },
+        {
+          "info": {
+            "name": "Get mobile events for an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/mobile-events",
+            "params": [
+              {
+                "name": "createdAtGt",
+                "value": "",
+                "type": "query",
+                "description": "Return results created AFTER the given date. \n\t\t\t\t\t\tFormat: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). \n\t\t\t\t\t\tExample: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "createdAtLt",
+                "value": "",
+                "type": "query",
+                "description": "Return results created BEFORE the given date. \n\t\t\t\t\tFormat: ISO 8601 timestamp (YYYY-MM-DDTHH:mm:ss.sssZ). \n\t\t\t\t\tExample: 2024-06-13T04:00:00.592Z"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor token for pagination."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "eventCode",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: Use eventCodeIn. Filters to the provided eventCode only."
+              },
+              {
+                "name": "eventCodeIn",
+                "value": "",
+                "type": "query",
+                "description": "Filters to the provided eventCode(s). Accepts comma-separated values or repeated eventCodeIn params."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "Filters to the provided userId only."
+              },
+              {
+                "name": "recordingId",
+                "value": "",
+                "type": "query",
+                "description": "Filters to the provided recordingId only."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get mobile events for an organization with optional filtering"
+        },
+        {
+          "info": {
+            "name": "Get mobile event by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/mobile-events/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a specific mobile event by its ID"
+        },
+        {
+          "info": {
+            "name": "Get details about your current auth token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/auth/caller-identity",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns metadata about the auth token used to make this API call"
+        },
+        {
+          "info": {
+            "name": "Get a single authentication token by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/auth/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single authentication token within a given org by ID"
+        },
+        {
+          "info": {
+            "name": "Delete a single authentication token by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/auth/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a single authentication token within a given org by ID. Can only be used with org-group tokens."
+        },
+        {
+          "info": {
+            "name": "List all tokens for a given org.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/auth/tokens",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all tokens for a given org. Can be used with org-scoped or org-group token. If org-group token, must pass selector."
+        },
+        {
+          "info": {
+            "name": "Create a new authentication token for an organization.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/auth/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new authentication token for an organization. Can only be used with org-group tokens."
+        },
+        {
+          "info": {
+            "name": "Get a specific OAuth app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps/:clientId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint returns the OAuth app with the given client ID."
+        },
+        {
+          "info": {
+            "name": "Delete an OAuth application by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps/:clientId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint will soft-delete an oauth app and revoke all associated tokens."
+        },
+        {
+          "info": {
+            "name": "Get all OAuth apps for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "The organization that owns one or more OAuth apps."
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "The id of the user that created one or more OAuth apps."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Return OAuth apps created after this date."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Return OAuth apps created before this date."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return. If omitted, 100 results will be returned."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to paginate the results. Cursor-based pagination will always be used unless if left blank and a page number is provided."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number to return. If omitted, the first page of results will be returned."
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort the results by. If omitted, the results will be sorted by dateCreated in descending order."
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort the results by. If omitted, the results will be sorted by dateCreated in descending order."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint returns all registered OAuth apps for a given owner meeting the specified filters.Results can be returned using either a cursor-based pagination or a page-based pagination.If both a cursor and a page are provided, the cursor will be used.By default, results are sorted by dateCreated in descending order."
+        },
+        {
+          "info": {
+            "name": "Create a new OAuth application for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint generates the client_id and client_secret you will need to generate OAuth tokens at a user scope."
+        },
+        {
+          "info": {
+            "name": "Get a specific OAuth access token by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps/:clientId/access-token/:tokenId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint returns a specific OAuth access token by id."
+        },
+        {
+          "info": {
+            "name": "Revoke an OAuth access token for a given OAuth app. ",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps/:clientId/access-token/:tokenId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Soft-delete (revoke) an OAuth access token for a given OAuth app."
+        },
+        {
+          "info": {
+            "name": "Get all OAuth access tokens for a given OAuth app.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps/:clientId/access-token",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path",
+                "description": "The OAuth app that the tokens are bound to."
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "The id of the user that created one or more OAuth access tokens."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Return OAuth access tokens created after this date."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Return OAuth access tokens created before this date."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return. If omitted, 100 results will be returned."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to paginate the results. Cursor-based pagination will always be used unless if left blank and a page number is provided."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number to return. If omitted, the first page of results will be returned."
+              },
+              {
+                "name": "sortField",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort the results by. If omitted, the results will be sorted by dateCreated in descending order."
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort the results by. If omitted, the results will be sorted by dateCreated in descending order."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint returns all OAuth access tokens for a given OAuth app."
+        },
+        {
+          "info": {
+            "name": "Create a new OAuth access token for a given OAuth app.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/oauth/apps/:clientId/access-token",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint creates a new OAuth access token at the user scope."
+        },
+        {
+          "info": {
+            "name": "Get organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get organizations"
+        },
+        {
+          "info": {
+            "name": "Create an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a specific organization"
+        },
+        {
+          "info": {
+            "name": "Get an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a specific organization"
+        },
+        {
+          "info": {
+            "name": "Update an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a specific organization"
+        },
+        {
+          "info": {
+            "name": "Get all integration connections for a single org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/integrations/connections",
+            "params": [
+              {
+                "name": "integrationPlatform",
+                "value": "",
+                "type": "query",
+                "description": "Platform to filter events by"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all integration connections for an org, optionally filtered by platform"
+        },
+        {
+          "info": {
+            "name": "Create a new integration connection for a given org",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/integrations/connections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new integration connection for a given org"
+        },
+        {
+          "info": {
+            "name": "Get a single integration connection within a single org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/integrations/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the integration connection to fetch"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single integration connection within a single org"
+        },
+        {
+          "info": {
+            "name": "Update a single integration connection within a given org",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/integrations/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the integration connection to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a single integration connection within a given org"
+        },
+        {
+          "info": {
+            "name": "Delete a single integration connection within a single org",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/integrations/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the integration connection to fetch"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a single integration connection within a single org"
+        },
+        {
+          "info": {
+            "name": "Upsert Salesforce integration authentication details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/integrations/salesforce",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upsert Salesforce integration authentication details"
+        },
+        {
+          "info": {
+            "name": "Get all teams for an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:orgId/teams",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID to fetch teams for"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all teams for an org with pagination"
+        },
+        {
+          "info": {
+            "name": "Create a new team for an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:orgId/teams",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new team for an org"
+        },
+        {
+          "info": {
+            "name": "Get a single team within a given org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:orgId/teams/:teamId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the team to fetch"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single team within a given org"
+        },
+        {
+          "info": {
+            "name": "Update a single team within a single org",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:orgId/teams/:teamId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the team to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a single team within a single org"
+        },
+        {
+          "info": {
+            "name": "Hard-delete a single team within a single org",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/organizations/:orgId/teams/:teamId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the team to delete"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Hard-delete a single team within a single org"
+        },
+        {
+          "info": {
+            "name": "Create a recording from a phone call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/recordings/upload",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new recording from an external phone call source."
+        },
+        {
+          "info": {
+            "name": "Get a signed URL for uploading a recording",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://functions.siro.ai/api-externalApi/v1/core/recordings/signed-urls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate signed upload and download URLs for an audio file. The upload URL can be used to upload the file directly to cloud storage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

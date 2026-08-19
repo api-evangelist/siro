@@ -1,0 +1,107 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/siro-ai (org repo listing), https://trunk.cocoapods.org/api/v1/pods/SiroSDK,
+  https://registry.npmjs.org/expo-siro, https://registry.npmjs.org/-/v1/search?text=siro.ai
+summary: >-
+  Siro ships mobile capture SDKs, not server-side API clients. The recording surface — the part
+  of Siro a partner embeds — is distributed as an iOS binary framework (Swift Package Manager +
+  CocoaPods) and an Android AAR served from GitHub Packages. There is no first-party JavaScript,
+  Python, Java, Go, Ruby, PHP or .NET client for the REST External API or the api.siro.ai gateway;
+  the documented integration path for those is raw HTTP with a Bearer organization token.
+currency_note: >-
+  The iOS SDK is actively maintained on GitHub (2.6.3, 2026-06-15) but its CocoaPods trunk
+  publication stopped at 1.3.16 on 2024-06-17, so a CocoaPods consumer is more than a major
+  version behind the released framework. The React Native / Expo wrapper on npm last published
+  0.7.7 on 2023-09-27 and its source repo is archived.
+packages:
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: SiroSDK
+  url: https://github.com/Siro-ai/SiroSDK
+  install: '.package(url: "https://github.com/Siro-ai/SiroSDK", from: "2.6.3")'
+  official: true
+  version: 2.6.3
+  published: '2026-06-15'
+  note: >-
+    Swift Package Manager binaryTarget pointing at the SiroSDK.xcframework.zip attached to the
+    GitHub release. No central registry metadata endpoint exists for SPM git packages; version
+    and date read from the GitHub releases API for Siro-ai/SiroSDK. Package.swift in the default
+    branch still pins the 2.6.2 xcframework URL while the latest release is 2.6.3.
+- language: swift
+  platform: ios
+  registry: cocoapods
+  name: SiroSDK
+  url: https://cocoapods.org/pods/SiroSDK
+  install: pod 'SiroSDK'
+  official: true
+  version: 1.3.16
+  published: '2024-06-17'
+  note: >-
+    Read from https://trunk.cocoapods.org/api/v1/pods/SiroSDK — 19 published versions, most recent
+    1.3.16 on 2024-06-17. The repo's SiroSDK.podspec.json declares 2.6.2, so the podspec in source
+    is ahead of anything pushed to CocoaPods trunk. A CocoaPods consumer cannot reach the 2.6.x line.
+- language: kotlin
+  platform: android
+  registry: github-packages
+  name: AndroidSdkDist
+  url: https://github.com/Siro-ai/AndroidSdkDist
+  install: >-
+    Add the GitHub Packages Maven repository for Siro-ai/AndroidSdkDist; see the consuming demo at
+    https://github.com/Siro-ai/AndroidSdkDemo
+  official: true
+  version: null
+  published: null
+  note: >-
+    Distribution repo whose only tracked file is a README pointing at GitHub Packages package
+    2487899. It publishes no GitHub releases and no git tags, and GitHub Packages Maven metadata
+    for a private-org package is not readable anonymously, so no version or date could be
+    established. Checked 2026-08-13 — an honest gap, not a guess. Last push to the repo was
+    2025-05-31; the consuming demo repo was last pushed 2025-09-17.
+- language: javascript
+  platform: react-native
+  registry: npm
+  name: expo-siro
+  url: https://www.npmjs.com/package/expo-siro
+  install: npm install expo-siro
+  official: true
+  version: 0.7.7
+  published: '2023-09-27'
+  note: >-
+    "A React Native wrapper for the iOS SiroSDK", homepage https://siro.ai. First-party — the
+    source repo github.com/Siro-ai/expo-siro is Siro's own but was ARCHIVED on 2023-10-09. 13
+    versions published, none since 2023-09-27. This wraps the 1.3.x iOS line and is therefore
+    unmaintained against the 2.6.x framework.
+third_party:
+- language: javascript
+  registry: npm
+  name: n8n-nodes-siro
+  url: https://www.npmjs.com/package/n8n-nodes-siro
+  official: false
+  version: 0.2.1
+  published: '2026-08-11'
+  note: >-
+    Community n8n node for Siro. Not first-party — published from
+    github.com/theCamArsenault-Boomerang/node-construction-site. Recorded for completeness only.
+negative_results:
+- registry: npm
+  queried: ['siro-sdk', '@siro/sdk', 'react-native-siro']
+  result: 404 — no such package
+- registry: npm
+  queried: ['siro']
+  result: >-
+    200 but NOT Siro.ai — an unrelated 1.0.0 package last published 2020-08-15 with no
+    description and no link to siro.ai.
+- registry: pypi
+  queried: ['siro']
+  result: >-
+    200 but NOT Siro.ai — "a package for controlling the SIRO SmartHome Devices like rollers",
+    homepage github.com/fear/siro. Excluded on ownership.
+- registry: pypi
+  queried: ['siro-sdk']
+  result: 404 — no such package
+- registry: [maven-central, nuget, rubygems, packagist, crates.io, pkg.go.dev]
+  result: >-
+    No first-party Siro client library found. Siro publishes no server-side SDK in any of these
+    ecosystems; the External API is consumed over plain HTTP.
