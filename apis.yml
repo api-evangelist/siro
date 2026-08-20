@@ -45,6 +45,17 @@ tags:
 - Conversation Intelligence
 - Field Sales
 - CRM
+- Artificial Intelligence
+- Speech-to-Text
+- Webhook
+- Integration
+tags_raw:
+- Company
+- Sales
+- Sales Coaching
+- Conversation Intelligence
+- Field Sales
+- CRM
 - AI
 - Speech to Text
 - Webhooks
@@ -122,6 +133,8 @@ apis:
   humanURL: https://docs.siro.ai/getting-started
   baseURL: https://functions.siro.ai/api-externalApi
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
