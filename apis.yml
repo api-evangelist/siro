@@ -163,6 +163,126 @@ apis:
     url: asyncapi/siro-webhooks.json
   - type: RateLimits
     url: rate-limits/siro-rate-limits.yml
+- aid: siro:siro-agents-api
+  name: Siro Agents API
+  description: The Agents API from Siro — 3 operation(s) for agents.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-agents-api-openapi.yml
+- aid: siro:siro-billing-graph-api
+  name: Siro Billing Graph API
+  description: The Billing Graph API from Siro — 10 operation(s) for billing graph.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Billing Graph
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-billing-graph-api-openapi.yml
+- aid: siro:siro-docs-api
+  name: Siro Docs API
+  description: The Docs API from Siro — 1 operation(s) for docs.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Docs
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-docs-api-openapi.yml
+- aid: siro:siro-halftime-api
+  name: Siro Halftime API
+  description: The Halftime API from Siro — 1 operation(s) for halftime.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Halftime
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-halftime-api-openapi.yml
+- aid: siro:siro-intercom-api
+  name: Siro Intercom API
+  description: The Intercom API from Siro — 1 operation(s) for intercom.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Intercom
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-intercom-api-openapi.yml
+- aid: siro:siro-invoices-api
+  name: Siro Invoices API
+  description: The Invoices API from Siro — 1 operation(s) for invoices.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-invoices-api-openapi.yml
+- aid: siro:siro-jobs-api
+  name: Siro Jobs API
+  description: The Jobs API from Siro — 3 operation(s) for jobs.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-jobs-api-openapi.yml
+- aid: siro:siro-licenses-api
+  name: Siro Licenses API
+  description: The Licenses API from Siro — 1 operation(s) for licenses.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Licenses
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-licenses-api-openapi.yml
+- aid: siro:siro-portal-api
+  name: Siro Portal API
+  description: The Portal API from Siro — 1 operation(s) for portal.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Portal
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-portal-api-openapi.yml
+- aid: siro:siro-sessions-api
+  name: Siro Sessions API
+  description: The Sessions API from Siro — 4 operation(s) for sessions.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-sessions-api-openapi.yml
+- aid: siro:siro-subscription-api
+  name: Siro Subscription API
+  description: The Subscription API from Siro — 1 operation(s) for subscription.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Subscription
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-subscription-api-openapi.yml
+- aid: siro:siro-suggested-questions-api
+  name: Siro Suggested Questions API
+  description: The Suggested Questions API from Siro — 1 operation(s) for suggested questions.
+  humanURL: https://docs.siro.ai/getting-started
+  baseURL: https://functions.siro.ai/api-externalApi
+  tags:
+  - Suggested Questions
+  properties:
+  - type: OpenAPI
+    url: openapi/siro-suggested-questions-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

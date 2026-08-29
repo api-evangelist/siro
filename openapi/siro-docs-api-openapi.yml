@@ -1,0 +1,39 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: Swagger Docs API
+servers:
+- url: https://api.siro.ai/
+  description: Siro API Gateway
+tags:
+- name: Docs
+paths:
+  /v1/docs/swagger.json:
+    get:
+      summary: Get OpenAPI specification
+      description: Returns the OpenAPI specification in JSON format
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                description: OpenAPI specification in JSON format
+        '500':
+          description: Internal server error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Docs
+components:
+  securitySchemes:
+    SiroAuthToken:
+      type: apiKey
+      in: header
+      name: x-siro-auth-token
+      description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
+      x-default: <oauth-access-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

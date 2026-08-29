@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: Swagger Suggested Questions API
+servers:
+- url: https://api.siro.ai/
+  description: Siro API Gateway
+tags:
+- name: Suggested Questions
+paths:
+  /v1/suggested-questions:
+    post:
+      summary: Generate suggested questions for a given entrypoint context.
+      description: Generates LLM-powered suggested questions. Routes to the appropriate service based on queryEntrypoint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                queryEntrypoint:
+                  type: string
+                  enum:
+                  - GENERIC
+                  - ASK_SIRO
+                  - CUSTOMER_PROFILE
+                  - MANAGER_CHAT
+                  - SCORECARDS
+                  - FILM_ROOM
+                  - SINGLE_RECORDING
+                  - RE_ENGAGE
+                  - UNIVERSAL_CHAT
+                  - REP_CHAT
+                  - DEBRIEF_CALL
+                  - HALFTIME_LIVE_COACHING
+                  - HALFTIME_REPORT
+                  - ROLE_PLAY
+                  - CONFIGURABLE_ROLE_PLAY
+                initialContext: {}
+                numSuggestedQuestions:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                  default: 4
+              required:
+              - queryEntrypoint
+      responses:
+        '200':
+          description: Generate suggested questions for a given entrypoint context.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      questions:
+                        type: array
+                        items:
+                          type: string
+                    required:
+                    - questions
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Suggested Questions
+components:
+  securitySchemes:
+    SiroAuthToken:
+      type: apiKey
+      in: header
+      name: x-siro-auth-token
+      description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
+      x-default: <oauth-access-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

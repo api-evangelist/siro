@@ -1,0 +1,2775 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: Swagger Billing Graph API
+servers:
+- url: https://api.siro.ai/
+  description: Siro API Gateway
+tags:
+- name: Billing Graph
+paths:
+  /v1/billing-graph/accounts:
+    post:
+      summary: Create a billing account
+      description: Creates a new billing account for a payment-provider customer. The account's seat capacity is derived from the customer's active subscription line items at the time of creation. The subscription end date and term length are optional and must be supplied together. Returns 409 Conflict if a billing account already exists for the given customer identifier.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stripeCustomerId:
+                  type: string
+                  minLength: 1
+                  description: Customer identifier from the payment provider used to look up subscription quantities.
+                  example: cus_ExampleCustomerId
+                subscriptionEndDate:
+                  type: string
+                  format: date-time
+                  description: Instant when the current billing contract or subscription period ends, in ISO 8601 format.
+                  example: '2026-12-31T23:59:59.000Z'
+                subscriptionLengthInMonths:
+                  type: integer
+                  minimum: 1
+                  description: Length of the billing term in whole months. Omit when not applicable.
+                  example: 12
+                isDynamicAllocation:
+                  type: boolean
+                  description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation. Defaults to true when omitted.
+                  example: true
+              required:
+              - stripeCustomerId
+              additionalProperties: false
+      responses:
+        '201':
+          description: Create a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier assigned to the billing account record.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      stripeCustomerId:
+                        type: string
+                        description: Customer identifier from the payment provider for this account.
+                        example: cus_ExampleCustomerId
+                      maxSeats:
+                        type: integer
+                        minimum: 0
+                        description: Total purchased seats derived from active subscription line items.
+                        example: 25
+                      isDynamicAllocation:
+                        type: boolean
+                        description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                        example: true
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used on this billing account: distinct billed users across every organization and team attached to the account.'
+                        example: 5
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available on this billing account: `maxSeats` minus the deduplicated count of users currently billed across every organization and team attached to the account.'
+                        example: 20
+                      subscriptionEndDate:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: Contract or subscription end instant in ISO 8601 format, if provided.
+                        example: '2026-12-31T23:59:59.000Z'
+                      subscriptionLengthInMonths:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                        description: Billing term length in whole months, if provided.
+                        example: 12
+                    required:
+                    - id
+                    - stripeCustomerId
+                    - maxSeats
+                    - isDynamicAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                    - subscriptionEndDate
+                    - subscriptionLengthInMonths
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/me/organization-billing-accounts:
+    get:
+      summary: List organization billing links
+      description: 'Returns associations between organizations and billing accounts that the authenticated user is allowed to view. Only links to active billing accounts are included; cancelled billing accounts are omitted. Scope depends on the caller''s role: organization administrators see links for organizations they manage, including organizations reached through group administration where applicable. Users with full platform access may see all matching links.'
+      responses:
+        '200':
+          description: List organization billing links
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Unique identifier for this organization–billing account association.
+                              example: 550e8400-e29b-41d4-a716-446655440000
+                            organizationId:
+                              type: string
+                              description: Identifier of the organization in this association.
+                              example: org_ExampleOrganizationId
+                            billingAccountId:
+                              type: string
+                              format: uuid
+                              description: Identifier of the billing account in this association.
+                              example: 550e8400-e29b-41d4-a716-446655440000
+                            seatAllocation:
+                              type: integer
+                              minimum: 0
+                              description: Number of seats from this billing account allocated to the organization.
+                              example: 10
+                            seatsUsed:
+                              type: integer
+                              minimum: 0
+                              description: 'Seats currently used for this organization billing link: users currently billed against this organization.'
+                              example: 6
+                            seatsRemaining:
+                              type: integer
+                              description: 'Seats still available on the organization: `seatAllocation` minus the number of users currently billed against this organization.'
+                              example: 4
+                            organization:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: Organization identifier.
+                                  example: org_ExampleOrganizationId
+                                name:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Organization display name, when available. May be null if not set or not yet available.
+                                  example: Acme Inc.
+                              required:
+                              - id
+                              - name
+                              description: Organization referenced by this association.
+                            billingAccount:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: Billing account identifier.
+                                  example: 550e8400-e29b-41d4-a716-446655440000
+                                stripeCustomerId:
+                                  type: string
+                                  description: Customer identifier from the payment provider linked to this billing account.
+                                  example: cus_ExampleCustomerId
+                                maxSeats:
+                                  type: integer
+                                  minimum: 0
+                                  description: Maximum number of seats covered by this billing account.
+                                  example: 25
+                                isDynamicAllocation:
+                                  type: boolean
+                                  description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                                  example: true
+                                status:
+                                  type: string
+                                  enum:
+                                  - ACTIVE
+                                  - CANCELLED
+                                  description: Current lifecycle status of the billing account.
+                                  example: ACTIVE
+                                isShared:
+                                  type: boolean
+                                  description: True when the billing account is linked to more than one entity (organizations and teams combined). False when linked to zero or one entity.
+                                  example: false
+                              required:
+                              - id
+                              - stripeCustomerId
+                              - maxSeats
+                              - isDynamicAllocation
+                              - status
+                              description: Summary of the billing account linked to the organization.
+                          required:
+                          - id
+                          - organizationId
+                          - billingAccountId
+                          - seatAllocation
+                          - seatsUsed
+                          - seatsRemaining
+                          - organization
+                          - billingAccount
+                          description: Association between an organization and an active billing account, with related details. Cancelled billing accounts are not returned in this listing.
+                        description: Associations matching the request scope and the caller's permissions.
+                    required:
+                    - items
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/me/accounts:
+    get:
+      summary: List billing accounts visible to the caller
+      description: Returns billing accounts the authenticated user is allowed to view, paginated by an opaque cursor. Cancelled billing accounts are not returned.
+      parameters:
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 2000
+          default: 50
+          description: Maximum number of billing accounts to return on this page (1–2000, default 50).
+          example: 50
+        required: false
+        description: Maximum number of billing accounts to return on this page (1–2000, default 50).
+        name: limit
+        in: query
+      - schema:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Opaque cursor returned as `nextCursor` on the prior page. Omit for the first page.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: false
+        description: Opaque cursor returned as `nextCursor` on the prior page. Omit for the first page.
+        name: cursor
+        in: query
+      - schema:
+          type: string
+          minLength: 1
+          description: Filter results to the billing account with this Stripe customer id. Returns at most one item.
+          example: cus_ExampleCustomerId
+        required: false
+        description: Filter results to the billing account with this Stripe customer id. Returns at most one item.
+        name: customerId
+        in: query
+      responses:
+        '200':
+          description: List billing accounts visible to the caller
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Unique identifier assigned to the billing account record.
+                              example: 550e8400-e29b-41d4-a716-446655440000
+                            stripeCustomerId:
+                              type: string
+                              description: Customer identifier from the payment provider for this account.
+                              example: cus_ExampleCustomerId
+                            maxSeats:
+                              type: integer
+                              minimum: 0
+                              description: Total purchased seats derived from active subscription line items.
+                              example: 25
+                            isDynamicAllocation:
+                              type: boolean
+                              description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                              example: true
+                            seatsUsed:
+                              type: integer
+                              minimum: 0
+                              description: 'Seats currently used on this billing account: distinct billed users across every organization and team attached to the account.'
+                              example: 5
+                            seatsRemaining:
+                              type: integer
+                              description: 'Seats still available on this billing account: `maxSeats` minus the deduplicated count of users currently billed across every organization and team attached to the account.'
+                              example: 20
+                            status:
+                              type: string
+                              enum:
+                              - ACTIVE
+                              - CANCELLED
+                              description: Current lifecycle status of the billing account.
+                              example: ACTIVE
+                            isShared:
+                              type: boolean
+                              description: True when the billing account is linked to more than one entity (organizations and teams combined). False when linked to zero or one entity.
+                              example: false
+                            subscriptionEndDate:
+                              type:
+                              - string
+                              - 'null'
+                              format: date-time
+                              description: Contract or subscription end instant in ISO 8601 format, if provided.
+                              example: '2026-12-31T23:59:59.000Z'
+                            subscriptionLengthInMonths:
+                              type:
+                              - integer
+                              - 'null'
+                              minimum: 1
+                              description: Billing term length in whole months, if provided.
+                              example: 12
+                          required:
+                          - id
+                          - stripeCustomerId
+                          - maxSeats
+                          - isDynamicAllocation
+                          - seatsUsed
+                          - seatsRemaining
+                          - status
+                          - subscriptionEndDate
+                          - subscriptionLengthInMonths
+                        description: Active billing accounts visible to the caller given their permissions.
+                      nextCursor:
+                        type:
+                        - string
+                        - 'null'
+                        format: uuid
+                        description: Cursor to pass back as `cursor` on the next request to fetch the following page. `null` when no more rows are available.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                    required:
+                    - items
+                    - nextCursor
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/accounts/{id}:
+    get:
+      summary: Get a billing account
+      description: Returns the billing account identified by `id`.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier assigned to the billing account record.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      stripeCustomerId:
+                        type: string
+                        description: Customer identifier from the payment provider for this account.
+                        example: cus_ExampleCustomerId
+                      maxSeats:
+                        type: integer
+                        minimum: 0
+                        description: Total purchased seats derived from active subscription line items.
+                        example: 25
+                      isDynamicAllocation:
+                        type: boolean
+                        description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                        example: true
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used on this billing account: distinct billed users across every organization and team attached to the account.'
+                        example: 5
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available on this billing account: `maxSeats` minus the deduplicated count of users currently billed across every organization and team attached to the account.'
+                        example: 20
+                      status:
+                        type: string
+                        enum:
+                        - ACTIVE
+                        - CANCELLED
+                        description: Current lifecycle status of the billing account.
+                        example: ACTIVE
+                      isShared:
+                        type: boolean
+                        description: True when the billing account is linked to more than one entity (organizations and teams combined). False when linked to zero or one entity.
+                        example: false
+                      subscriptionEndDate:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: Contract or subscription end instant in ISO 8601 format, if provided.
+                        example: '2026-12-31T23:59:59.000Z'
+                      subscriptionLengthInMonths:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                        description: Billing term length in whole months, if provided.
+                        example: 12
+                    required:
+                    - id
+                    - stripeCustomerId
+                    - maxSeats
+                    - isDynamicAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                    - status
+                    - subscriptionEndDate
+                    - subscriptionLengthInMonths
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+    patch:
+      summary: Update a billing account
+      description: Updates subscription dates and/or seat capacity on a billing account. `subscriptionEndDate` and `subscriptionLengthInMonths` must be provided together; pass `null` for both to clear the window. Seat changes are applied in Stripe and may return a `deepLink` when further action is required. Returns 404 if the account does not exist, or 409 if it is cancelled.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subscriptionEndDate:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                  description: Instant when the current billing contract or subscription period ends, in ISO 8601 format.
+                  example: '2026-12-31T23:59:59.000Z'
+                subscriptionLengthInMonths:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 1
+                  description: Length of the billing term in whole months.
+                  example: 12
+                maxSeats:
+                  type: integer
+                  minimum: 0
+                  description: Desired seat capacity for the billing account.
+                  example: 30
+                isDynamicAllocation:
+                  type: boolean
+                  description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                  example: true
+              additionalProperties: false
+      responses:
+        '200':
+          description: Update a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier assigned to the billing account record.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      stripeCustomerId:
+                        type: string
+                        description: Customer identifier from the payment provider for this account.
+                        example: cus_ExampleCustomerId
+                      maxSeats:
+                        type: integer
+                        minimum: 0
+                        description: Total purchased seats derived from active subscription line items.
+                        example: 25
+                      isDynamicAllocation:
+                        type: boolean
+                        description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                        example: true
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used on this billing account: distinct billed users across every organization and team attached to the account.'
+                        example: 5
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available on this billing account: `maxSeats` minus the deduplicated count of users currently billed across every organization and team attached to the account.'
+                        example: 20
+                      subscriptionEndDate:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: Contract or subscription end instant in ISO 8601 format, if provided.
+                        example: '2026-12-31T23:59:59.000Z'
+                      subscriptionLengthInMonths:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                        description: Billing term length in whole months, if provided.
+                        example: 12
+                      deepLink:
+                        type: string
+                        description: If present, a Stripe link to complete the seat change (e.g. to confirm payment for an increase).
+                        example: https://billing.stripe.com/session/...
+                    required:
+                    - id
+                    - stripeCustomerId
+                    - maxSeats
+                    - isDynamicAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                    - subscriptionEndDate
+                    - subscriptionLengthInMonths
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+    delete:
+      summary: Cancel a billing account
+      description: Cancels a billing account. The account status is set to `CANCELLED` and all organization and team assignments referencing the account are removed. The account record itself is retained for historical reference and may be restored later via the reactivate endpoint. Returns 204 No Content on success, 404 Not Found if the billing account does not exist, or 409 Conflict if the account has already been cancelled.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      responses:
+        '204':
+          description: Cancel a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+                    additionalProperties: false
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/accounts/{id}/reactivate:
+    post:
+      summary: Reactivate a billing account
+      description: 'Reactivates a previously cancelled billing account by setting its status back to `ACTIVE`. Organization and team assignments are not automatically restored: those assignments were removed at cancellation time and may have since been reassigned to other billing accounts. Use the organization and team assignment endpoints to attach scopes after reactivation. The seat capacity is preserved as it was at cancellation time. Returns 404 Not Found if the billing account does not exist, or 409 Conflict if the account is already active.'
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Reactivate a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier assigned to the billing account record.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      stripeCustomerId:
+                        type: string
+                        description: Customer identifier from the payment provider for this account.
+                        example: cus_ExampleCustomerId
+                      maxSeats:
+                        type: integer
+                        minimum: 0
+                        description: Total purchased seats derived from active subscription line items.
+                        example: 25
+                      isDynamicAllocation:
+                        type: boolean
+                        description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                        example: true
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used on this billing account: distinct billed users across every organization and team attached to the account.'
+                        example: 5
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available on this billing account: `maxSeats` minus the deduplicated count of users currently billed across every organization and team attached to the account.'
+                        example: 20
+                      subscriptionEndDate:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: Contract or subscription end instant in ISO 8601 format, if provided.
+                        example: '2026-12-31T23:59:59.000Z'
+                      subscriptionLengthInMonths:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                        description: Billing term length in whole months, if provided.
+                        example: 12
+                    required:
+                    - id
+                    - stripeCustomerId
+                    - maxSeats
+                    - isDynamicAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                    - subscriptionEndDate
+                    - subscriptionLengthInMonths
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/accounts/{id}/organizations/{organizationId}:
+    put:
+      summary: Link an organization to a billing account
+      description: Associates an organization with a billing account and sets how many seats are allocated to that organization. Submitting the same organization again updates the seat allocation. Returns 400 Bad Request if the billing account or organization cannot be resolved, or if the requested allocation exceeds the account's total purchased seats.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      - schema:
+          type: string
+          minLength: 1
+          description: Organization to attach to the billing account.
+          example: org_ExampleOrganizationId
+        required: true
+        description: Organization to attach to the billing account.
+        name: organizationId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seatAllocation:
+                  type: integer
+                  minimum: 0
+                  description: Number of seats to allocate from the billing account to this organization.
+                  example: 10
+              required:
+              - seatAllocation
+              additionalProperties: false
+      responses:
+        '200':
+          description: Link an organization to a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier of the organization billing account link.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      organizationId:
+                        type: string
+                        description: Organization attached to the billing account.
+                        example: org_ExampleOrganizationId
+                      billingAccountId:
+                        type: string
+                        format: uuid
+                        description: Billing account the organization is attached to.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      seatAllocation:
+                        type: integer
+                        minimum: 0
+                        description: Seats allocated from the billing account to this organization.
+                        example: 10
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used for this organization billing link: users currently billed against this organization.'
+                        example: 6
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available on the organization: `seatAllocation` minus the number of users currently billed against this organization.'
+                        example: 4
+                    required:
+                    - id
+                    - organizationId
+                    - billingAccountId
+                    - seatAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+    delete:
+      summary: Detach an organization from a billing account
+      description: Removes the link between an organization and a billing account. The billing account record itself is not modified, and any team-level seat allocations under the organization are not touched. Returns 204 No Content on success, or 400 Bad Request if the organization is not currently linked to a billing account.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      - schema:
+          type: string
+          minLength: 1
+          description: Organization to attach to the billing account.
+          example: org_ExampleOrganizationId
+        required: true
+        description: Organization to attach to the billing account.
+        name: organizationId
+        in: path
+      responses:
+        '204':
+          description: Detach an organization from a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+                    additionalProperties: false
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/me/team-billing-accounts:
+    get:
+      summary: List team billing links
+      description: 'Returns associations between teams and billing accounts that the authenticated user is allowed to view. Only links to active billing accounts are included; cancelled billing accounts are omitted. Scope depends on the caller''s role: organization administrators see links for teams belonging to organizations they manage, including organizations reached through group administration where applicable. Pass `organizationId` to scope the listing to a single organization; the caller must be an admin of that organization or a platform admin, otherwise a 403 is returned.'
+      parameters:
+      - schema:
+          type: string
+          minLength: 1
+          description: Optional organization id to filter the team billing links to a single organization. The caller must be an admin of the organization (org admin, org-group admin, or platform admin).
+          example: org_ExampleOrganizationId
+        required: false
+        description: Optional organization id to filter the team billing links to a single organization. The caller must be an admin of the organization (org admin, org-group admin, or platform admin).
+        name: organizationId
+        in: query
+      responses:
+        '200':
+          description: List team billing links
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Unique identifier for this team–billing account association.
+                              example: 550e8400-e29b-41d4-a716-446655440000
+                            siroTeamId:
+                              type: string
+                              description: Identifier of the team in this association.
+                              example: 660e8400-e29b-41d4-a716-446655440111
+                            billingAccountId:
+                              type: string
+                              format: uuid
+                              description: Identifier of the billing account in this association.
+                              example: 550e8400-e29b-41d4-a716-446655440000
+                            seatAllocation:
+                              type: integer
+                              minimum: 0
+                              description: Number of seats from this billing account allocated to the team.
+                              example: 5
+                            seatsUsed:
+                              type: integer
+                              minimum: 0
+                              description: 'Seats currently used for this team billing link: users currently billed against this team.'
+                              example: 3
+                            seatsRemaining:
+                              type: integer
+                              description: 'Seats still available on the team: `seatAllocation` minus the number of users currently billed against this team.'
+                              example: 2
+                            team:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: Team identifier.
+                                  example: 660e8400-e29b-41d4-a716-446655440111
+                                name:
+                                  type: string
+                                  description: Team display name.
+                                  example: East Region Sales
+                                organizationId:
+                                  type: string
+                                  description: Organization the team belongs to.
+                                  example: org_ExampleOrganizationId
+                              required:
+                              - id
+                              - name
+                              - organizationId
+                              description: Team referenced by this association.
+                            billingAccount:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                  description: Billing account identifier.
+                                  example: 550e8400-e29b-41d4-a716-446655440000
+                                stripeCustomerId:
+                                  type: string
+                                  description: Customer identifier from the payment provider linked to this billing account.
+                                  example: cus_ExampleCustomerId
+                                maxSeats:
+                                  type: integer
+                                  minimum: 0
+                                  description: Maximum number of seats covered by this billing account.
+                                  example: 25
+                                isDynamicAllocation:
+                                  type: boolean
+                                  description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                                  example: true
+                                status:
+                                  type: string
+                                  enum:
+                                  - ACTIVE
+                                  - CANCELLED
+                                  description: Current lifecycle status of the billing account.
+                                  example: ACTIVE
+                                isShared:
+                                  type: boolean
+                                  description: True when the billing account is linked to more than one entity (organizations and teams combined). False when linked to zero or one entity.
+                                  example: false
+                              required:
+                              - id
+                              - stripeCustomerId
+                              - maxSeats
+                              - isDynamicAllocation
+                              - status
+                              description: Summary of the billing account linked to the team.
+                          required:
+                          - id
+                          - siroTeamId
+                          - billingAccountId
+                          - seatAllocation
+                          - seatsUsed
+                          - seatsRemaining
+                          - team
+                          - billingAccount
+                          description: Association between a team and an active billing account, with related details. Cancelled billing accounts are not returned in this listing.
+                        description: Associations matching the request scope and the caller's permissions.
+                    required:
+                    - items
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/accounts/{id}/teams/{siroTeamId}:
+    put:
+      summary: Link a team to a billing account
+      description: Associates a team with a billing account and sets how many seats are allocated to that team. Submitting the same team again updates the seat allocation. Returns 400 Bad Request if the billing account or team cannot be resolved, or if the requested allocation exceeds the account's total purchased seats.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      - schema:
+          type: string
+          description: Team to attach to the billing account.
+          example: 660e8400-e29b-41d4-a716-446655440111
+        required: true
+        description: Team to attach to the billing account.
+        name: siroTeamId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seatAllocation:
+                  type: integer
+                  minimum: 0
+                  description: Number of seats to allocate from the billing account to this team.
+                  example: 5
+              required:
+              - seatAllocation
+              additionalProperties: false
+      responses:
+        '200':
+          description: Link a team to a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier of the team billing account link.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      siroTeamId:
+                        type: string
+                        description: Team attached to the billing account.
+                        example: 660e8400-e29b-41d4-a716-446655440111
+                      billingAccountId:
+                        type: string
+                        format: uuid
+                        description: Billing account the team is attached to.
+                        example: 550e8400-e29b-41d4-a716-446655440000
+                      seatAllocation:
+                        type: integer
+                        minimum: 0
+                        description: Seats allocated from the billing account to this team.
+                        example: 5
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used for this team billing link: users currently billed against this team.'
+                        example: 3
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available on the team: `seatAllocation` minus the number of users currently billed against this team.'
+                        example: 2
+                    required:
+                    - id
+                    - siroTeamId
+                    - billingAccountId
+                    - seatAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+    delete:
+      summary: Detach a team from a billing account
+      description: Removes the link between a team and a billing account. The billing account record itself is not modified, and any organization-level seat allocations covering the team are not touched. Returns 204 No Content on success, or 400 Bad Request if the team is not currently linked to a billing account.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          description: Billing account id.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: Billing account id.
+        name: id
+        in: path
+      - schema:
+          type: string
+          description: Team to attach to the billing account.
+          example: 660e8400-e29b-41d4-a716-446655440111
+        required: true
+        description: Team to attach to the billing account.
+        name: siroTeamId
+        in: path
+      responses:
+        '204':
+          description: Detach a team from a billing account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+                    additionalProperties: false
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/organizations/{organizationId}/seats:
+    get:
+      summary: Get seat summary for an organization
+      description: Returns the seat allocation and seats remaining for the organization. Any authenticated user who belongs to the organization may call this endpoint. Returns 404 if the organization has no active billing account.
+      responses:
+        '200':
+          description: Get seat summary for an organization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      seatAllocation:
+                        type: integer
+                        minimum: 0
+                        description: Total seats allocated to this organization or team.
+                        example: 10
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used for this organization or team link: users currently billed against this entity.'
+                        example: 6
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available: `seatAllocation` minus the number of users currently billed against this entity.'
+                        example: 4
+                      billingAccount:
+                        type: object
+                        properties:
+                          isShared:
+                            type: boolean
+                            description: Whether the billing account backing this entity is linked to more than one organization/team.
+                            example: false
+                          isDynamicAllocation:
+                            type: boolean
+                            description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                            example: true
+                          maxSeats:
+                            type: integer
+                            minimum: 0
+                            description: Total purchased seats on the backing billing account.
+                            example: 25
+                        required:
+                        - isShared
+                        - isDynamicAllocation
+                        - maxSeats
+                        additionalProperties: false
+                    required:
+                    - seatAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                    - billingAccount
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+  /v1/billing-graph/teams/{siroTeamId}/seats:
+    get:
+      summary: Get seat summary for a team
+      description: Returns the seat allocation and seats remaining for the team. Any authenticated user who is a member or coach of the team may call this endpoint. Returns 404 if the team has no active billing account.
+      responses:
+        '200':
+          description: Get seat summary for a team
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      seatAllocation:
+                        type: integer
+                        minimum: 0
+                        description: Total seats allocated to this organization or team.
+                        example: 10
+                      seatsUsed:
+                        type: integer
+                        minimum: 0
+                        description: 'Seats currently used for this organization or team link: users currently billed against this entity.'
+                        example: 6
+                      seatsRemaining:
+                        type: integer
+                        description: 'Seats still available: `seatAllocation` minus the number of users currently billed against this entity.'
+                        example: 4
+                      billingAccount:
+                        type: object
+                        properties:
+                          isShared:
+                            type: boolean
+                            description: Whether the billing account backing this entity is linked to more than one organization/team.
+                            example: false
+                          isDynamicAllocation:
+                            type: boolean
+                            description: Whether seat availability is computed from billing-account max seats instead of per-link seat allocation.
+                            example: true
+                          maxSeats:
+                            type: integer
+                            minimum: 0
+                            description: Total purchased seats on the backing billing account.
+                            example: 25
+                        required:
+                        - isShared
+                        - isDynamicAllocation
+                        - maxSeats
+                        additionalProperties: false
+                    required:
+                    - seatAllocation
+                    - seatsUsed
+                    - seatsRemaining
+                    - billingAccount
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Billing Graph
+components:
+  securitySchemes:
+    SiroAuthToken:
+      type: apiKey
+      in: header
+      name: x-siro-auth-token
+      description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
+      x-default: <oauth-access-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

@@ -1,116 +1,49 @@
 openapi: 3.2.0
 info:
-  title: Siro Folders API
   version: 1.0.0
-  description: 'Operations tagged Folders across 2 of this provider''s published API definitions: siro-folders-api-openapi.json, siro-platform-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  title: Swagger Jobs API
 servers:
 - url: https://api.siro.ai/
   description: Siro API Gateway
 tags:
-- name: Folders
+- name: Jobs
 paths:
-  /v1/folders:
+  /v1/jobs/siro-noticed/results:
     get:
-      summary: Get all folders for a user
-      description: Get all folders and folder items for a given user
+      summary: List SiroNoticed results for the current user.
+      description: Returns the most recent SiroNoticed results generated for the calling user.
       parameters:
       - schema:
           type: string
-          description: Organization ID to get folders for
         required: false
-        description: Organization ID to get folders for
         name: organizationId
         in: query
       responses:
         '200':
-          description: Get all folders for a user
+          description: List SiroNoticed results for the current user.
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   data:
-                    type: object
-                    properties:
-                      folders:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              description: Folder ID
-                            title:
-                              type: string
-                              description: Folder title
-                            description:
-                              type:
-                              - string
-                              - 'null'
-                              description: Folder description
-                            lastUpdated:
-                              type: string
-                              description: Last updated date as string
-                            dateCreated:
-                              type: string
-                              description: Date created as string
-                            userId:
-                              type: string
-                              description: User ID who created the folder
-                            teamId:
-                              type: string
-                              description: Team ID of the user who created the folder
-                            organizationId:
-                              type: string
-                              description: Organization ID the folder belongs to
-                            isPublic:
-                              type: boolean
-                              description: Whether the folder is visible to other users in the org
-                          required:
-                          - id
-                          - title
-                          - lastUpdated
-                          - dateCreated
-                          - userId
-                          - teamId
-                          - organizationId
-                        description: List of folders
-                      folderItems:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              description: Folder item ID
-                            recordingId:
-                              type: string
-                              description: Recording ID in the folder
-                            startTimeInMilliseconds:
-                              type:
-                              - number
-                              - 'null'
-                              description: Start time of the folder item without recording offset
-                            endTimeInMilliseconds:
-                              type:
-                              - number
-                              - 'null'
-                              description: End time of the folder item without recording offset
-                            folderId:
-                              type: string
-                              description: Folder ID this item belongs to
-                            dateCreated:
-                              type: string
-                              description: Date created as string
-                          required:
-                          - id
-                          - recordingId
-                          - folderId
-                          - dateCreated
-                        description: List of folder items
-                    required:
-                    - folders
-                    - folderItems
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        userId:
+                          type: string
+                          description: Job owner
+                        organizationId:
+                          type: string
+                          description: Organization of the job
+                        result:
+                          type: string
+                          description: The result content
+                      required:
+                      - userId
+                      - organizationId
+                      - result
                   cursor:
                     anyOf:
                     - type: string
@@ -228,30 +161,220 @@ paths:
       security:
       - SiroAuthToken: []
       tags:
-      - Folders
+      - Jobs
+  /v1/jobs/siro-noticed:
+    get:
+      summary: List SiroNoticed jobs for the current user (or org).
+      description: By default returns only the caller's own SiroNoticed jobs. Pass fullOrg=true (admin-only) to return all jobs in the caller's org.
+      parameters:
+      - schema:
+          type:
+          - boolean
+          - 'null'
+          description: Admin-only. If true, return all SiroNoticed jobs in the caller's org instead of just the caller's own jobs.
+        required: false
+        description: Admin-only. If true, return all SiroNoticed jobs in the caller's org instead of just the caller's own jobs.
+        name: fullOrg
+        in: query
+      responses:
+        '200':
+          description: List SiroNoticed jobs for the current user (or org).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: The unique ID of the scheduled report
+                        cron:
+                          type: string
+                          description: Cron string of the format "* * * * *" representing the schedule
+                        cronDescription:
+                          type:
+                          - string
+                          - 'null'
+                          description: English description of the cron schedule. In case of drift, cron is the source of truth
+                        nextScheduledTime:
+                          type: string
+                          format: date-time
+                          description: When this report is scheduled to run next. ISO 8601 format.
+                        owner:
+                          type: string
+                          description: The user ID of the report owner.
+                        organizationId:
+                          type: string
+                          description: The organization ID that owns this report (derived from owner).
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: When the report was created, ISO 8601 format
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: When the report was last updated, ISO 8601 format
+                        deletedAt:
+                          type:
+                          - string
+                          - 'null'
+                          format: date-time
+                          description: When the report was deleted, if applicable. ISO 8601 format.
+                        prompt:
+                          type: string
+                          description: The prompt used to generate the SiroNoticed insight
+                      required:
+                      - id
+                      - cron
+                      - nextScheduledTime
+                      - owner
+                      - organizationId
+                      - createdAt
+                      - updatedAt
+                      - prompt
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Jobs
     post:
-      summary: Create a folder
-      description: Create a new folder in the requested organization
+      summary: Create a new SiroNoticed job for the current user.
+      description: Creates a SiroNoticed scheduled job owned by the calling user. The server derives `cronDescription` and `nextScheduledTime` from the provided cron string.
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                title:
+                cron:
                   type: string
-                  description: Folder title
-                description:
+                  description: Cron string of the format "* * * * *" representing the schedule
+                prompt:
                   type: string
-                  description: Folder description
-                organizationId:
-                  type: string
-                  description: Organization ID to create folder in
+                  description: SiroNoticed prompt override
               required:
-              - title
+              - cron
       responses:
         '200':
-          description: Create a folder
+          description: Create a new SiroNoticed job for the current user.
           content:
             application/json:
               schema:
@@ -262,7 +385,52 @@ paths:
                     properties:
                       id:
                         type: string
-                        description: ID of the created folder
+                        format: uuid
+                        description: The unique ID of the scheduled report
+                      cron:
+                        type: string
+                        description: Cron string of the format "* * * * *" representing the schedule
+                      cronDescription:
+                        type:
+                        - string
+                        - 'null'
+                        description: English description of the cron schedule. In case of drift, cron is the source of truth
+                      nextScheduledTime:
+                        type: string
+                        format: date-time
+                        description: When this report is scheduled to run next. ISO 8601 format.
+                      owner:
+                        type: string
+                        description: The user ID of the report owner.
+                      organizationId:
+                        type: string
+                        description: The organization ID that owns this report (derived from owner).
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: When the report was created, ISO 8601 format
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: When the report was last updated, ISO 8601 format
+                      deletedAt:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: When the report was deleted, if applicable. ISO 8601 format.
+                      prompt:
+                        type: string
+                        description: The prompt used to generate the SiroNoticed insight
+                    required:
+                    - id
+                    - cron
+                    - nextScheduledTime
+                    - owner
+                    - organizationId
+                    - createdAt
+                    - updatedAt
+                    - prompt
                   cursor:
                     anyOf:
                     - type: string
@@ -380,419 +548,220 @@ paths:
       security:
       - SiroAuthToken: []
       tags:
-      - Folders
+      - Jobs
+  /v1/jobs/siro-noticed/{id}:
+    patch:
+      summary: Update a SiroNoticed job (owner only).
+      description: Updates the cron schedule and/or prompt for a SiroNoticed job. Only the job owner or an admin may update.
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+        required: true
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cron:
+                  type: string
+                  description: Cron string of the format "* * * * *" representing the schedule
+                prompt:
+                  type: string
+                  description: SiroNoticed prompt override
+      responses:
+        '200':
+          description: Update a SiroNoticed job (owner only).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: The unique ID of the scheduled report
+                      cron:
+                        type: string
+                        description: Cron string of the format "* * * * *" representing the schedule
+                      cronDescription:
+                        type:
+                        - string
+                        - 'null'
+                        description: English description of the cron schedule. In case of drift, cron is the source of truth
+                      nextScheduledTime:
+                        type: string
+                        format: date-time
+                        description: When this report is scheduled to run next. ISO 8601 format.
+                      owner:
+                        type: string
+                        description: The user ID of the report owner.
+                      organizationId:
+                        type: string
+                        description: The organization ID that owns this report (derived from owner).
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: When the report was created, ISO 8601 format
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: When the report was last updated, ISO 8601 format
+                      deletedAt:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                        description: When the report was deleted, if applicable. ISO 8601 format.
+                      prompt:
+                        type: string
+                        description: The prompt used to generate the SiroNoticed insight
+                    required:
+                    - id
+                    - cron
+                    - nextScheduledTime
+                    - owner
+                    - organizationId
+                    - createdAt
+                    - updatedAt
+                    - prompt
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Jobs
     delete:
-      summary: Delete a folder
-      description: Delete a folder and all its items from the requested organization
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                folderId:
-                  type: string
-                  description: ID of the folder to delete
-                organizationId:
-                  type: string
-                  description: Organization ID the folder belongs to
-              required:
-              - folderId
-      responses:
-        '200':
-          description: Delete a folder
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        description: Whether the folder was successfully deleted
-                    required:
-                    - success
-                  cursor:
-                    anyOf:
-                    - type: string
-                    - type: number
-                    - {}
-                  pageSize:
-                    type: number
-                  limit:
-                    type: number
-                  total:
-                    type:
-                    - number
-                    - 'null'
-                  hasNextPage:
-                    type: boolean
-                required:
-                - data
-        '400':
-          description: Bad Request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message
-                required:
-                - error
-        '401':
-          description: Unauthorized - User not authenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authentication error message
-                required:
-                - error
-        '403':
-          description: Forbidden - User does not have access
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authorization error message
-                required:
-                - error
-        '404':
-          description: Not Found - Resource not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Resource not found error message
-                required:
-                - error
-        '422':
-          description: Unprocessable Content - The request failed validation checks
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  issues:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                        expected:
-                          type: string
-                        received:
-                          type: string
-                        path:
-                          type: array
-                          items:
-                            anyOf:
-                            - type: string
-                            - type: number
-                        message:
-                          type: string
-                      required:
-                      - code
-                      - path
-                      - message
-                  name:
-                    type: string
-                    enum:
-                    - ZodError
-                required:
-                - issues
-                - name
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Internal server error message
-                required:
-                - error
-      security:
-      - SiroAuthToken: []
-      tags:
-      - Folders
-    servers:
-    - url: https://api.siro.ai/
-      description: Siro API Gateway
-  /v1/folders/{id}/items:
-    get:
-      summary: Get folder items
-      description: Get all items in a specific folder
+      summary: Delete a SiroNoticed job (owner only).
+      description: Soft-deletes a SiroNoticed job. Only the job owner or an admin may delete.
       parameters:
       - schema:
           type: string
-          description: ID of the folder
+          format: uuid
         required: true
-        description: ID of the folder
         name: id
         in: path
-      - schema:
-          type: string
-          description: Organization ID the folder belongs to
-        required: false
-        description: Organization ID the folder belongs to
-        name: organizationId
-        in: query
       responses:
         '200':
-          description: Get folder items
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      folder:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            description: Folder ID
-                          title:
-                            type: string
-                            description: Folder title
-                          description:
-                            type:
-                            - string
-                            - 'null'
-                            description: Folder description
-                          lastUpdated:
-                            type: string
-                            description: Last updated date as string
-                          dateCreated:
-                            type: string
-                            description: Date created as string
-                          userId:
-                            type: string
-                            description: User ID who created the folder
-                          teamId:
-                            type: string
-                            description: Team ID of the user who created the folder
-                          organizationId:
-                            type: string
-                            description: Organization ID the folder belongs to
-                          isPublic:
-                            type: boolean
-                            description: Whether the folder is visible to other users in the org
-                        required:
-                        - id
-                        - title
-                        - lastUpdated
-                        - dateCreated
-                        - userId
-                        - teamId
-                        - organizationId
-                      folderItems:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              description: Folder item ID
-                            recordingId:
-                              type: string
-                              description: Recording ID in the folder
-                            startTimeInMilliseconds:
-                              type:
-                              - number
-                              - 'null'
-                              description: Start time of the folder item without recording offset
-                            endTimeInMilliseconds:
-                              type:
-                              - number
-                              - 'null'
-                              description: End time of the folder item without recording offset
-                            folderId:
-                              type: string
-                              description: Folder ID this item belongs to
-                            dateCreated:
-                              type: string
-                              description: Date created as string
-                          required:
-                          - id
-                          - recordingId
-                          - folderId
-                          - dateCreated
-                        description: List of folder items
-                    required:
-                    - folder
-                    - folderItems
-                  cursor:
-                    anyOf:
-                    - type: string
-                    - type: number
-                    - {}
-                  pageSize:
-                    type: number
-                  limit:
-                    type: number
-                  total:
-                    type:
-                    - number
-                    - 'null'
-                  hasNextPage:
-                    type: boolean
-                required:
-                - data
-        '400':
-          description: Bad Request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message
-                required:
-                - error
-        '401':
-          description: Unauthorized - User not authenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authentication error message
-                required:
-                - error
-        '403':
-          description: Forbidden - User does not have access
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authorization error message
-                required:
-                - error
-        '404':
-          description: Not Found - Resource not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Resource not found error message
-                required:
-                - error
-        '422':
-          description: Unprocessable Content - The request failed validation checks
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  issues:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                        expected:
-                          type: string
-                        received:
-                          type: string
-                        path:
-                          type: array
-                          items:
-                            anyOf:
-                            - type: string
-                            - type: number
-                        message:
-                          type: string
-                      required:
-                      - code
-                      - path
-                      - message
-                  name:
-                    type: string
-                    enum:
-                    - ZodError
-                required:
-                - issues
-                - name
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Internal server error message
-                required:
-                - error
-      security:
-      - SiroAuthToken: []
-      tags:
-      - Folders
-    post:
-      summary: Add item to folder
-      description: Add a recording item to a specific folder
-      parameters:
-      - schema:
-          type: string
-          description: ID of the folder
-        required: true
-        description: ID of the folder
-        name: id
-        in: path
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                recordingId:
-                  type: string
-                  description: Recording ID to add to the folder
-                startTimeInMilliseconds:
-                  type: number
-                  description: Start time of the folder item without recording offset
-                endTimeInMilliseconds:
-                  type: number
-                  description: End time of the folder item without recording offset
-                organizationId:
-                  type: string
-                  description: Organization ID the folder belongs to
-              required:
-              - recordingId
-      responses:
-        '200':
-          description: Add item to folder
+          description: Delete a SiroNoticed job (owner only).
           content:
             application/json:
               schema:
@@ -803,7 +772,8 @@ paths:
                     properties:
                       id:
                         type: string
-                        description: ID of the created folder item
+                        format: uuid
+                        description: The unique ID of the deleted scheduled report
                     required:
                     - id
                   cursor:
@@ -923,170 +893,7 @@ paths:
       security:
       - SiroAuthToken: []
       tags:
-      - Folders
-    delete:
-      summary: Delete a folder item
-      description: Delete a specific item from a folder
-      parameters:
-      - schema:
-          type: string
-          description: ID of the folder
-        required: true
-        description: ID of the folder
-        name: id
-        in: path
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                folderItemId:
-                  type: string
-                  description: ID of the folder item to delete
-                organizationId:
-                  type: string
-                  description: Organization ID the folder belongs to
-              required:
-              - folderItemId
-              - organizationId
-      responses:
-        '200':
-          description: Delete a folder item
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        description: Whether the folder item was successfully deleted
-                    required:
-                    - success
-                  cursor:
-                    anyOf:
-                    - type: string
-                    - type: number
-                    - {}
-                  pageSize:
-                    type: number
-                  limit:
-                    type: number
-                  total:
-                    type:
-                    - number
-                    - 'null'
-                  hasNextPage:
-                    type: boolean
-                required:
-                - data
-        '400':
-          description: Bad Request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message
-                required:
-                - error
-        '401':
-          description: Unauthorized - User not authenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authentication error message
-                required:
-                - error
-        '403':
-          description: Forbidden - User does not have access
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authorization error message
-                required:
-                - error
-        '404':
-          description: Not Found - Resource not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Resource not found error message
-                required:
-                - error
-        '422':
-          description: Unprocessable Content - The request failed validation checks
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  issues:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                        expected:
-                          type: string
-                        received:
-                          type: string
-                        path:
-                          type: array
-                          items:
-                            anyOf:
-                            - type: string
-                            - type: number
-                        message:
-                          type: string
-                      required:
-                      - code
-                      - path
-                      - message
-                  name:
-                    type: string
-                    enum:
-                    - ZodError
-                required:
-                - issues
-                - name
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Internal server error message
-                required:
-                - error
-      security:
-      - SiroAuthToken: []
-      tags:
-      - Folders
-    servers:
-    - url: https://api.siro.ai/
-      description: Siro API Gateway
+      - Jobs
 components:
   securitySchemes:
     SiroAuthToken:
@@ -1095,6 +902,6 @@ components:
       name: x-siro-auth-token
       description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
       x-default: <oauth-access-token>
-x-refined-from:
-- siro-folders-api-openapi.json
-- siro-platform-api-openapi.json
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

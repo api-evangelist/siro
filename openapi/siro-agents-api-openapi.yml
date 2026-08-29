@@ -1,0 +1,2048 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: Swagger Agents API
+servers:
+- url: https://api.siro.ai/
+  description: Siro API Gateway
+tags:
+- name: Agents
+paths:
+  /v1/agents/run:
+    post:
+      summary: Issues a query to the Siro AI platform.
+      description: Executes a Siro AI agent with the given query and context. Supports streaming responses.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  type: string
+                liveKitSessionId:
+                  type: string
+                userQuery:
+                  type: string
+                queryType:
+                  type: string
+                  enum:
+                  - CHAT
+                  - VOICE
+                  - REPORT
+                queryEntrypoint:
+                  type: string
+                  enum:
+                  - GENERIC
+                  - ASK_SIRO
+                  - CUSTOMER_PROFILE
+                  - MANAGER_CHAT
+                  - SCORECARDS
+                  - FILM_ROOM
+                  - SINGLE_RECORDING
+                  - RE_ENGAGE
+                  - UNIVERSAL_CHAT
+                  - REP_CHAT
+                  - DEBRIEF_CALL
+                  - HALFTIME_LIVE_COACHING
+                  - HALFTIME_REPORT
+                  - ROLE_PLAY
+                  - CONFIGURABLE_ROLE_PLAY
+                initialContext:
+                  anyOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          account:
+                            type:
+                            - object
+                            - 'null'
+                            properties:
+                              id:
+                                type: string
+                                description: Customer ID
+                              name:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer name
+                              crmUrl:
+                                type: string
+                                description: URL to this customer in the linked CRM
+                              customerType:
+                                type: string
+                                enum:
+                                - ACCOUNT
+                                - LEAD
+                                - OPPORTUNITY
+                                - ENGAGEMENT
+                                - CONTACT
+                                - DMS_OPPORTUNITY
+                              lastActivityAt:
+                                type:
+                                - string
+                                - 'null'
+                                description: Last activity date
+                              createdAt:
+                                type: string
+                                format: date-time
+                                description: Date the Customer record was created in Siro
+                              updatedAt:
+                                type: string
+                                format: date-time
+                                description: Date the Customer record was last updated in Siro
+                              closedAt:
+                                type:
+                                - string
+                                - 'null'
+                                format: date-time
+                                description: Date the Customer was closed (applicable to Opportunities)
+                              emailAddress:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer email addresses
+                              phoneNumber:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer phone numbers
+                              externalId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer external ID
+                              amount:
+                                type:
+                                - number
+                                - 'null'
+                                description: Dollar amount associated with a Customer deal
+                              disposition:
+                                type:
+                                - string
+                                - 'null'
+                                description: 'Disposition for the Customer deal: "WON" | "LOST" | "OPEN"'
+                              recordingId:
+                                type:
+                                - string
+                                - 'null'
+                                description: ID of the most recent recording linked to this customer
+                              lastRecordingDate:
+                                type:
+                                - string
+                                - 'null'
+                                format: date-time
+                                description: Datetime of the most recent recording linked to this customer
+                              numRecordings:
+                                type:
+                                - number
+                                - 'null'
+                                description: Total number of recordings linked to this customer
+                              matchingSource:
+                                type:
+                                - string
+                                - 'null'
+                                enum:
+                                - DIRECT
+                                - FUZZY
+                                - NOT_FOUND
+                                description: Source of matching
+                              accountId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Account ID
+                              opportunityAccountName:
+                                type:
+                                - string
+                                - 'null'
+                                description: Account Name associated with the Opportunity
+                              contactId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Contact ID
+                              opportunityContactName:
+                                type:
+                                - string
+                                - 'null'
+                                description: Contact Name associated with the Opportunity
+                              opportunityId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Opportunity ID
+                              engagementId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Engagement ID
+                              opportunity:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                  externalId:
+                                    type: string
+                                    description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                  name:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The name of the opportunity
+                                  amount:
+                                    type: number
+                                    description: The dollar amount of the opportunity
+                                  closedAt:
+                                    type: string
+                                    description: The closure date of the opportunity
+                                  disposition:
+                                    type: string
+                                    description: '"WON" | "LOST" | "OPEN"'
+                                  createdAt:
+                                    type: string
+                                    description: The date the opportunity was created
+                                  updatedAt:
+                                    type: string
+                                    description: The date the opportunity was last updated
+                                  recordingId:
+                                    type: string
+                                    description: The ID of the recording associated to the opportunity
+                                  accountId:
+                                    type: string
+                                  organizationId:
+                                    type: string
+                                  account: {}
+                                  opportunityUsers:
+                                    type: array
+                                    items: {}
+                                required:
+                                - id
+                                - externalId
+                                - createdAt
+                                - updatedAt
+                                - organizationId
+                                description: Opportunity
+                              opportunities:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  data:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                        externalId:
+                                          type: string
+                                          description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                        name:
+                                          type:
+                                          - string
+                                          - 'null'
+                                          description: The name of the opportunity
+                                        amount:
+                                          type: number
+                                          description: The dollar amount of the opportunity
+                                        closedAt:
+                                          type: string
+                                          description: The closure date of the opportunity
+                                        disposition:
+                                          type: string
+                                          description: '"WON" | "LOST" | "OPEN"'
+                                        createdAt:
+                                          type: string
+                                          description: The date the opportunity was created
+                                        updatedAt:
+                                          type: string
+                                          description: The date the opportunity was last updated
+                                        recordingId:
+                                          type: string
+                                          description: The ID of the recording associated to the opportunity
+                                        accountId:
+                                          type: string
+                                        organizationId:
+                                          type: string
+                                        account: {}
+                                        opportunityUsers:
+                                          type: array
+                                          items: {}
+                                      required:
+                                      - id
+                                      - externalId
+                                      - createdAt
+                                      - updatedAt
+                                      - organizationId
+                                  cursor:
+                                    type:
+                                    - string
+                                    - 'null'
+                                required:
+                                - data
+                                description: Optional first page of related opportunities for Accounts or Contacts
+                              opportunityUsers:
+                                type:
+                                - array
+                                - 'null'
+                                items: {}
+                                description: Users associated with the opportunity
+                              contactAccount:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                  name:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The name of the account
+                                  externalId:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The ID of the account in the external system (e.g. Salesforce)
+                                required:
+                                - id
+                                description: Contact Account
+                              address:
+                                type:
+                                - string
+                                - 'null'
+                                description: Address
+                              organizationId:
+                                type: string
+                                description: Organization ID
+                              integrationConnectionId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Integration Connection ID
+                              integrationPlatform:
+                                type:
+                                - string
+                                - 'null'
+                                enum:
+                                - MERGE
+                                - SIRO_CUSTOM_INPUT
+                                - SERVICE_TITAN
+                                - COMPANY_CAM
+                                - INGAGE
+                                - LEAD_PERFECTION
+                                - SPOTIO
+                                description: Integration Platform
+                              integrationName:
+                                type:
+                                - string
+                                - 'null'
+                                description: Integration Name
+                            required:
+                            - id
+                            - createdAt
+                            - updatedAt
+                            - organizationId
+                          lead:
+                            type:
+                            - object
+                            - 'null'
+                            properties:
+                              id:
+                                type: string
+                                description: Customer ID
+                              name:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer name
+                              crmUrl:
+                                type: string
+                                description: URL to this customer in the linked CRM
+                              customerType:
+                                type: string
+                                enum:
+                                - ACCOUNT
+                                - LEAD
+                                - OPPORTUNITY
+                                - ENGAGEMENT
+                                - CONTACT
+                                - DMS_OPPORTUNITY
+                              lastActivityAt:
+                                type:
+                                - string
+                                - 'null'
+                                description: Last activity date
+                              createdAt:
+                                type: string
+                                format: date-time
+                                description: Date the Customer record was created in Siro
+                              updatedAt:
+                                type: string
+                                format: date-time
+                                description: Date the Customer record was last updated in Siro
+                              closedAt:
+                                type:
+                                - string
+                                - 'null'
+                                format: date-time
+                                description: Date the Customer was closed (applicable to Opportunities)
+                              emailAddress:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer email addresses
+                              phoneNumber:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer phone numbers
+                              externalId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Customer external ID
+                              amount:
+                                type:
+                                - number
+                                - 'null'
+                                description: Dollar amount associated with a Customer deal
+                              disposition:
+                                type:
+                                - string
+                                - 'null'
+                                description: 'Disposition for the Customer deal: "WON" | "LOST" | "OPEN"'
+                              recordingId:
+                                type:
+                                - string
+                                - 'null'
+                                description: ID of the most recent recording linked to this customer
+                              lastRecordingDate:
+                                type:
+                                - string
+                                - 'null'
+                                format: date-time
+                                description: Datetime of the most recent recording linked to this customer
+                              numRecordings:
+                                type:
+                                - number
+                                - 'null'
+                                description: Total number of recordings linked to this customer
+                              matchingSource:
+                                type:
+                                - string
+                                - 'null'
+                                enum:
+                                - DIRECT
+                                - FUZZY
+                                - NOT_FOUND
+                                description: Source of matching
+                              accountId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Account ID
+                              opportunityAccountName:
+                                type:
+                                - string
+                                - 'null'
+                                description: Account Name associated with the Opportunity
+                              contactId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Contact ID
+                              opportunityContactName:
+                                type:
+                                - string
+                                - 'null'
+                                description: Contact Name associated with the Opportunity
+                              opportunityId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Opportunity ID
+                              engagementId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Engagement ID
+                              opportunity:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                  externalId:
+                                    type: string
+                                    description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                  name:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The name of the opportunity
+                                  amount:
+                                    type: number
+                                    description: The dollar amount of the opportunity
+                                  closedAt:
+                                    type: string
+                                    description: The closure date of the opportunity
+                                  disposition:
+                                    type: string
+                                    description: '"WON" | "LOST" | "OPEN"'
+                                  createdAt:
+                                    type: string
+                                    description: The date the opportunity was created
+                                  updatedAt:
+                                    type: string
+                                    description: The date the opportunity was last updated
+                                  recordingId:
+                                    type: string
+                                    description: The ID of the recording associated to the opportunity
+                                  accountId:
+                                    type: string
+                                  organizationId:
+                                    type: string
+                                  account: {}
+                                  opportunityUsers:
+                                    type: array
+                                    items: {}
+                                required:
+                                - id
+                                - externalId
+                                - createdAt
+                                - updatedAt
+                                - organizationId
+                                description: Opportunity
+                              opportunities:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  data:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                        externalId:
+                                          type: string
+                                          description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                        name:
+                                          type:
+                                          - string
+                                          - 'null'
+                                          description: The name of the opportunity
+                                        amount:
+                                          type: number
+                                          description: The dollar amount of the opportunity
+                                        closedAt:
+                                          type: string
+                                          description: The closure date of the opportunity
+                                        disposition:
+                                          type: string
+                                          description: '"WON" | "LOST" | "OPEN"'
+                                        createdAt:
+                                          type: string
+                                          description: The date the opportunity was created
+                                        updatedAt:
+                                          type: string
+                                          description: The date the opportunity was last updated
+                                        recordingId:
+                                          type: string
+                                          description: The ID of the recording associated to the opportunity
+                                        accountId:
+                                          type: string
+                                        organizationId:
+                                          type: string
+                                        account: {}
+                                        opportunityUsers:
+                                          type: array
+                                          items: {}
+                                      required:
+                                      - id
+                                      - externalId
+                                      - createdAt
+                                      - updatedAt
+                                      - organizationId
+                                  cursor:
+                                    type:
+                                    - string
+                                    - 'null'
+                                required:
+                                - data
+                                description: Optional first page of related opportunities for Accounts or Contacts
+                              opportunityUsers:
+                                type:
+                                - array
+                                - 'null'
+                                items: {}
+                                description: Users associated with the opportunity
+                              contactAccount:
+                                type:
+                                - object
+                                - 'null'
+                                properties:
+                                  id:
+                                    type: string
+                                  name:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The name of the account
+                                  externalId:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: The ID of the account in the external system (e.g. Salesforce)
+                                required:
+                                - id
+                                description: Contact Account
+                              address:
+                                type:
+                                - string
+                                - 'null'
+                                description: Address
+                              organizationId:
+                                type: string
+                                description: Organization ID
+                              integrationConnectionId:
+                                type:
+                                - string
+                                - 'null'
+                                description: Integration Connection ID
+                              integrationPlatform:
+                                type:
+                                - string
+                                - 'null'
+                                enum:
+                                - MERGE
+                                - SIRO_CUSTOM_INPUT
+                                - SERVICE_TITAN
+                                - COMPANY_CAM
+                                - INGAGE
+                                - LEAD_PERFECTION
+                                - SPOTIO
+                                description: Integration Platform
+                              integrationName:
+                                type:
+                                - string
+                                - 'null'
+                                description: Integration Name
+                            required:
+                            - id
+                            - createdAt
+                            - updatedAt
+                            - organizationId
+                          contacts:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: Customer ID
+                                name:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer name
+                                crmUrl:
+                                  type: string
+                                  description: URL to this customer in the linked CRM
+                                customerType:
+                                  type: string
+                                  enum:
+                                  - ACCOUNT
+                                  - LEAD
+                                  - OPPORTUNITY
+                                  - ENGAGEMENT
+                                  - CONTACT
+                                  - DMS_OPPORTUNITY
+                                lastActivityAt:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Last activity date
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                  description: Date the Customer record was created in Siro
+                                updatedAt:
+                                  type: string
+                                  format: date-time
+                                  description: Date the Customer record was last updated in Siro
+                                closedAt:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: Date the Customer was closed (applicable to Opportunities)
+                                emailAddress:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer email addresses
+                                phoneNumber:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer phone numbers
+                                externalId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer external ID
+                                amount:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  description: Dollar amount associated with a Customer deal
+                                disposition:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: 'Disposition for the Customer deal: "WON" | "LOST" | "OPEN"'
+                                recordingId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: ID of the most recent recording linked to this customer
+                                lastRecordingDate:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: Datetime of the most recent recording linked to this customer
+                                numRecordings:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  description: Total number of recordings linked to this customer
+                                matchingSource:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  enum:
+                                  - DIRECT
+                                  - FUZZY
+                                  - NOT_FOUND
+                                  description: Source of matching
+                                accountId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Account ID
+                                opportunityAccountName:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Account Name associated with the Opportunity
+                                contactId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Contact ID
+                                opportunityContactName:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Contact Name associated with the Opportunity
+                                opportunityId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Opportunity ID
+                                engagementId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Engagement ID
+                                opportunity:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    id:
+                                      type: string
+                                    externalId:
+                                      type: string
+                                      description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                    name:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The name of the opportunity
+                                    amount:
+                                      type: number
+                                      description: The dollar amount of the opportunity
+                                    closedAt:
+                                      type: string
+                                      description: The closure date of the opportunity
+                                    disposition:
+                                      type: string
+                                      description: '"WON" | "LOST" | "OPEN"'
+                                    createdAt:
+                                      type: string
+                                      description: The date the opportunity was created
+                                    updatedAt:
+                                      type: string
+                                      description: The date the opportunity was last updated
+                                    recordingId:
+                                      type: string
+                                      description: The ID of the recording associated to the opportunity
+                                    accountId:
+                                      type: string
+                                    organizationId:
+                                      type: string
+                                    account: {}
+                                    opportunityUsers:
+                                      type: array
+                                      items: {}
+                                  required:
+                                  - id
+                                  - externalId
+                                  - createdAt
+                                  - updatedAt
+                                  - organizationId
+                                  description: Opportunity
+                                opportunities:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    data:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          id:
+                                            type: string
+                                          externalId:
+                                            type: string
+                                            description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                          name:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: The name of the opportunity
+                                          amount:
+                                            type: number
+                                            description: The dollar amount of the opportunity
+                                          closedAt:
+                                            type: string
+                                            description: The closure date of the opportunity
+                                          disposition:
+                                            type: string
+                                            description: '"WON" | "LOST" | "OPEN"'
+                                          createdAt:
+                                            type: string
+                                            description: The date the opportunity was created
+                                          updatedAt:
+                                            type: string
+                                            description: The date the opportunity was last updated
+                                          recordingId:
+                                            type: string
+                                            description: The ID of the recording associated to the opportunity
+                                          accountId:
+                                            type: string
+                                          organizationId:
+                                            type: string
+                                          account: {}
+                                          opportunityUsers:
+                                            type: array
+                                            items: {}
+                                        required:
+                                        - id
+                                        - externalId
+                                        - createdAt
+                                        - updatedAt
+                                        - organizationId
+                                    cursor:
+                                      type:
+                                      - string
+                                      - 'null'
+                                  required:
+                                  - data
+                                  description: Optional first page of related opportunities for Accounts or Contacts
+                                opportunityUsers:
+                                  type:
+                                  - array
+                                  - 'null'
+                                  items: {}
+                                  description: Users associated with the opportunity
+                                contactAccount:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    id:
+                                      type: string
+                                    name:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The name of the account
+                                    externalId:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The ID of the account in the external system (e.g. Salesforce)
+                                  required:
+                                  - id
+                                  description: Contact Account
+                                address:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Address
+                                organizationId:
+                                  type: string
+                                  description: Organization ID
+                                integrationConnectionId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Integration Connection ID
+                                integrationPlatform:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  enum:
+                                  - MERGE
+                                  - SIRO_CUSTOM_INPUT
+                                  - SERVICE_TITAN
+                                  - COMPANY_CAM
+                                  - INGAGE
+                                  - LEAD_PERFECTION
+                                  - SPOTIO
+                                  description: Integration Platform
+                                integrationName:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Integration Name
+                              required:
+                              - id
+                              - createdAt
+                              - updatedAt
+                              - organizationId
+                          contactsCursor:
+                            type: string
+                          contactsTotal:
+                            type: number
+                          opportunities:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: Customer ID
+                                name:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer name
+                                crmUrl:
+                                  type: string
+                                  description: URL to this customer in the linked CRM
+                                customerType:
+                                  type: string
+                                  enum:
+                                  - ACCOUNT
+                                  - LEAD
+                                  - OPPORTUNITY
+                                  - ENGAGEMENT
+                                  - CONTACT
+                                  - DMS_OPPORTUNITY
+                                lastActivityAt:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Last activity date
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                  description: Date the Customer record was created in Siro
+                                updatedAt:
+                                  type: string
+                                  format: date-time
+                                  description: Date the Customer record was last updated in Siro
+                                closedAt:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: Date the Customer was closed (applicable to Opportunities)
+                                emailAddress:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer email addresses
+                                phoneNumber:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer phone numbers
+                                externalId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Customer external ID
+                                amount:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  description: Dollar amount associated with a Customer deal
+                                disposition:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: 'Disposition for the Customer deal: "WON" | "LOST" | "OPEN"'
+                                recordingId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: ID of the most recent recording linked to this customer
+                                lastRecordingDate:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  format: date-time
+                                  description: Datetime of the most recent recording linked to this customer
+                                numRecordings:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  description: Total number of recordings linked to this customer
+                                matchingSource:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  enum:
+                                  - DIRECT
+                                  - FUZZY
+                                  - NOT_FOUND
+                                  description: Source of matching
+                                accountId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Account ID
+                                opportunityAccountName:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Account Name associated with the Opportunity
+                                contactId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Contact ID
+                                opportunityContactName:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Contact Name associated with the Opportunity
+                                opportunityId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Opportunity ID
+                                engagementId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Engagement ID
+                                opportunity:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    id:
+                                      type: string
+                                    externalId:
+                                      type: string
+                                      description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                    name:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The name of the opportunity
+                                    amount:
+                                      type: number
+                                      description: The dollar amount of the opportunity
+                                    closedAt:
+                                      type: string
+                                      description: The closure date of the opportunity
+                                    disposition:
+                                      type: string
+                                      description: '"WON" | "LOST" | "OPEN"'
+                                    createdAt:
+                                      type: string
+                                      description: The date the opportunity was created
+                                    updatedAt:
+                                      type: string
+                                      description: The date the opportunity was last updated
+                                    recordingId:
+                                      type: string
+                                      description: The ID of the recording associated to the opportunity
+                                    accountId:
+                                      type: string
+                                    organizationId:
+                                      type: string
+                                    account: {}
+                                    opportunityUsers:
+                                      type: array
+                                      items: {}
+                                  required:
+                                  - id
+                                  - externalId
+                                  - createdAt
+                                  - updatedAt
+                                  - organizationId
+                                  description: Opportunity
+                                opportunities:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    data:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          id:
+                                            type: string
+                                          externalId:
+                                            type: string
+                                            description: The ID of the opportunity in the external system (e.g. Salesforce)
+                                          name:
+                                            type:
+                                            - string
+                                            - 'null'
+                                            description: The name of the opportunity
+                                          amount:
+                                            type: number
+                                            description: The dollar amount of the opportunity
+                                          closedAt:
+                                            type: string
+                                            description: The closure date of the opportunity
+                                          disposition:
+                                            type: string
+                                            description: '"WON" | "LOST" | "OPEN"'
+                                          createdAt:
+                                            type: string
+                                            description: The date the opportunity was created
+                                          updatedAt:
+                                            type: string
+                                            description: The date the opportunity was last updated
+                                          recordingId:
+                                            type: string
+                                            description: The ID of the recording associated to the opportunity
+                                          accountId:
+                                            type: string
+                                          organizationId:
+                                            type: string
+                                          account: {}
+                                          opportunityUsers:
+                                            type: array
+                                            items: {}
+                                        required:
+                                        - id
+                                        - externalId
+                                        - createdAt
+                                        - updatedAt
+                                        - organizationId
+                                    cursor:
+                                      type:
+                                      - string
+                                      - 'null'
+                                  required:
+                                  - data
+                                  description: Optional first page of related opportunities for Accounts or Contacts
+                                opportunityUsers:
+                                  type:
+                                  - array
+                                  - 'null'
+                                  items: {}
+                                  description: Users associated with the opportunity
+                                contactAccount:
+                                  type:
+                                  - object
+                                  - 'null'
+                                  properties:
+                                    id:
+                                      type: string
+                                    name:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The name of the account
+                                    externalId:
+                                      type:
+                                      - string
+                                      - 'null'
+                                      description: The ID of the account in the external system (e.g. Salesforce)
+                                  required:
+                                  - id
+                                  description: Contact Account
+                                address:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Address
+                                organizationId:
+                                  type: string
+                                  description: Organization ID
+                                integrationConnectionId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Integration Connection ID
+                                integrationPlatform:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  enum:
+                                  - MERGE
+                                  - SIRO_CUSTOM_INPUT
+                                  - SERVICE_TITAN
+                                  - COMPANY_CAM
+                                  - INGAGE
+                                  - LEAD_PERFECTION
+                                  - SPOTIO
+                                  description: Integration Platform
+                                integrationName:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Integration Name
+                              required:
+                              - id
+                              - createdAt
+                              - updatedAt
+                              - organizationId
+                          opportunitiesCursor:
+                            type: string
+                          opportunitiesTotal:
+                            type: number
+                          engagements:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                externalId:
+                                  type: string
+                                startTime:
+                                  type:
+                                  - string
+                                  - 'null'
+                                endTime:
+                                  type:
+                                  - string
+                                  - 'null'
+                                accountId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                contactId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                leadId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                opportunityId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                recordingId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                organizationId:
+                                  type: string
+                                integrationConnectionId:
+                                  type: string
+                                createdAt:
+                                  type: string
+                                updatedAt:
+                                  type:
+                                  - string
+                                  - 'null'
+                              required:
+                              - id
+                              - externalId
+                              - startTime
+                              - endTime
+                              - accountId
+                              - contactId
+                              - leadId
+                              - opportunityId
+                              - recordingId
+                              - organizationId
+                              - integrationConnectionId
+                              - createdAt
+                              - updatedAt
+                          engagementsCursor:
+                            type: string
+                          engagementsTotal:
+                            type: number
+                          recordingIds:
+                            type: array
+                            items:
+                              type: string
+                          latestRecordingDate:
+                            type: string
+                        required:
+                        - account
+                        - lead
+                        - contacts
+                        - opportunities
+                        - engagements
+                        - recordingIds
+                    required:
+                    - data
+                  - {}
+                  - {}
+                questionSource:
+                  type: string
+                  enum:
+                  - manual
+                  - static_preset
+                  - llm_generated
+                userPlatform:
+                  type: string
+                  enum:
+                  - WEB
+                  - MOBILE
+                  default: WEB
+                tenant:
+                  type: string
+                  enum:
+                  - siro
+                  - salespro
+                  - fieldpro
+                streaming:
+                  type:
+                  - boolean
+                  - 'null'
+                  default: true
+                topLevelAgentToInvoke:
+                  type: string
+                organizationId:
+                  type: string
+                promptLabelOverride:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Map of agent name to prompt label
+                systemPromptOverride:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Map of agent name to prompt label
+                toolListOverride:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                  description: Map of agent name to list of tool names
+                modelOverride:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Map of agent name to model identifier
+                thinkingEffortOverride:
+                  type: object
+                  additionalProperties:
+                    type: string
+                    enum:
+                    - none
+                    - low
+                    - medium
+                    - high
+                  description: Map of agent name to thinking effort level
+                webSearchEnabled:
+                  type:
+                  - boolean
+                  - 'null'
+                  default: false
+                roleOverride:
+                  type: string
+                  enum:
+                  - REP
+                  - COACH
+                  - ORG_ADMIN
+                  - ROOT_ADMIN
+                memberTeamIdOverride:
+                  type: string
+                coachTeamIdsOverride:
+                  type: array
+                  items:
+                    type: string
+                entrypointOverride:
+                  type: object
+                  additionalProperties:
+                    type: string
+                    enum:
+                    - GENERIC
+                    - ASK_SIRO
+                    - CUSTOMER_PROFILE
+                    - MANAGER_CHAT
+                    - SCORECARDS
+                    - FILM_ROOM
+                    - SINGLE_RECORDING
+                    - RE_ENGAGE
+                    - UNIVERSAL_CHAT
+                    - REP_CHAT
+                    - DEBRIEF_CALL
+                    - HALFTIME_LIVE_COACHING
+                    - HALFTIME_REPORT
+                    - ROLE_PLAY
+                    - CONFIGURABLE_ROLE_PLAY
+                  description: Map of agent name to entrypoint
+                initialContextOverride:
+                  type: object
+                  additionalProperties: {}
+                  description: Map of agent name to initialContext payload
+              required:
+              - userQuery
+              - queryType
+              - queryEntrypoint
+      responses:
+        '200':
+          description: Issues a query to the Siro AI platform.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      sessionId:
+                        type: string
+                      eventType:
+                        type: string
+                        enum:
+                        - FUNCTION_CALL
+                        - AGENT_TRANSFER
+                        - RESPONSE
+                      content:
+                        type: object
+                        properties:
+                          parts:
+                            type: array
+                            items:
+                              oneOf:
+                              - type: object
+                                properties:
+                                  kind:
+                                    type: string
+                                    enum:
+                                    - text
+                                  text:
+                                    type: string
+                                required:
+                                - kind
+                                - text
+                              - type: object
+                                properties:
+                                  kind:
+                                    type: string
+                                    enum:
+                                    - tool
+                                  tool:
+                                    type: string
+                                    enum:
+                                    - show_chart
+                                  data: {}
+                                required:
+                                - kind
+                                - tool
+                              - type: object
+                                properties:
+                                  kind:
+                                    type: string
+                                    enum:
+                                    - markdown-patch
+                                  patches:
+                                    type: array
+                                    items: {}
+                                  seq:
+                                    type: integer
+                                    minimum: 0
+                                  segment:
+                                    type: integer
+                                    minimum: 0
+                                required:
+                                - kind
+                                - patches
+                                - seq
+                                - segment
+                              - type: object
+                                properties:
+                                  kind:
+                                    type: string
+                                    enum:
+                                    - markdown-tokens
+                                  tokens:
+                                    type: array
+                                    items: {}
+                                  segment:
+                                    type: integer
+                                    minimum: 0
+                                  intermediate:
+                                    type: boolean
+                                required:
+                                - kind
+                                - tokens
+                                - segment
+                              - type: object
+                                properties:
+                                  kind:
+                                    type: string
+                                    enum:
+                                    - segment-meta
+                                  segment:
+                                    type: integer
+                                    minimum: 0
+                                  intermediate:
+                                    type: boolean
+                                required:
+                                - kind
+                                - segment
+                                - intermediate
+                              - type: object
+                                properties:
+                                  kind:
+                                    type: string
+                                    enum:
+                                    - halftime-report
+                                  sections:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          description: ID of the Halftime report topic
+                                        title:
+                                          type: string
+                                          description: Name of the Halftime report topic
+                                        guidance:
+                                          type: string
+                                          description: Guidance generated for Halftime report topic
+                                      required:
+                                      - id
+                                      - title
+                                      - guidance
+                                required:
+                                - kind
+                                - sections
+                        required:
+                        - parts
+                      partial:
+                        type: boolean
+                      statusMessage:
+                        type: string
+                      invocationId:
+                        type: string
+                    required:
+                    - sessionId
+                    - eventType
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Agents
+  /v1/agents:
+    get:
+      summary: Lists all agents in the Siro AI Platform.
+      description: Lists all agents along with their names and top-level agent status
+      parameters:
+      - schema:
+          type: string
+          description: true to return only top-level agents. default false
+        required: false
+        description: true to return only top-level agents. default false
+        name: topLevelOnly
+        in: query
+      - schema:
+          type: string
+          description: whether or not to include tools in the request. excluding tools is faster. default true.
+        required: false
+        description: whether or not to include tools in the request. excluding tools is faster. default true.
+        name: includeTools
+        in: query
+      - schema:
+          type: string
+          description: whether or not to include the agents system prompt in the request. excluding the prompt is faster. default false.
+        required: false
+        description: whether or not to include the agents system prompt in the request. excluding the prompt is faster. default false.
+        name: includePrompts
+        in: query
+      responses:
+        '200':
+          description: Lists all agents in the Siro AI Platform.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          agents:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: name of the agent in the backend
+                                description:
+                                  type: string
+                                  description: what the agent does
+                                model:
+                                  type: string
+                                  description: model name in a a format ADK can understand
+                                isTopLevel:
+                                  type: boolean
+                                  description: true if top level agent and directly invokable via topLevelAgentToInvoke, false otherwise
+                                prompt:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: the system prompt of the agent
+                                tools:
+                                  type: array
+                                  items:
+                                    type: string
+                                  description: list of tool names this agent has access to
+                              required:
+                              - name
+                              - isTopLevel
+                              - prompt
+                              - tools
+                        required:
+                        - agents
+                    required:
+                    - data
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Agents
+  /v1/agents/models:
+    get:
+      summary: Lists available LLM models for agent configuration.
+      description: Returns the list of selectable models and the default primary model used when no override is set.
+      responses:
+        '200':
+          description: Lists available LLM models for agent configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          models:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: human-readable model name
+                                model:
+                                  type: string
+                                  description: model identifier in provider/model-id format
+                              required:
+                              - name
+                              - model
+                          defaultModel:
+                            type: string
+                            description: default primary model used when no override is set
+                        required:
+                        - models
+                        - defaultModel
+                    required:
+                    - data
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Agents
+components:
+  securitySchemes:
+    SiroAuthToken:
+      type: apiKey
+      in: header
+      name: x-siro-auth-token
+      description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
+      x-default: <oauth-access-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: Swagger Subscription API
+servers:
+- url: https://api.siro.ai/
+  description: Siro API Gateway
+tags:
+- name: Subscription
+paths:
+  /v1/subscription:
+    put:
+      summary: Change subscription license quantity
+      description: Updates the subscription to the desired license quantity. Returns a deep link if Stripe requires further action (e.g. adding payment method for an increase).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  minimum: 1
+                  description: The desired total license count for the subscription
+              required:
+              - quantity
+              additionalProperties: false
+      responses:
+        '200':
+          description: Change subscription license quantity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      deepLink:
+                        type: string
+                        description: If present, a Stripe deep link the user must visit to complete the subscription change (e.g. to add a payment method for an increase).
+                  cursor:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - {}
+                  pageSize:
+                    type: number
+                  limit:
+                    type: number
+                  total:
+                    type:
+                    - number
+                    - 'null'
+                  hasNextPage:
+                    type: boolean
+                required:
+                - data
+        '400':
+          description: Bad Request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                required:
+                - error
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authentication error message
+                required:
+                - error
+        '403':
+          description: Forbidden - User does not have access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Authorization error message
+                required:
+                - error
+        '404':
+          description: Not Found - Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Resource not found error message
+                required:
+                - error
+        '422':
+          description: Unprocessable Content - The request failed validation checks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expected:
+                          type: string
+                        received:
+                          type: string
+                        path:
+                          type: array
+                          items:
+                            anyOf:
+                            - type: string
+                            - type: number
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - path
+                      - message
+                  name:
+                    type: string
+                    enum:
+                    - ZodError
+                required:
+                - issues
+                - name
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error message
+                required:
+                - error
+      security:
+      - SiroAuthToken: []
+      tags:
+      - Subscription
+components:
+  securitySchemes:
+    SiroAuthToken:
+      type: apiKey
+      in: header
+      name: x-siro-auth-token
+      description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
+      x-default: <oauth-access-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

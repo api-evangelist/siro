@@ -1,7 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
+  title: Siro Integrations API
   version: 1.0.0
-  title: Swagger Audit Integrations API
+  description: 'Operations tagged Integrations across 2 of this provider''s published API definitions: siro-external-api-openapi.json, siro-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://functions.siro.ai/api-externalApi
   description: Siro API external API endpoint
@@ -37,8 +38,7 @@ paths:
                     type: number
                   addresses:
                     type: array
-                    items:
-                      nullable: true
+                    items: {}
                   phoneNumbers:
                     type: array
                     items:
@@ -134,8 +134,7 @@ paths:
                     type: number
                   addresses:
                     type: array
-                    items:
-                      nullable: true
+                    items: {}
                   phoneNumbers:
                     type: array
                     items:
@@ -182,6 +181,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/accounts:
     get:
       summary: Get accounts
@@ -207,8 +209,7 @@ paths:
                       type: number
                     addresses:
                       type: array
-                      items:
-                        nullable: true
+                      items: {}
                     phoneNumbers:
                       type: array
                       items:
@@ -349,8 +350,7 @@ paths:
                     type: number
                   addresses:
                     type: array
-                    items:
-                      nullable: true
+                    items: {}
                   phoneNumbers:
                     type: array
                     items:
@@ -377,6 +377,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/opportunities/{id}:
     get:
       summary: Get an opportunity
@@ -401,8 +404,9 @@ paths:
                     type: string
                     description: The ID of the opportunity in the external system (e.g. Salesforce)
                   name:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: The name of the opportunity
                   amount:
                     type: number
@@ -426,12 +430,10 @@ paths:
                     type: string
                   organizationId:
                     type: string
-                  account:
-                    nullable: true
+                  account: {}
                   opportunityUsers:
                     type: array
-                    items:
-                      nullable: true
+                    items: {}
                 required:
                 - id
                 - externalId
@@ -462,6 +464,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/opportunities:
     get:
       summary: Get opportunities
@@ -501,8 +506,9 @@ paths:
                           type: string
                           description: The ID of the opportunity in the external system (e.g. Salesforce)
                         name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The name of the opportunity
                         amount:
                           type: number
@@ -526,12 +532,10 @@ paths:
                           type: string
                         organizationId:
                           type: string
-                        account:
-                          nullable: true
+                        account: {}
                         opportunityUsers:
                           type: array
-                          items:
-                            nullable: true
+                          items: {}
                       required:
                       - id
                       - externalId
@@ -542,14 +546,15 @@ paths:
                     anyOf:
                     - type: string
                     - type: number
-                    - nullable: true
+                    - {}
                   pageSize:
                     type: number
                   limit:
                     type: number
                   total:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                   hasNextPage:
                     type: boolean
                 required:
@@ -558,6 +563,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/opportunity-users/{id}:
     get:
       summary: Get an opportunity user
@@ -687,6 +695,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/opportunity-users:
     get:
       summary: Get opportunity users
@@ -802,6 +813,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/sync/opportunities:
     put:
       summary: Sync an opportunity
@@ -831,8 +845,9 @@ paths:
                   type: string
                   description: date of last external update
                 deletedAt:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   format: date-time
                   description: The datetime when this record was deleted in the external system
                 disposition:
@@ -843,12 +858,14 @@ paths:
                   - WON
                   description: '"WON" | "LOST" | "OPEN"'
                 accountId:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Internal SIRO accountId override for this opportunity. OPTIONAL -- only use if you know the internal value of the Account as it will override the account object args.
                 account:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -898,13 +915,15 @@ paths:
                       type: string
                       description: The datetime of the last activity on this record in the external system
                     deletedAt:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       format: date-time
                       description: The datetime when this record was deleted in the external system
                     owner:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -921,8 +940,9 @@ paths:
                       description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
                   description: 'The associated account for this opportunity. Note: supplying just an externalId will resolve to an already-synced account'
                 contact:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -937,8 +957,9 @@ paths:
                       type: number
                       description: The longitude of the contact
                     account:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -988,13 +1009,15 @@ paths:
                           type: string
                           description: The datetime of the last activity on this record in the external system
                         deletedAt:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           format: date-time
                           description: The datetime when this record was deleted in the external system
                         owner:
-                          type: object
-                          nullable: true
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             externalId:
                               type: string
@@ -1046,13 +1069,15 @@ paths:
                       type: string
                       description: The datetime of the last activity on this record in the external system
                     deletedAt:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       format: date-time
                       description: The datetime when this record was deleted in the external system
                     owner:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -1088,8 +1113,9 @@ paths:
                         type: number
                         description: The longitude of the contact
                       account:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -1139,13 +1165,15 @@ paths:
                             type: string
                             description: The datetime of the last activity on this record in the external system
                           deletedAt:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             format: date-time
                             description: The datetime when this record was deleted in the external system
                           owner:
-                            type: object
-                            nullable: true
+                            type:
+                            - object
+                            - 'null'
                             properties:
                               externalId:
                                 type: string
@@ -1197,13 +1225,15 @@ paths:
                         type: string
                         description: The datetime of the last activity on this record in the external system
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system
                       owner:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -1241,8 +1271,9 @@ paths:
                         type: string
                         description: The name of the user, e.g. John Smith
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system (Optional)
                     required:
@@ -1267,8 +1298,9 @@ paths:
                         type: string
                         description: The ID of the opportunity in the external system (e.g. Salesforce)
                       name:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: The name of the opportunity
                       amount:
                         type: number
@@ -1292,12 +1324,10 @@ paths:
                         type: string
                       organizationId:
                         type: string
-                      account:
-                        nullable: true
+                      account: {}
                       opportunityUsers:
                         type: array
-                        items:
-                          nullable: true
+                        items: {}
                     required:
                     - id
                     - externalId
@@ -1310,6 +1340,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/sync/batch/opportunities:
     put:
       summary: Sync a batch of opportunities
@@ -1341,8 +1374,9 @@ paths:
                     type: string
                     description: date of last external update
                   deletedAt:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     format: date-time
                     description: The datetime when this record was deleted in the external system
                   disposition:
@@ -1353,12 +1387,14 @@ paths:
                     - WON
                     description: '"WON" | "LOST" | "OPEN"'
                   accountId:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: Internal SIRO accountId override for this opportunity. OPTIONAL -- only use if you know the internal value of the Account as it will override the account object args.
                   account:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -1408,13 +1444,15 @@ paths:
                         type: string
                         description: The datetime of the last activity on this record in the external system
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system
                       owner:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -1431,8 +1469,9 @@ paths:
                         description: If other Accounts were merged into this one, their externalIds. Will migrate all existing references from those Accounts to this Account.
                     description: 'The associated account for this opportunity. Note: supplying just an externalId will resolve to an already-synced account'
                   contact:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -1447,8 +1486,9 @@ paths:
                         type: number
                         description: The longitude of the contact
                       account:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -1498,13 +1538,15 @@ paths:
                             type: string
                             description: The datetime of the last activity on this record in the external system
                           deletedAt:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             format: date-time
                             description: The datetime when this record was deleted in the external system
                           owner:
-                            type: object
-                            nullable: true
+                            type:
+                            - object
+                            - 'null'
                             properties:
                               externalId:
                                 type: string
@@ -1556,13 +1598,15 @@ paths:
                         type: string
                         description: The datetime of the last activity on this record in the external system
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system
                       owner:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -1598,8 +1642,9 @@ paths:
                           type: number
                           description: The longitude of the contact
                         account:
-                          type: object
-                          nullable: true
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             externalId:
                               type: string
@@ -1649,13 +1694,15 @@ paths:
                               type: string
                               description: The datetime of the last activity on this record in the external system
                             deletedAt:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                               format: date-time
                               description: The datetime when this record was deleted in the external system
                             owner:
-                              type: object
-                              nullable: true
+                              type:
+                              - object
+                              - 'null'
                               properties:
                                 externalId:
                                   type: string
@@ -1707,13 +1754,15 @@ paths:
                           type: string
                           description: The datetime of the last activity on this record in the external system
                         deletedAt:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           format: date-time
                           description: The datetime when this record was deleted in the external system
                         owner:
-                          type: object
-                          nullable: true
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             externalId:
                               type: string
@@ -1751,8 +1800,9 @@ paths:
                           type: string
                           description: The name of the user, e.g. John Smith
                         deletedAt:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           format: date-time
                           description: The datetime when this record was deleted in the external system (Optional)
                       required:
@@ -1779,8 +1829,9 @@ paths:
                           type: string
                           description: The ID of the opportunity in the external system (e.g. Salesforce)
                         name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The name of the opportunity
                         amount:
                           type: number
@@ -1804,12 +1855,10 @@ paths:
                           type: string
                         organizationId:
                           type: string
-                        account:
-                          nullable: true
+                        account: {}
                         opportunityUsers:
                           type: array
-                          items:
-                            nullable: true
+                          items: {}
                       required:
                       - id
                       - externalId
@@ -1822,6 +1871,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/engagements/{id}:
     get:
       summary: Get an engagement
@@ -1882,12 +1934,10 @@ paths:
                     type: string
                   organizationId:
                     type: string
-                  account:
-                    nullable: true
+                  account: {}
                   engagementUsers:
                     type: array
-                    items:
-                      nullable: true
+                    items: {}
                 required:
                 - id
                 - externalId
@@ -1936,6 +1986,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/engagements:
     get:
       summary: Get engagements
@@ -2011,12 +2064,10 @@ paths:
                           type: string
                         organizationId:
                           type: string
-                        account:
-                          nullable: true
+                        account: {}
                         engagementUsers:
                           type: array
-                          items:
-                            nullable: true
+                          items: {}
                       required:
                       - id
                       - externalId
@@ -2028,14 +2079,15 @@ paths:
                     anyOf:
                     - type: string
                     - type: number
-                    - nullable: true
+                    - {}
                   pageSize:
                     type: number
                   limit:
                     type: number
                   total:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                   hasNextPage:
                     type: boolean
                 required:
@@ -2044,6 +2096,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/users/{id}/engagements:
     get:
       summary: Get user engagement list
@@ -2123,12 +2178,10 @@ paths:
                       type: string
                     organizationId:
                       type: string
-                    account:
-                      nullable: true
+                    account: {}
                     engagementUsers:
                       type: array
-                      items:
-                        nullable: true
+                      items: {}
                   required:
                   - id
                   - externalId
@@ -2140,6 +2193,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/engagement-users/{id}:
     get:
       summary: Get an engagement user
@@ -2263,6 +2319,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/engagement-users:
     get:
       summary: Get engagement users
@@ -2372,6 +2431,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/sync/engagements:
     put:
       summary: Sync an engagement
@@ -2386,52 +2448,63 @@ paths:
                   type: string
                   description: The ID of the engagement in the external system
                 direction:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - INBOUND
                   - OUTBOUND
                   description: The direction of the engagement (INBOUND/OUTBOUND)
                 content:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: The content of the engagement
                 subject:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: The subject of the engagement
                 startTime:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: start dateTime of the engagement in UTC.
                 startTimeLocalized:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Localized dateTime of the engagement, without timezone info. When present, the frontend will display this as-is without timezone conversion, overriding startTime for display purposes.
                 endTime:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: end dateTime of the engagement
                 remoteCreatedAt:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: external engagement creation datetime
                 remoteUpdatedAt:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: external engagement update datetime
                 deletedAt:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   format: date-time
                   description: The datetime when this record was deleted in the external system
                 engagementTypeId:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Internal SIRO engagementTypeId override for this engagement. OPTIONAL -- only use if you know the internal value of the engagement type as it will override the engagementType object args.
                 engagementType:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -2456,8 +2529,9 @@ paths:
                   - activityType
                   description: The type of this engagement
                 account:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -2507,13 +2581,15 @@ paths:
                       type: string
                       description: The datetime of the last activity on this record in the external system
                     deletedAt:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       format: date-time
                       description: The datetime when this record was deleted in the external system
                     owner:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -2547,16 +2623,18 @@ paths:
                         type: string
                         description: The name of the user, e.g. John Smith
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system (Optional)
                     required:
                     - externalId
                   description: The users associated with this engagement
                 opportunity:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -2590,8 +2668,9 @@ paths:
                   - externalId
                   description: 'The associated opportunity for this engagement. Note: supplying just an externalId will resolve to an already-synced opportunity'
                 lead:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -2644,13 +2723,15 @@ paths:
                       type: string
                       description: The datetime of the last activity on this record in the external system
                     deletedAt:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       format: date-time
                       description: The datetime when this record was deleted in the external system
                     owner:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -2669,8 +2750,9 @@ paths:
                   - externalId
                   description: The associated lead for this engagement
                 contact:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     externalId:
                       type: string
@@ -2685,8 +2767,9 @@ paths:
                       type: number
                       description: The longitude of the contact
                     account:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -2736,13 +2819,15 @@ paths:
                           type: string
                           description: The datetime of the last activity on this record in the external system
                         deletedAt:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           format: date-time
                           description: The datetime when this record was deleted in the external system
                         owner:
-                          type: object
-                          nullable: true
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             externalId:
                               type: string
@@ -2794,13 +2879,15 @@ paths:
                       type: string
                       description: The datetime of the last activity on this record in the external system
                     deletedAt:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       format: date-time
                       description: The datetime when this record was deleted in the external system
                     owner:
-                      type: object
-                      nullable: true
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         externalId:
                           type: string
@@ -2873,12 +2960,10 @@ paths:
                         type: string
                       organizationId:
                         type: string
-                      account:
-                        nullable: true
+                      account: {}
                       engagementUsers:
                         type: array
-                        items:
-                          nullable: true
+                        items: {}
                     required:
                     - id
                     - externalId
@@ -2892,6 +2977,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/sync/engagements/soft-delete-removed:
     post:
       summary: Soft-delete engagements removed upstream within a window
@@ -2940,6 +3028,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/sync/batch/engagements:
     put:
       summary: Sync a batch of engagements
@@ -2956,52 +3047,63 @@ paths:
                     type: string
                     description: The ID of the engagement in the external system
                   direction:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     enum:
                     - INBOUND
                     - OUTBOUND
                     description: The direction of the engagement (INBOUND/OUTBOUND)
                   content:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: The content of the engagement
                   subject:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: The subject of the engagement
                   startTime:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: start dateTime of the engagement in UTC.
                   startTimeLocalized:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: Localized dateTime of the engagement, without timezone info. When present, the frontend will display this as-is without timezone conversion, overriding startTime for display purposes.
                   endTime:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: end dateTime of the engagement
                   remoteCreatedAt:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: external engagement creation datetime
                   remoteUpdatedAt:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: external engagement update datetime
                   deletedAt:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     format: date-time
                     description: The datetime when this record was deleted in the external system
                   engagementTypeId:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: Internal SIRO engagementTypeId override for this engagement. OPTIONAL -- only use if you know the internal value of the engagement type as it will override the engagementType object args.
                   engagementType:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -3026,8 +3128,9 @@ paths:
                     - activityType
                     description: The type of this engagement
                   account:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -3077,13 +3180,15 @@ paths:
                         type: string
                         description: The datetime of the last activity on this record in the external system
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system
                       owner:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -3117,16 +3222,18 @@ paths:
                           type: string
                           description: The name of the user, e.g. John Smith
                         deletedAt:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           format: date-time
                           description: The datetime when this record was deleted in the external system (Optional)
                       required:
                       - externalId
                     description: The users associated with this engagement
                   opportunity:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -3160,8 +3267,9 @@ paths:
                     - externalId
                     description: 'The associated opportunity for this engagement. Note: supplying just an externalId will resolve to an already-synced opportunity'
                   lead:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -3214,13 +3322,15 @@ paths:
                         type: string
                         description: The datetime of the last activity on this record in the external system
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system
                       owner:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -3239,8 +3349,9 @@ paths:
                     - externalId
                     description: The associated lead for this engagement
                   contact:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       externalId:
                         type: string
@@ -3255,8 +3366,9 @@ paths:
                         type: number
                         description: The longitude of the contact
                       account:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -3306,13 +3418,15 @@ paths:
                             type: string
                             description: The datetime of the last activity on this record in the external system
                           deletedAt:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             format: date-time
                             description: The datetime when this record was deleted in the external system
                           owner:
-                            type: object
-                            nullable: true
+                            type:
+                            - object
+                            - 'null'
                             properties:
                               externalId:
                                 type: string
@@ -3364,13 +3478,15 @@ paths:
                         type: string
                         description: The datetime of the last activity on this record in the external system
                       deletedAt:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         format: date-time
                         description: The datetime when this record was deleted in the external system
                       owner:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           externalId:
                             type: string
@@ -3445,12 +3561,10 @@ paths:
                           type: string
                         organizationId:
                           type: string
-                        account:
-                          nullable: true
+                        account: {}
                         engagementUsers:
                           type: array
-                          items:
-                            nullable: true
+                          items: {}
                       required:
                       - id
                       - externalId
@@ -3464,6 +3578,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/users:
     get:
       summary: List CRM users
@@ -3489,16 +3606,17 @@ paths:
                 properties:
                   data:
                     type: array
-                    items:
-                      nullable: true
-                  cursor:
-                    nullable: true
+                    items: {}
+                  cursor: {}
                 required:
                 - data
       security:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/users/{id}:
     get:
       summary: Get CRM user by id
@@ -3517,12 +3635,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    nullable: true
+                  data: {}
       security:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/batch/multimedia-events:
     put:
       summary: Batch sync multimedia events
@@ -3572,12 +3692,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    nullable: true
+                  data: {}
       security:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/multimedia-events:
     put:
       summary: Sync multimedia event
@@ -3625,12 +3747,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    nullable: true
+                  data: {}
       security:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
   /v1/integrations/briefs:
     put:
       summary: Create a brief
@@ -3679,6 +3803,9 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+    servers:
+    - url: https://functions.siro.ai/api-externalApi
+      description: Siro API external API endpoint
 components:
   securitySchemes:
     bearerAuth:
@@ -3690,3 +3817,6 @@ components:
 externalDocs:
   description: View the raw OpenAPI Specification in JSON format
   url: /swagger.json
+x-refined-from:
+- siro-external-api-openapi.json
+- siro-openapi-original.json
