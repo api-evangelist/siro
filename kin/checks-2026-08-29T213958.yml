@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: siro
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  schema_version: 0.16.0
+  scored_at: '2026-08-29'
+  run_ts: 2026-08-29T213958
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.15.1.yml; counts below let you verify that.
+    in rubric/scoring-0.16.0.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 49
-    partial: 10
-    missed: 47
+    earned: 48
+    partial: 12
+    missed: 46
     na: 24
   checks:
   - id: well_known_published
@@ -19,24 +19,22 @@ kin_checks:
     status: missed
   - id: openapi_3_2
     status: missed
-    detail: 0 of 4 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: openapi_3_1
     status: missed
-    detail: 0 of 4 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: info_complete
     status: missed
-    detail: 0 of 4 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: operations_operation_ids
     status: missed
-    detail: 0 of 4 openapi documents pass
-  - id: examples_present
-    status: missed
+    detail: 0 of 16 openapi documents pass
   - id: components_reuse
     status: missed
-    detail: 0 of 4 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: webhooks_or_callbacks
     status: missed
-    detail: 0 of 4 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: asyncapi_present
     status: missed
   - id: json_schema_present
@@ -58,6 +56,8 @@ kin_checks:
   - id: balanced_severities
     status: missed
   - id: vocabulary_published
+    status: missed
+  - id: overlay_published
     status: missed
   - id: change_log_present
     status: missed
@@ -97,8 +97,6 @@ kin_checks:
     status: missed
   - id: idempotency
     status: missed
-  - id: openapi_examples
-    status: missed
   - id: well_known_catalog
     status: missed
   - id: consent_identity
@@ -115,8 +113,11 @@ kin_checks:
     status: missed
   - id: error_responses_documented
     status: partial
-    earned: 1.0
-    detail: 1 of 4 openapi documents pass
+    earned: 3.25
+    detail: 13 of 16 openapi documents pass
+  - id: examples_present
+    status: partial
+    earned: 0.24
   - id: github_org_present
     status: partial
     earned: 1.0
@@ -141,6 +142,10 @@ kin_checks:
     status: partial
     earned: 4.0
     detail: 'grade: documented'
+  - id: openapi_examples
+    status: partial
+    earned: 3.5
+    detail: 'grade: partial'
   - id: rate_limit_signal
     status: partial
     earned: 3.5
