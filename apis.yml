@@ -229,6 +229,8 @@ apis:
   humanURL: https://docs.siro.ai/getting-started
   baseURL: https://functions.siro.ai/api-externalApi
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
