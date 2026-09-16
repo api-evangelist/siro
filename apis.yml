@@ -367,6 +367,8 @@ common:
   url: https://trust.siro.ai/
 - type: GitHubOrganization
   url: https://github.com/siro-ai
+- type: Contact
+  url: mailto:support@siro.ai
 x-enrichment:
   date: '2026-08-13'
   status: enriched
