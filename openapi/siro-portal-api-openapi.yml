@@ -146,6 +146,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Portal
+      operationId: postV1PortalSession
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

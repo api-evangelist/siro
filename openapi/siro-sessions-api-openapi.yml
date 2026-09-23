@@ -10,7 +10,7 @@ tags:
 paths:
   /v1/sessions:
     get:
-      summary: List past chat sessions for the authenticated user.
+      summary: List past chat sessions for the authenticated user
       description: Returns session metadata (sessionId, title, createdAt, updatedAt, sourceSystem) ordered by most recent first. sourceSystem is AIF or AURORA -- Aurora conversations are read-only. Supports cursor-based pagination. Pass organizationId to scope results to a specific org (for org switchers).
       parameters:
       - schema:
@@ -190,9 +190,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Sessions
+      operationId: getV1Sessions
+      x-operation-id-source: derived
   /v1/sessions/{sessionId}:
     get:
-      summary: Get full message history for a chat session.
+      summary: Get full message history for a chat session
       description: Validates ownership, then returns the full ChatMessage history for the session as Q&A message pairs. Each model row includes invocationId (feedback key) and persisted feedback when set. sourceSystem indicates AIF vs AURORA (Aurora conversations are read-only).
       responses:
         '200':
@@ -590,8 +592,10 @@ paths:
       - SiroAuthToken: []
       tags:
       - Sessions
+      operationId: getV1SessionsBySessionId
+      x-operation-id-source: derived
     patch:
-      summary: Rename a chat session.
+      summary: Rename a chat session
       description: Updates the chat session title.
       requestBody:
         content:
@@ -741,8 +745,10 @@ paths:
       - SiroAuthToken: []
       tags:
       - Sessions
+      operationId: patchV1SessionsBySessionId
+      x-operation-id-source: derived
     delete:
-      summary: Delete a chat session.
+      summary: Delete a chat session
       description: Soft-deletes the chat session.
       responses:
         '200':
@@ -877,9 +883,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Sessions
+      operationId: deleteV1SessionsBySessionId
+      x-operation-id-source: derived
   /v1/sessions/{sessionId}/invocations/{invocationId}/feedback:
     patch:
-      summary: Upsert thumbs feedback for an ADK turn (invocation).
+      summary: Upsert thumbs feedback for an ADK turn (invocation)
       description: Stores or replaces feedback for the given ADK invocation id within a session the caller owns.
       requestBody:
         content:
@@ -1046,9 +1054,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Sessions
+      operationId: patchV1SessionsBySessionIdInvocationsByInvocationIdFeedback
+      x-operation-id-source: derived
   /v1/sessions/{sessionId}/messages/{messageId}/feedback:
     patch:
-      summary: Upsert thumbs feedback for a chat message.
+      summary: Upsert thumbs feedback for a chat message
       description: Stores or replaces feedback on a MODEL ChatMessage row (by message id) within a session the caller owns. Successor to the invocation-keyed feedback route; requires the session to exist in the unified chat tables.
       requestBody:
         content:
@@ -1215,6 +1225,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Sessions
+      operationId: patchV1SessionsBySessionIdMessagesByMessageIdFeedback
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

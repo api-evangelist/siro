@@ -146,6 +146,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Intercom
+      operationId: postV1IntercomHash
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

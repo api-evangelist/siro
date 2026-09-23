@@ -150,6 +150,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Licenses
+      operationId: getV1LicensesRemaining
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

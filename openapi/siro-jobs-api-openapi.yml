@@ -10,7 +10,7 @@ tags:
 paths:
   /v1/jobs/siro-noticed/results:
     get:
-      summary: List SiroNoticed results for the current user.
+      summary: List SiroNoticed results for the current user
       description: Returns the most recent SiroNoticed results generated for the calling user.
       parameters:
       - schema:
@@ -162,9 +162,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Jobs
+      operationId: getV1JobsSiroNoticedResults
+      x-operation-id-source: derived
   /v1/jobs/siro-noticed:
     get:
-      summary: List SiroNoticed jobs for the current user (or org).
+      summary: List SiroNoticed jobs for the current user (or org)
       description: By default returns only the caller's own SiroNoticed jobs. Pass fullOrg=true (admin-only) to return all jobs in the caller's org.
       parameters:
       - schema:
@@ -355,8 +357,10 @@ paths:
       - SiroAuthToken: []
       tags:
       - Jobs
+      operationId: getV1JobsSiroNoticed
+      x-operation-id-source: derived
     post:
-      summary: Create a new SiroNoticed job for the current user.
+      summary: Create a new SiroNoticed job for the current user
       description: Creates a SiroNoticed scheduled job owned by the calling user. The server derives `cronDescription` and `nextScheduledTime` from the provided cron string.
       requestBody:
         content:
@@ -549,9 +553,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Jobs
+      operationId: postV1JobsSiroNoticed
+      x-operation-id-source: derived
   /v1/jobs/siro-noticed/{id}:
     patch:
-      summary: Update a SiroNoticed job (owner only).
+      summary: Update a SiroNoticed job (owner only)
       description: Updates the cron schedule and/or prompt for a SiroNoticed job. Only the job owner or an admin may update.
       parameters:
       - schema:
@@ -749,8 +755,10 @@ paths:
       - SiroAuthToken: []
       tags:
       - Jobs
+      operationId: patchV1JobsSiroNoticedById
+      x-operation-id-source: derived
     delete:
-      summary: Delete a SiroNoticed job (owner only).
+      summary: Delete a SiroNoticed job (owner only)
       description: Soft-deletes a SiroNoticed job. Only the job owner or an admin may delete.
       parameters:
       - schema:
@@ -894,6 +902,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Jobs
+      operationId: deleteV1JobsSiroNoticedById
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

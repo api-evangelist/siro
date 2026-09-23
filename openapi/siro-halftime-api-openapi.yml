@@ -10,8 +10,8 @@ tags:
 paths:
   /v1/halftime/reports:
     post:
-      summary: Generate a halftime report for an in-progress recording.
-      description: "Generates the halftime report deterministically (no agent invocation) from the live partial transcript and returns it as a single non-streaming response, mirroring the legacy POST /aurora/reports shape. \t\t\tCreates a gateway chat session when none is passed (returned as sessionId) so follow-up HALFTIME_LIVE_COACHING turns on /agents/run continue the same thread."
+      summary: Generate a halftime report for an in-progress recording
+      description: Generates the halftime report deterministically (no agent invocation) from the live partial transcript and returns it as a single non-streaming response, mirroring the legacy POST /aurora/reports shape. Creates a gateway chat session when none is passed (returned as sessionId) so follow-up HALFTIME_LIVE_COACHING turns on /agents/run continue the same thread.
       requestBody:
         content:
           application/json:
@@ -186,6 +186,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Halftime
+      operationId: postV1HalftimeReports
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

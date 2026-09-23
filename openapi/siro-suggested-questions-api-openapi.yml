@@ -10,7 +10,7 @@ tags:
 paths:
   /v1/suggested-questions:
     post:
-      summary: Generate suggested questions for a given entrypoint context.
+      summary: Generate suggested questions for a given entrypoint context
       description: Generates LLM-powered suggested questions. Routes to the appropriate service based on queryEntrypoint.
       requestBody:
         content:
@@ -179,6 +179,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Suggested Questions
+      operationId: postV1SuggestedQuestions
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

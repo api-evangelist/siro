@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Siro Folders API
   version: 1.0.0
-  description: 'Operations tagged Folders across 2 of this provider''s published API definitions: siro-folders-api-openapi.json, siro-platform-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  title: Swagger Folders API
 servers:
 - url: https://api.siro.ai/
   description: Siro API Gateway
@@ -229,6 +228,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Folders
+      operationId: getV1Folders
+      x-operation-id-source: derived
     post:
       summary: Create a folder
       description: Create a new folder in the requested organization
@@ -381,6 +382,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Folders
+      operationId: postV1Folders
+      x-operation-id-source: derived
     delete:
       summary: Delete a folder
       description: Delete a folder and all its items from the requested organization
@@ -532,9 +535,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Folders
-    servers:
-    - url: https://api.siro.ai/
-      description: Siro API Gateway
+      operationId: deleteV1Folders
+      x-operation-id-source: derived
   /v1/folders/{id}/items:
     get:
       summary: Get folder items
@@ -759,6 +761,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Folders
+      operationId: getV1FoldersByIdItems
+      x-operation-id-source: derived
     post:
       summary: Add item to folder
       description: Add a recording item to a specific folder
@@ -924,6 +928,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Folders
+      operationId: postV1FoldersByIdItems
+      x-operation-id-source: derived
     delete:
       summary: Delete a folder item
       description: Delete a specific item from a folder
@@ -1084,9 +1090,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Folders
-    servers:
-    - url: https://api.siro.ai/
-      description: Siro API Gateway
+      operationId: deleteV1FoldersByIdItems
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:
@@ -1095,6 +1100,6 @@ components:
       name: x-siro-auth-token
       description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
       x-default: <oauth-access-token>
-x-refined-from:
-- siro-folders-api-openapi.json
-- siro-platform-api-openapi.json
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json

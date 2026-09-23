@@ -219,6 +219,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: postV1BillingGraphAccounts
+      x-operation-id-source: derived
   /v1/billing-graph/me/organization-billing-accounts:
     get:
       summary: List organization billing links
@@ -454,6 +456,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: getV1BillingGraphMeOrganizationBillingAccounts
+      x-operation-id-source: derived
   /v1/billing-graph/me/accounts:
     get:
       summary: List billing accounts visible to the caller
@@ -697,6 +701,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: getV1BillingGraphMeAccounts
+      x-operation-id-source: derived
   /v1/billing-graph/accounts/{id}:
     get:
       summary: Get a billing account
@@ -902,6 +908,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: getV1BillingGraphAccountsById
+      x-operation-id-source: derived
     patch:
       summary: Update a billing account
       description: Updates subscription dates and/or seat capacity on a billing account. `subscriptionEndDate` and `subscriptionLengthInMonths` must be provided together; pass `null` for both to clear the window. Seat changes are applied in Stripe and may return a `deepLink` when further action is required. Returns 404 if the account does not exist, or 409 if it is cancelled.
@@ -1128,6 +1136,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: patchV1BillingGraphAccountsById
+      x-operation-id-source: derived
     delete:
       summary: Cancel a billing account
       description: Cancels a billing account. The account status is set to `CANCELLED` and all organization and team assignments referencing the account are removed. The account record itself is retained for historical reference and may be restored later via the reactivate endpoint. Returns 204 No Content on success, 404 Not Found if the billing account does not exist, or 409 Conflict if the account has already been cancelled.
@@ -1271,6 +1281,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: deleteV1BillingGraphAccountsById
+      x-operation-id-source: derived
   /v1/billing-graph/accounts/{id}/reactivate:
     post:
       summary: Reactivate a billing account
@@ -1464,6 +1476,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: postV1BillingGraphAccountsByIdReactivate
+      x-operation-id-source: derived
   /v1/billing-graph/accounts/{id}/organizations/{organizationId}:
     put:
       summary: Link an organization to a billing account
@@ -1665,6 +1679,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: putV1BillingGraphAccountsByIdOrganizationsByOrganizationId
+      x-operation-id-source: derived
     delete:
       summary: Detach an organization from a billing account
       description: Removes the link between an organization and a billing account. The billing account record itself is not modified, and any team-level seat allocations under the organization are not touched. Returns 204 No Content on success, or 400 Bad Request if the organization is not currently linked to a billing account.
@@ -1817,6 +1833,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: deleteV1BillingGraphAccountsByIdOrganizationsByOrganizationId
+      x-operation-id-source: derived
   /v1/billing-graph/me/team-billing-accounts:
     get:
       summary: List team billing links
@@ -2065,6 +2083,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: getV1BillingGraphMeTeamBillingAccounts
+      x-operation-id-source: derived
   /v1/billing-graph/accounts/{id}/teams/{siroTeamId}:
     put:
       summary: Link a team to a billing account
@@ -2265,6 +2285,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: putV1BillingGraphAccountsByIdTeamsBySiroTeamId
+      x-operation-id-source: derived
     delete:
       summary: Detach a team from a billing account
       description: Removes the link between a team and a billing account. The billing account record itself is not modified, and any organization-level seat allocations covering the team are not touched. Returns 204 No Content on success, or 400 Bad Request if the team is not currently linked to a billing account.
@@ -2416,6 +2438,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: deleteV1BillingGraphAccountsByIdTeamsBySiroTeamId
+      x-operation-id-source: derived
   /v1/billing-graph/organizations/{organizationId}/seats:
     get:
       summary: Get seat summary for an organization
@@ -2589,6 +2613,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: getV1BillingGraphOrganizationsByOrganizationIdSeats
+      x-operation-id-source: derived
   /v1/billing-graph/teams/{siroTeamId}/seats:
     get:
       summary: Get seat summary for a team
@@ -2762,6 +2788,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Billing Graph
+      operationId: getV1BillingGraphTeamsBySiroTeamIdSeats
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

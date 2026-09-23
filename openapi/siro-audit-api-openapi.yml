@@ -69,6 +69,8 @@ paths:
       - bearerAuth: []
       tags:
       - Audit
+      operationId: getV1AuditLogs
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

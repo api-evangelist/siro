@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Siro Core API
   version: 1.0.0
-  description: 'Operations tagged Core across 4 of this provider''s published API definitions: siro-external-api-openapi.json, siro-openapi-original.json, siro-platform-api-openapi.json, siro-recordings-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Core across 3 of this provider''s published API definitions: siro-external-api-openapi.json, siro-openapi-original.json, siro-platform-api-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://functions.siro.ai/api-externalApi
   description: Siro API external API endpoint
@@ -767,6 +767,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsById
+      x-operation-id-source: derived
     delete:
       summary: Soft-delete a recording
       description: Soft-deletes a recording. This will make it unfetchable.Only recording owners and admins can soft-delete a recording.
@@ -889,13 +891,14 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreRecordingsById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/recordings:
     get:
       summary: Get recordings
-      description: Get recordings
       parameters:
       - schema:
           type:
@@ -1297,6 +1300,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreRecordings
+      x-operation-id-source: derived
     put:
       summary: Create a new recording
       description: Create a new recording with the specified parameters. The recording will be initialized in the RECORDING state and ready to receive audio chunks.
@@ -1508,6 +1513,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreRecordings
+      x-operation-id-source: derived
     patch:
       summary: Update a recording
       description: Update an existing recording with new information. Only fields provided in the request body will be updated.
@@ -2603,6 +2610,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreRecordings
+      x-operation-id-source: derived
     post:
       summary: Fetch a list of recordings by id
       description: Fetch multiple recordings by passing a list of recording IDs. Despite the POST HTTP verb, this is a fetch.
@@ -5216,13 +5225,14 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordings
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/recordings/{id}/summaries:
     get:
       summary: Get recording summaries
-      description: Get recording summaries
       parameters:
       - schema:
           type: string
@@ -5253,13 +5263,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdSummaries
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/users:
     get:
       summary: Get users
-      description: Get users
       parameters:
       - schema:
           type:
@@ -5375,9 +5386,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreUsers
+      x-operation-id-source: derived
     post:
       summary: Create user
-      description: Create user
       requestBody:
         content:
           application/json:
@@ -5506,13 +5518,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreUsers
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/users/{id}:
     get:
       summary: Get user
-      description: Get user
       parameters:
       - schema:
           type: string
@@ -5595,9 +5608,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreUsersById
+      x-operation-id-source: derived
     put:
       summary: Update user
-      description: Update user
       parameters:
       - schema:
           type: string
@@ -5721,6 +5735,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: putV1CoreUsersById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -5932,6 +5948,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreMobileEvents
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -6062,6 +6080,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreMobileEventsById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -6112,6 +6132,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreAuthCallerIdentity
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -6168,6 +6190,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreAuthTokensById
+      x-operation-id-source: derived
     delete:
       summary: Delete a single authentication token by ID
       description: Delete a single authentication token within a given org by ID. Can only be used with org-group tokens.
@@ -6220,12 +6244,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: deleteV1CoreAuthTokensById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/auth/tokens:
     get:
-      summary: List all tokens for a given org.
+      summary: List all tokens for a given org
       description: List all tokens for a given org. Can be used with org-scoped or org-group token. If org-group token, must pass selector.
       responses:
         '200':
@@ -6283,8 +6309,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreAuthTokens
+      x-operation-id-source: derived
     post:
-      summary: Create a new authentication token for an organization.
+      summary: Create a new authentication token for an organization
       description: Create a new authentication token for an organization. Can only be used with org-group tokens.
       requestBody:
         content:
@@ -6345,6 +6373,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreAuthTokens
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -6519,8 +6549,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOauthAppsByClientId
+      x-operation-id-source: derived
     delete:
-      summary: Delete an OAuth application by id.
+      summary: Delete an OAuth application by id
       description: This endpoint will soft-delete an oauth app and revoke all associated tokens.
       parameters:
       - schema:
@@ -6544,6 +6576,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: deleteV1CoreOauthAppsByClientId
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -6795,6 +6829,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOauthApps
+      x-operation-id-source: derived
     post:
       summary: Create a new OAuth application for an organization
       description: This endpoint generates the client_id and client_secret you will need to generate OAuth tokens at a user scope.
@@ -6841,12 +6877,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreOauthApps
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/oauth/apps/{clientId}/access-token/{tokenId}:
     get:
-      summary: Get a specific OAuth access token by id.
+      summary: Get a specific OAuth access token by id
       description: This endpoint returns a specific OAuth access token by id.
       parameters:
       - schema:
@@ -7038,8 +7076,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOauthAppsByClientIdAccessTokenByTokenId
+      x-operation-id-source: derived
     delete:
-      summary: 'Revoke an OAuth access token for a given OAuth app. '
+      summary: Revoke an OAuth access token for a given OAuth app
       description: Soft-delete (revoke) an OAuth access token for a given OAuth app.
       parameters:
       - schema:
@@ -7081,12 +7121,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: deleteV1CoreOauthAppsByClientIdAccessTokenByTokenId
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/oauth/apps/{clientId}/access-token:
     post:
-      summary: Create a new OAuth access token for a given OAuth app.
+      summary: Create a new OAuth access token for a given OAuth app
       description: This endpoint creates a new OAuth access token at the user scope.
       parameters:
       - schema:
@@ -7135,8 +7177,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreOauthAppsByClientIdAccessToken
+      x-operation-id-source: derived
     get:
-      summary: Get all OAuth access tokens for a given OAuth app.
+      summary: Get all OAuth access tokens for a given OAuth app
       description: This endpoint returns all OAuth access tokens for a given OAuth app.
       parameters:
       - schema:
@@ -7399,13 +7443,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOauthAppsByClientIdAccessToken
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/organizations:
     get:
       summary: Get organizations
-      description: Get organizations
       responses:
         '200':
           description: Get organizations
@@ -7560,6 +7605,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOrganizations
+      x-operation-id-source: derived
     post:
       summary: Create an organization
       description: Create a specific organization
@@ -7739,6 +7786,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreOrganizations
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -7895,6 +7944,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOrganizationsById
+      x-operation-id-source: derived
     patch:
       summary: Update an organization
       description: Update a specific organization
@@ -8073,6 +8124,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: patchV1CoreOrganizationsById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -8201,9 +8254,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreIntegrationsConnections
+      x-operation-id-source: derived
     post:
       summary: Create a new integration connection for a given org
-      description: Create a new integration connection for a given org
       requestBody:
         content:
           application/json:
@@ -8331,13 +8385,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreIntegrationsConnections
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/integrations/connections/{id}:
     get:
       summary: Get a single integration connection within a single org
-      description: Get a single integration connection within a single org
       parameters:
       - schema:
           type: string
@@ -8436,9 +8491,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreIntegrationsConnectionsById
+      x-operation-id-source: derived
     patch:
       summary: Update a single integration connection within a given org
-      description: Update a single integration connection within a given org
       parameters:
       - schema:
           type: string
@@ -8552,9 +8608,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: patchV1CoreIntegrationsConnectionsById
+      x-operation-id-source: derived
     delete:
       summary: Delete a single integration connection within a single org
-      description: Delete a single integration connection within a single org
       parameters:
       - schema:
           type: string
@@ -8653,13 +8710,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: deleteV1CoreIntegrationsConnectionsById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/integrations/salesforce:
     put:
       summary: Upsert Salesforce integration authentication details
-      description: Upsert Salesforce integration authentication details
       requestBody:
         content:
           application/json:
@@ -8710,6 +8768,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: putV1CoreIntegrationsSalesforce
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -8846,9 +8906,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOrganizationsByOrgIdTeams
+      x-operation-id-source: derived
     post:
       summary: Create a new team for an org
-      description: Create a new team for an org
       parameters:
       - schema:
           type: string
@@ -8985,13 +9046,14 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: postV1CoreOrganizationsByOrgIdTeams
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/core/organizations/{orgId}/teams/{teamId}:
     get:
       summary: Get a single team within a given org
-      description: Get a single team within a given org
       parameters:
       - schema:
           type: string
@@ -9110,9 +9172,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: getV1CoreOrganizationsByOrgIdTeamsByTeamId
+      x-operation-id-source: derived
     patch:
       summary: Update a single team within a single org
-      description: Update a single team within a single org
       parameters:
       - schema:
           type: string
@@ -9260,9 +9323,10 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: patchV1CoreOrganizationsByOrgIdTeamsByTeamId
+      x-operation-id-source: derived
     delete:
       summary: Hard-delete a single team within a single org
-      description: Hard-delete a single team within a single org
       parameters:
       - schema:
           type: string
@@ -9381,6 +9445,8 @@ paths:
       - bearerAuth: []
       tags:
       - Core
+      operationId: deleteV1CoreOrganizationsByOrgIdTeamsByTeamId
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -9533,6 +9599,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreRecordingsByIdViewed
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -9697,6 +9765,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsByIdViews
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -9913,6 +9983,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreRecordingsByIdListen
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -10115,6 +10187,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdUtterances
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -10290,6 +10364,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsByIdChats
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -10414,6 +10490,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdChatsAvailable
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -10572,6 +10650,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdDeepLinkByTenant
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -12045,6 +12125,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsSearch
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -12205,6 +12287,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreRecordingsByIdTranscriptionLanguage
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -12348,12 +12432,14 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsByIdSignedUrl
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
   /v1/core/recordings/{id}/summary:
     get:
-      summary: Get the summary for the recording provided.
+      summary: Get the summary for the recording provided
       description: Fetch the recording summary for recording with id provided.
       parameters:
       - schema:
@@ -12533,6 +12619,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdSummary
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -12663,6 +12751,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreRecordingsByIdLink
+      x-operation-id-source: derived
     delete:
       summary: Remove the CRM link from a recording
       description: Removes the link between the recording and the specified CRM object.
@@ -12763,6 +12853,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreRecordingsByIdLink
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -12971,6 +13063,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreFolders
+      x-operation-id-source: derived
     post:
       summary: Create a new folder
       description: Create a new folder in the requested organization
@@ -13108,6 +13202,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreFolders
+      x-operation-id-source: derived
     delete:
       summary: Delete a folder
       description: Delete a folder and all its items from the requested organization
@@ -13244,6 +13340,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreFolders
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -13456,6 +13554,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreFoldersByIdItems
+      x-operation-id-source: derived
     post:
       summary: Add item to folder
       description: Add a recording item to a specific folder
@@ -13606,6 +13706,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreFoldersByIdItems
+      x-operation-id-source: derived
     delete:
       summary: Delete folder item
       description: Delete a specific item from a folder
@@ -13753,6 +13855,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreFoldersByIdItems
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -13901,6 +14005,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreFoldersById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -14224,6 +14330,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreComments
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -14571,6 +14679,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsByIdComments
+      x-operation-id-source: derived
     get:
       summary: Get all comments for a recording
       description: Returns all comments for a recording
@@ -14828,6 +14938,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdComments
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -15151,6 +15263,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdThreads
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -15563,6 +15677,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreThreads
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -15924,6 +16040,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreThreadsUnread
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -16165,6 +16283,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByIdCommentsByCommentId
+      x-operation-id-source: derived
     patch:
       summary: Update a comment
       description: Updates a comment and returns the updated comment
@@ -16507,6 +16627,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreRecordingsByIdCommentsByCommentId
+      x-operation-id-source: derived
     delete:
       summary: Delete a comment
       description: Soft deletes a comment by marking it as deleted
@@ -16744,6 +16866,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreRecordingsByIdCommentsByCommentId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -16927,6 +17051,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsByIdCommentsByCommentIdRating
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -17266,6 +17392,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreRecordingsByRecordingIdThreadsByThreadId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -17864,6 +17992,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreConversationConfigurations
+      x-operation-id-source: derived
     get:
       summary: Get conversation configurations
       description: Retrieves conversation configurations for an organization. Users can only access configurations for their own organization unless they are organization admins.
@@ -18462,6 +18592,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreConversationConfigurations
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -19071,6 +19203,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreConversationConfigurationsById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -19221,6 +19355,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreSummaryPromptsIndustry
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -19377,6 +19513,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreConversationConfigurationsByConversationTypeIdSummaryPrompts
+      x-operation-id-source: derived
     post:
       summary: Create summary prompts for a conversation configuration
       description: Appends summary prompts to an existing conversation configuration. Only Siro admins and organization admins for the owning organization can mutate this admin configuration.
@@ -19554,6 +19692,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreConversationConfigurationsByConversationTypeIdSummaryPrompts
+      x-operation-id-source: derived
     put:
       summary: Replace summary prompts for a conversation configuration
       description: Replaces all summary prompts for an existing conversation configuration in one Firestore batch. Only Siro admins and organization admins for the owning organization can mutate this admin configuration.
@@ -19731,6 +19871,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreConversationConfigurationsByConversationTypeIdSummaryPrompts
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -19880,6 +20022,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreTeamsByTeamIdTeamCodeLink
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -20162,6 +20306,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreBookmarkConfigs
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -20323,6 +20469,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreBookmarkGroups
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -20891,6 +21039,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreBookmarkModels
+      x-operation-id-source: derived
     post:
       summary: Create a bookmark model
       description: Creates a bookmark model for an existing bookmark configuration from the internalApi cutover route. Only Siro admins can create models.
@@ -21455,6 +21605,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreBookmarkModels
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -22077,6 +22229,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreBookmarkModelsByModelId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -22260,6 +22414,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreManualLabels
+      x-operation-id-source: derived
     post:
       summary: Create a manual label
       description: Creates a manual label from the internalApi cutover route. This updates the recording manual-label list, Sage Label rows, bookmark config counts, and marks related models stale. Only Siro admins can create labels.
@@ -23486,6 +23642,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreManualLabels
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -23644,6 +23802,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreManualLabelsByManualLabelId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -23974,6 +24134,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreManualLabelsByManualLabelIdToggle
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -24139,6 +24301,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreBookmarkConfigsByBookmarkConfigIdLabeledRecordings
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -24384,13 +24548,14 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreOrganizationsByIdUsers
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
   /v1/core/entities/extractions/{recordingId}:
     get:
       summary: Get entity extractions for a recording
-      description: Get entity extractions for a recording
       parameters:
       - schema:
           type: string
@@ -24655,6 +24820,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreEntitiesExtractionsByRecordingId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -25019,6 +25186,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsScorecardMetricsValues
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -25270,6 +25439,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsUsersByUserIdWeightedScoreHistory
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -25503,6 +25674,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsTeamsByTeamIdWeightedScoreHistory
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -25730,6 +25903,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsScorecardMetricsAvailable
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -25886,6 +26061,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsScorecardMetricsById
+      x-operation-id-source: derived
     patch:
       summary: Update scorecard metric prompt
       description: Update a scorecard metric by adding a new AI metric prompt. Each call appends a new prompt version rather than replacing the previous one; the most recently created version is treated as the active prompt and is what subsequent scorecard reads return as `llmPrompt`. The user must have admin access to the organization that owns the metric.
@@ -26051,6 +26228,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreScorecardsScorecardMetricsById
+      x-operation-id-source: derived
     delete:
       summary: Delete scorecard metric
       description: Delete a scorecard metric and all its related data. Currently only supports AI metrics.The user must have admin access to the organization that owns the metric.
@@ -26193,6 +26372,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: deleteV1CoreScorecardsScorecardMetricsById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -26405,6 +26586,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreScorecardsScorecardMetrics
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -26708,6 +26891,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreScorecardsInstances
+      x-operation-id-source: derived
     get:
       summary: Get scorecard instances
       description: Get scorecard instances for an organization with optional filtering.
@@ -27298,6 +27483,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsInstances
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -27595,6 +27782,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreScorecardsInstancesById
+      x-operation-id-source: derived
     get:
       summary: Get scorecard instances
       description: Get a scorecard instance for a given org.
@@ -28173,6 +28362,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsInstancesById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -28332,6 +28523,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsColorConfigurations
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -28529,6 +28722,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsInstanceSummaries
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -29266,6 +29461,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsEvaluatedInstancesById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -29951,6 +30148,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsEvaluatedInstancesByIdPopulations
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -30140,6 +30339,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreScorecardsStandardizedPrompts
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -30876,6 +31077,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreFollowups
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -31506,6 +31709,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreFollowupsById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -31728,6 +31933,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreSdkLoggingSiroLogs
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -31775,6 +31982,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreCompanionCallSettings
+      x-operation-id-source: derived
     put:
       summary: Update companion call settings
       description: Updates companion call settings for the authenticated user.
@@ -31832,6 +32041,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: putV1CoreCompanionCallSettings
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -32011,6 +32222,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreHalftimeRecordingsByRecordingIdTranscript
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -32186,6 +32399,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreOutcomesOutcomeDefinitions
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -32371,6 +32586,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreOutcomesOutcomeDefinitionsByConversationConfigId
+      x-operation-id-source: derived
     post:
       summary: Create or update outcome definition
       description: Creates a new outcome mapping definition or updates an existing one.
@@ -32569,6 +32786,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreOutcomesOutcomeDefinitionsByConversationConfigId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -32724,6 +32943,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreOutcomesSetMultipleByConversationConfigId
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -32909,6 +33130,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV1CoreRecordingsByRecordingIdOutcomes
+      x-operation-id-source: derived
     patch:
       summary: Edit a recording’s selected outcomes
       description: Replaces the recording’s selected outcomes with the submitted set and recomputes the overall universal outcome label. An empty array clears all outcomes. Editable by the recording owner, a coach of the recording’s team, or an org admin.
@@ -33104,6 +33327,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV1CoreRecordingsByRecordingIdOutcomes
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -34577,6 +34802,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreRecordingsSearch
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -36050,6 +36277,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreRecordingsSearchSlim
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -36547,6 +36776,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreRecordingsListDecorations
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -36706,6 +36937,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreRecordingsByIdSignedUrl
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -37775,12 +38008,14 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreRecordingsUsersByUserIdList
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
   /v2/core/recordings/{id}/summary:
     get:
-      summary: Get the summary for the recording provided.
+      summary: Get the summary for the recording provided
       description: Fetch the recording summary for recording with id provided.
       parameters:
       - schema:
@@ -37960,6 +38195,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV2CoreRecordingsByIdSummary
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -38247,6 +38484,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV2CoreBookmarkConfigs
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -38604,6 +38843,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV2CoreBookmarkConfigsById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -38763,6 +39004,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV2CoreBookmarkGroups
+      x-operation-id-source: derived
     post:
       summary: Create a bookmark group (v2)
       description: Creates a bookmark group from the v2 cutover route. Only Firebase-authenticated Siro admins can create groups.
@@ -38928,6 +39171,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreBookmarkGroups
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -39092,6 +39337,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV2CoreBookmarkGroupsById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -39252,6 +39499,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV2CoreIndustries
+      x-operation-id-source: derived
     post:
       summary: Create an industry (v2)
       description: Creates an industry from the v2 cutover route. Only Firebase-authenticated Siro admins can create industries.
@@ -39420,6 +39669,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV2CoreIndustries
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -39582,6 +39833,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: getV2CoreIndustriesById
+      x-operation-id-source: derived
     patch:
       summary: Update an industry (v2)
       description: Updates an industry from the v2 cutover route. Only Firebase-authenticated Siro admins can update industries.
@@ -39742,6 +39995,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: patchV2CoreIndustriesById
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -39962,6 +40217,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsUpload
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -40142,6 +40399,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Core
+      operationId: postV1CoreRecordingsSignedUrls
+      x-operation-id-source: derived
     servers:
     - url: https://api.siro.ai/
       description: Siro API Gateway
@@ -40906,8 +41165,10 @@ components:
       name: x-siro-auth-token
       description: 'OAuth access token for user-scoped requests (Authorization Code or machine-to-machine). Send header `x-siro-auth-token: <oauth-access-token>`. Not an organization API key.'
       x-default: <oauth-access-token>
+externalDocs:
+  description: View the raw OpenAPI Specification in JSON format
+  url: /swagger.json
 x-refined-from:
 - siro-external-api-openapi.json
 - siro-openapi-original.json
 - siro-platform-api-openapi.json
-- siro-recordings-api-openapi.json

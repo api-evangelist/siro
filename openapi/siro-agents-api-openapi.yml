@@ -10,7 +10,7 @@ tags:
 paths:
   /v1/agents/run:
     post:
-      summary: Issues a query to the Siro AI platform.
+      summary: Issues a query to the Siro AI platform
       description: Executes a Siro AI agent with the given query and context. Supports streaming responses.
       requestBody:
         content:
@@ -1683,9 +1683,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Agents
+      operationId: postV1AgentsRun
+      x-operation-id-source: derived
   /v1/agents:
     get:
-      summary: Lists all agents in the Siro AI Platform.
+      summary: Lists all agents in the Siro AI Platform
       description: Lists all agents along with their names and top-level agent status
       parameters:
       - schema:
@@ -1877,9 +1879,11 @@ paths:
       - SiroAuthToken: []
       tags:
       - Agents
+      operationId: getV1Agents
+      x-operation-id-source: derived
   /v1/agents/models:
     get:
-      summary: Lists available LLM models for agent configuration.
+      summary: Lists available LLM models for agent configuration
       description: Returns the list of selectable models and the default primary model used when no override is set.
       responses:
         '200':
@@ -2035,6 +2039,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Agents
+      operationId: getV1AgentsModels
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

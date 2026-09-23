@@ -26,6 +26,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Docs
+      operationId: getV1DocsSwaggerJson
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

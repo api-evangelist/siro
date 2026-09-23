@@ -157,6 +157,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Subscription
+      operationId: putV1Subscription
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

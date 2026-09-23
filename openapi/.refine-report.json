@@ -2,19 +2,17 @@
   "provider": "siro",
   "sources": [
     "_original/siro-external-api-openapi.json",
-    "_original/siro-folders-api-openapi.json",
     "_original/siro-openapi-original.json",
-    "_original/siro-platform-api-openapi.json",
-    "_original/siro-recordings-api-openapi.json"
+    "_original/siro-platform-api-openapi.json"
   ],
   "outputs": [
     "siro-core-api-openapi.yml",
     "siro-integrations-api-openapi.yml",
-    "siro-folders-api-openapi.yml",
     "siro-audit-api-openapi.yml",
     "siro-agents-api-openapi.yml",
     "siro-billing-graph-api-openapi.yml",
     "siro-docs-api-openapi.yml",
+    "siro-folders-api-openapi.yml",
     "siro-halftime-api-openapi.yml",
     "siro-intercom-api-openapi.yml",
     "siro-invoices-api-openapi.yml",
@@ -29,7 +27,8 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (5 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "siro-external-api-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
     "siro-external-api-openapi.json: tagged paths GET /v1/core/recordings/{id} -> Core",
     "siro-external-api-openapi.json: tagged paths GET /v1/core/recordings -> Core",
@@ -102,14 +101,6 @@
     "siro-external-api-openapi.json: tagged paths PUT /v1/integrations/briefs -> Integrations",
     "siro-external-api-openapi.json: declared missing tag: Core",
     "siro-external-api-openapi.json: declared missing tag: Integrations",
-    "siro-folders-api-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "siro-folders-api-openapi.json: tagged paths GET /v1/folders -> Folders",
-    "siro-folders-api-openapi.json: tagged paths POST /v1/folders -> Folders",
-    "siro-folders-api-openapi.json: tagged paths DELETE /v1/folders -> Folders",
-    "siro-folders-api-openapi.json: tagged paths GET /v1/folders/{id}/items -> Folders",
-    "siro-folders-api-openapi.json: tagged paths POST /v1/folders/{id}/items -> Folders",
-    "siro-folders-api-openapi.json: tagged paths DELETE /v1/folders/{id}/items -> Folders",
-    "siro-folders-api-openapi.json: declared missing tag: Folders",
     "siro-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
     "siro-openapi-original.json: tagged paths GET /v1/core/recordings/{id} -> Core",
     "siro-openapi-original.json: tagged paths GET /v1/core/recordings -> Core",
@@ -340,18 +331,28 @@
     "siro-platform-api-openapi.json: declared missing tag: Sessions",
     "siro-platform-api-openapi.json: declared missing tag: Subscription",
     "siro-platform-api-openapi.json: declared missing tag: Suggested Questions",
-    "siro-recordings-api-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "siro-recordings-api-openapi.json: tagged paths POST /v1/core/recordings/upload -> Core",
-    "siro-recordings-api-openapi.json: tagged paths POST /v1/core/recordings/signed-urls -> Core",
-    "siro-recordings-api-openapi.json: declared missing tag: Core",
-    "tag 'Core' spans 4 source specs (siro-external-api-openapi.json, siro-openapi-original.json, siro-platform-api-openapi.json, siro-recordings-api-openapi.json): per-path servers applied",
+    "tag 'Core' spans 3 source specs (siro-external-api-openapi.json, siro-openapi-original.json, siro-platform-api-openapi.json): per-path servers applied",
     "tag 'Integrations' spans 2 source specs (siro-external-api-openapi.json, siro-openapi-original.json): per-path servers applied",
-    "tag 'Folders' spans 2 source specs (siro-folders-api-openapi.json, siro-platform-api-openapi.json): per-path servers applied"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
+    "_original/siro-recordings-api-openapi.json: archived document superseded by a larger archived document",
+    "_original/siro-folders-api-openapi.json: archived document superseded by a larger archived document",
+    "siro-agents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "siro-audit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-billing-graph-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "siro-core-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-docs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "siro-folders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "siro-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "siro-halftime-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-intercom-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-licenses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-portal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-sessions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-subscription-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "siro-suggested-questions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

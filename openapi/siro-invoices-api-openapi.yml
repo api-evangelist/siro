@@ -150,6 +150,8 @@ paths:
       - SiroAuthToken: []
       tags:
       - Invoices
+      operationId: getV1InvoicesLineItems
+      x-operation-id-source: derived
 components:
   securitySchemes:
     SiroAuthToken:

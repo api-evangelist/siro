@@ -12,7 +12,6 @@ paths:
   /v1/integrations/accounts/{id}:
     get:
       summary: Get an account
-      description: Get an account
       parameters:
       - schema:
           type: string
@@ -65,9 +64,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsAccountsById
+      x-operation-id-source: derived
     put:
       summary: Update an account
-      description: Update an account
       parameters:
       - schema:
           type: string
@@ -161,6 +161,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsAccountsById
+      x-operation-id-source: derived
     delete:
       summary: Delete an account
       description: Delete an accounts
@@ -181,13 +183,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: deleteV1IntegrationsAccountsById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/accounts:
     get:
       summary: Get accounts
-      description: Get accounts
       responses:
         '200':
           description: Get accounts
@@ -236,9 +239,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsAccounts
+      x-operation-id-source: derived
     post:
       summary: Create an account
-      description: Create an account
       requestBody:
         content:
           application/json:
@@ -377,13 +381,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: postV1IntegrationsAccounts
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/opportunities/{id}:
     get:
       summary: Get an opportunity
-      description: Get an opportunity
       parameters:
       - schema:
           type: string
@@ -444,9 +449,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsOpportunitiesById
+      x-operation-id-source: derived
     delete:
       summary: Delete an opportunity
-      description: Delete an opportunity
       parameters:
       - schema:
           type: string
@@ -464,13 +470,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: deleteV1IntegrationsOpportunitiesById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/opportunities:
     get:
       summary: Get opportunities
-      description: Get opportunities
       parameters:
       - schema:
           type: string
@@ -563,13 +570,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsOpportunities
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/opportunity-users/{id}:
     get:
       summary: Get an opportunity user
-      description: Get an opportunity user
       parameters:
       - schema:
           type: string
@@ -614,9 +622,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsOpportunityUsersById
+      x-operation-id-source: derived
     put:
       summary: Update an opportunity user
-      description: Update an opportunity user
       parameters:
       - schema:
           type: string
@@ -675,9 +684,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsOpportunityUsersById
+      x-operation-id-source: derived
     delete:
       summary: Delete an opportunity user
-      description: Delete an opportunity user
       parameters:
       - schema:
           type: string
@@ -695,13 +705,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: deleteV1IntegrationsOpportunityUsersById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/opportunity-users:
     get:
       summary: Get opportunity users
-      description: Get opportunity users
       parameters:
       - schema:
           type: string
@@ -758,9 +769,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsOpportunityUsers
+      x-operation-id-source: derived
     post:
       summary: Create an opportunity user
-      description: Create an opportunity user
       requestBody:
         content:
           application/json:
@@ -813,13 +825,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: postV1IntegrationsOpportunityUsers
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/sync/opportunities:
     put:
       summary: Sync an opportunity
-      description: Sync an opportunity
       requestBody:
         content:
           application/json:
@@ -1340,13 +1353,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsSyncOpportunities
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/sync/batch/opportunities:
     put:
       summary: Sync a batch of opportunities
-      description: Sync a batch of opportunities
       requestBody:
         content:
           application/json:
@@ -1871,13 +1885,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsSyncBatchOpportunities
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/engagements/{id}:
     get:
       summary: Get an engagement
-      description: Get an engagement
       parameters:
       - schema:
           type: string
@@ -1949,9 +1964,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsEngagementsById
+      x-operation-id-source: derived
     delete:
       summary: Delete an engagement
-      description: Delete an engagement
       parameters:
       - schema:
           type: string
@@ -1986,13 +2002,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: deleteV1IntegrationsEngagementsById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/engagements:
     get:
       summary: Get engagements
-      description: Get engagements
       parameters:
       - schema:
           type: string
@@ -2096,6 +2113,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsEngagements
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -2193,13 +2212,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsUsersByIdEngagements
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/engagement-users/{id}:
     get:
       summary: Get an engagement user
-      description: Get an engagement user
       parameters:
       - schema:
           type: string
@@ -2242,9 +2262,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsEngagementUsersById
+      x-operation-id-source: derived
     put:
       summary: Update an engagement user
-      description: Update an engagement user
       parameters:
       - schema:
           type: string
@@ -2299,9 +2320,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsEngagementUsersById
+      x-operation-id-source: derived
     delete:
       summary: Delete an engagement user
-      description: Delete an engagement user
       parameters:
       - schema:
           type: string
@@ -2319,13 +2341,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: deleteV1IntegrationsEngagementUsersById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/engagement-users:
     get:
       summary: Get engagement users
-      description: Get engagement users
       parameters:
       - schema:
           type: string
@@ -2380,9 +2403,10 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsEngagementUsers
+      x-operation-id-source: derived
     post:
       summary: Create an engagement user
-      description: Create an engagement user
       requestBody:
         content:
           application/json:
@@ -2431,13 +2455,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: postV1IntegrationsEngagementUsers
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/sync/engagements:
     put:
       summary: Sync an engagement
-      description: Sync an engagement
       requestBody:
         content:
           application/json:
@@ -2977,6 +3002,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsSyncEngagements
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -3028,13 +3055,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: postV1IntegrationsSyncEngagementsSoftDeleteRemoved
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/sync/batch/engagements:
     put:
       summary: Sync a batch of engagements
-      description: Sync a batch of engagements
       requestBody:
         content:
           application/json:
@@ -3578,6 +3606,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsSyncBatchEngagements
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -3614,6 +3644,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsUsers
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -3640,6 +3672,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: getV1IntegrationsUsersById
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -3697,6 +3731,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsBatchMultimediaEvents
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
@@ -3752,13 +3788,14 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsMultimediaEvents
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
   /v1/integrations/briefs:
     put:
       summary: Create a brief
-      description: Create a brief
       requestBody:
         content:
           application/json:
@@ -3803,6 +3840,8 @@ paths:
       - bearerAuth: []
       tags:
       - Integrations
+      operationId: putV1IntegrationsBriefs
+      x-operation-id-source: derived
     servers:
     - url: https://functions.siro.ai/api-externalApi
       description: Siro API external API endpoint
