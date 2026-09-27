@@ -64,6 +64,7 @@ tags:
 - Speech-to-Text
 - Webhook
 - Integration
+- A2A
 tags_raw:
 - Company
 - Sales
@@ -75,6 +76,7 @@ tags_raw:
 - Speech to Text
 - Webhooks
 - Integrations
+- A2A
 apis:
 - aid: siro:siro-audit-api
   name: Siro Audit API
@@ -374,3 +376,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 11
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.siro.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
