@@ -40406,311 +40406,6 @@ paths:
       description: Siro API Gateway
 components:
   schemas:
-    CrmCustomer:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Customer ID
-        name:
-          type:
-          - string
-          - 'null'
-          description: Customer name
-        crmUrl:
-          type: string
-          description: URL to this customer in the linked CRM
-        customerType:
-          type: string
-          enum:
-          - ACCOUNT
-          - LEAD
-          - OPPORTUNITY
-          - ENGAGEMENT
-          - CONTACT
-          - DMS_OPPORTUNITY
-        lastActivityAt:
-          type:
-          - string
-          - 'null'
-          description: Last activity date
-        createdAt:
-          type: string
-          format: date-time
-          description: Date the Customer record was created in Siro
-        updatedAt:
-          type: string
-          format: date-time
-          description: Date the Customer record was last updated in Siro
-        closedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date the Customer was closed (applicable to Opportunities)
-        emailAddress:
-          type:
-          - string
-          - 'null'
-          description: Customer email addresses
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: Customer phone numbers
-        externalId:
-          type:
-          - string
-          - 'null'
-          description: Customer external ID
-        amount:
-          type:
-          - number
-          - 'null'
-          description: Dollar amount associated with a Customer deal
-        disposition:
-          type:
-          - string
-          - 'null'
-          description: 'Disposition for the Customer deal: "WON" | "LOST" | "OPEN"'
-        recordingId:
-          type:
-          - string
-          - 'null'
-          description: ID of the most recent recording linked to this customer
-        lastRecordingDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Datetime of the most recent recording linked to this customer
-        numRecordings:
-          type:
-          - number
-          - 'null'
-          description: Total number of recordings linked to this customer
-        matchingSource:
-          type:
-          - string
-          - 'null'
-          enum:
-          - DIRECT
-          - FUZZY
-          - NOT_FOUND
-          description: Source of matching
-        accountId:
-          type:
-          - string
-          - 'null'
-          description: Account ID
-        opportunityAccountName:
-          type:
-          - string
-          - 'null'
-          description: Account Name associated with the Opportunity
-        contactId:
-          type:
-          - string
-          - 'null'
-          description: Contact ID
-        opportunityContactName:
-          type:
-          - string
-          - 'null'
-          description: Contact Name associated with the Opportunity
-        opportunityId:
-          type:
-          - string
-          - 'null'
-          description: Opportunity ID
-        engagementId:
-          type:
-          - string
-          - 'null'
-          description: Engagement ID
-        opportunity:
-          type:
-          - object
-          - 'null'
-          properties:
-            id:
-              type: string
-            externalId:
-              type: string
-              description: The ID of the opportunity in the external system (e.g. Salesforce)
-            name:
-              type:
-              - string
-              - 'null'
-              description: The name of the opportunity
-            amount:
-              type: number
-              description: The dollar amount of the opportunity
-            closedAt:
-              type: string
-              description: The closure date of the opportunity
-            disposition:
-              type: string
-              description: '"WON" | "LOST" | "OPEN"'
-            createdAt:
-              type: string
-              description: The date the opportunity was created
-            updatedAt:
-              type: string
-              description: The date the opportunity was last updated
-            recordingId:
-              type: string
-              description: The ID of the recording associated to the opportunity
-            accountId:
-              type: string
-            organizationId:
-              type: string
-            account: {}
-            opportunityUsers:
-              type: array
-              items: {}
-          required:
-          - id
-          - externalId
-          - createdAt
-          - updatedAt
-          - organizationId
-          description: Opportunity
-        opportunities:
-          type:
-          - object
-          - 'null'
-          properties:
-            data:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  externalId:
-                    type: string
-                    description: The ID of the opportunity in the external system (e.g. Salesforce)
-                  name:
-                    type:
-                    - string
-                    - 'null'
-                    description: The name of the opportunity
-                  amount:
-                    type: number
-                    description: The dollar amount of the opportunity
-                  closedAt:
-                    type: string
-                    description: The closure date of the opportunity
-                  disposition:
-                    type: string
-                    description: '"WON" | "LOST" | "OPEN"'
-                  createdAt:
-                    type: string
-                    description: The date the opportunity was created
-                  updatedAt:
-                    type: string
-                    description: The date the opportunity was last updated
-                  recordingId:
-                    type: string
-                    description: The ID of the recording associated to the opportunity
-                  accountId:
-                    type: string
-                  organizationId:
-                    type: string
-                  account: {}
-                  opportunityUsers:
-                    type: array
-                    items: {}
-                required:
-                - id
-                - externalId
-                - createdAt
-                - updatedAt
-                - organizationId
-            cursor:
-              type:
-              - string
-              - 'null'
-          required:
-          - data
-          description: Optional first page of related opportunities for Accounts or Contacts
-        opportunityUsers:
-          type:
-          - array
-          - 'null'
-          items: {}
-          description: Users associated with the opportunity
-        contactAccount:
-          type:
-          - object
-          - 'null'
-          properties:
-            id:
-              type: string
-            name:
-              type:
-              - string
-              - 'null'
-              description: The name of the account
-            externalId:
-              type:
-              - string
-              - 'null'
-              description: The ID of the account in the external system (e.g. Salesforce)
-          required:
-          - id
-          description: Contact Account
-        address:
-          type:
-          - string
-          - 'null'
-          description: Address
-        organizationId:
-          type: string
-          description: Organization ID
-        integrationConnectionId:
-          type:
-          - string
-          - 'null'
-          description: Integration Connection ID
-        integrationPlatform:
-          type:
-          - string
-          - 'null'
-          enum:
-          - MERGE
-          - SIRO_CUSTOM_INPUT
-          - SERVICE_TITAN
-          - COMPANY_CAM
-          - INGAGE
-          - LEAD_PERFECTION
-          - SPOTIO
-          description: Integration Platform
-        integrationName:
-          type:
-          - string
-          - 'null'
-          description: Integration Name
-      required:
-      - id
-      - createdAt
-      - updatedAt
-      - organizationId
-      description: CRM account linked to this recording
-      example:
-        id: acc_12345
-        name: Acme Corporation
-        customerType: ACCOUNT
-        externalId: ext_67890
-        createdAt: '2024-01-01T00:00:00.000Z'
-        updatedAt: '2024-01-15T08:30:00.000Z'
-        lastActivityAt: '2024-01-15T08:30:00.000Z'
-        matchingSource: DIRECT
-        emailAddress: contact@acme.com
-        phoneNumber: +1-555-123-4567
-        crmUrl: https://acme.salesforce.com/lightning/r/Account/001XX000004C9Z6YAK/view
-        organizationId: '12345'
     DmsOpportunity:
       type: object
       properties:
@@ -41152,6 +40847,311 @@ components:
           description: Balnce tires
           price: 399.99
           type: CS
+    CrmCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Customer ID
+        name:
+          type:
+          - string
+          - 'null'
+          description: Customer name
+        crmUrl:
+          type: string
+          description: URL to this customer in the linked CRM
+        customerType:
+          type: string
+          enum:
+          - ACCOUNT
+          - LEAD
+          - OPPORTUNITY
+          - ENGAGEMENT
+          - CONTACT
+          - DMS_OPPORTUNITY
+        lastActivityAt:
+          type:
+          - string
+          - 'null'
+          description: Last activity date
+        createdAt:
+          type: string
+          format: date-time
+          description: Date the Customer record was created in Siro
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date the Customer record was last updated in Siro
+        closedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date the Customer was closed (applicable to Opportunities)
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: Customer email addresses
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: Customer phone numbers
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: Customer external ID
+        amount:
+          type:
+          - number
+          - 'null'
+          description: Dollar amount associated with a Customer deal
+        disposition:
+          type:
+          - string
+          - 'null'
+          description: 'Disposition for the Customer deal: "WON" | "LOST" | "OPEN"'
+        recordingId:
+          type:
+          - string
+          - 'null'
+          description: ID of the most recent recording linked to this customer
+        lastRecordingDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Datetime of the most recent recording linked to this customer
+        numRecordings:
+          type:
+          - number
+          - 'null'
+          description: Total number of recordings linked to this customer
+        matchingSource:
+          type:
+          - string
+          - 'null'
+          enum:
+          - DIRECT
+          - FUZZY
+          - NOT_FOUND
+          description: Source of matching
+        accountId:
+          type:
+          - string
+          - 'null'
+          description: Account ID
+        opportunityAccountName:
+          type:
+          - string
+          - 'null'
+          description: Account Name associated with the Opportunity
+        contactId:
+          type:
+          - string
+          - 'null'
+          description: Contact ID
+        opportunityContactName:
+          type:
+          - string
+          - 'null'
+          description: Contact Name associated with the Opportunity
+        opportunityId:
+          type:
+          - string
+          - 'null'
+          description: Opportunity ID
+        engagementId:
+          type:
+          - string
+          - 'null'
+          description: Engagement ID
+        opportunity:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+            externalId:
+              type: string
+              description: The ID of the opportunity in the external system (e.g. Salesforce)
+            name:
+              type:
+              - string
+              - 'null'
+              description: The name of the opportunity
+            amount:
+              type: number
+              description: The dollar amount of the opportunity
+            closedAt:
+              type: string
+              description: The closure date of the opportunity
+            disposition:
+              type: string
+              description: '"WON" | "LOST" | "OPEN"'
+            createdAt:
+              type: string
+              description: The date the opportunity was created
+            updatedAt:
+              type: string
+              description: The date the opportunity was last updated
+            recordingId:
+              type: string
+              description: The ID of the recording associated to the opportunity
+            accountId:
+              type: string
+            organizationId:
+              type: string
+            account: {}
+            opportunityUsers:
+              type: array
+              items: {}
+          required:
+          - id
+          - externalId
+          - createdAt
+          - updatedAt
+          - organizationId
+          description: Opportunity
+        opportunities:
+          type:
+          - object
+          - 'null'
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  externalId:
+                    type: string
+                    description: The ID of the opportunity in the external system (e.g. Salesforce)
+                  name:
+                    type:
+                    - string
+                    - 'null'
+                    description: The name of the opportunity
+                  amount:
+                    type: number
+                    description: The dollar amount of the opportunity
+                  closedAt:
+                    type: string
+                    description: The closure date of the opportunity
+                  disposition:
+                    type: string
+                    description: '"WON" | "LOST" | "OPEN"'
+                  createdAt:
+                    type: string
+                    description: The date the opportunity was created
+                  updatedAt:
+                    type: string
+                    description: The date the opportunity was last updated
+                  recordingId:
+                    type: string
+                    description: The ID of the recording associated to the opportunity
+                  accountId:
+                    type: string
+                  organizationId:
+                    type: string
+                  account: {}
+                  opportunityUsers:
+                    type: array
+                    items: {}
+                required:
+                - id
+                - externalId
+                - createdAt
+                - updatedAt
+                - organizationId
+            cursor:
+              type:
+              - string
+              - 'null'
+          required:
+          - data
+          description: Optional first page of related opportunities for Accounts or Contacts
+        opportunityUsers:
+          type:
+          - array
+          - 'null'
+          items: {}
+          description: Users associated with the opportunity
+        contactAccount:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+            name:
+              type:
+              - string
+              - 'null'
+              description: The name of the account
+            externalId:
+              type:
+              - string
+              - 'null'
+              description: The ID of the account in the external system (e.g. Salesforce)
+          required:
+          - id
+          description: Contact Account
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address
+        organizationId:
+          type: string
+          description: Organization ID
+        integrationConnectionId:
+          type:
+          - string
+          - 'null'
+          description: Integration Connection ID
+        integrationPlatform:
+          type:
+          - string
+          - 'null'
+          enum:
+          - MERGE
+          - SIRO_CUSTOM_INPUT
+          - SERVICE_TITAN
+          - COMPANY_CAM
+          - INGAGE
+          - LEAD_PERFECTION
+          - SPOTIO
+          description: Integration Platform
+        integrationName:
+          type:
+          - string
+          - 'null'
+          description: Integration Name
+      required:
+      - id
+      - createdAt
+      - updatedAt
+      - organizationId
+      description: CRM account linked to this recording
+      example:
+        id: acc_12345
+        name: Acme Corporation
+        customerType: ACCOUNT
+        externalId: ext_67890
+        createdAt: '2024-01-01T00:00:00.000Z'
+        updatedAt: '2024-01-15T08:30:00.000Z'
+        lastActivityAt: '2024-01-15T08:30:00.000Z'
+        matchingSource: DIRECT
+        emailAddress: contact@acme.com
+        phoneNumber: +1-555-123-4567
+        crmUrl: https://acme.salesforce.com/lightning/r/Account/001XX000004C9Z6YAK/view
+        organizationId: '12345'
   securitySchemes:
     bearerAuth:
       type: http
