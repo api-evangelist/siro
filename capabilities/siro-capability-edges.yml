@@ -1,0 +1,35 @@
+slug: siro
+provider: Siro
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Subscription
+  spec_file: siro-subscription-api-openapi.yml
+  capability_id: BC-4240.40
+  capability_id_l1: BC-4240
+  capability_name: Subscription Modification
+  confidence: 0.82
+  evidence: PUT /v1/subscription — "Change subscription license quantity"
+  reason: The operation performs an in-life change to an active subscription by adjusting seat/license
+    quantity, which is precisely Subscription Modification.
+- tag: Integrations
+  spec_file: siro-integrations-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.7
+  evidence: '"Get an opportunity"; "Get opportunities"; "Get accounts"; "Get opportunity users"'
+  reason: The surface is CRM object synchronisation — accounts, opportunities and the users assigned to
+    them — matching lead/opportunity/deal lifecycle data management. Confidence is moderated because the
+    tag is named 'Integrations' and part of the surface is connector plumbing rather than the pipeline
+    process itself.

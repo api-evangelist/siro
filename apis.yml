@@ -296,6 +296,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/siro-capability-edges.yml
+  name: Siro Business Capability Map
 - type: Overlay
   url: overlays/siro-platform-api-overlay.yaml
 - type: AgenticAccess
