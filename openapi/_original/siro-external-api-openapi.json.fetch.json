@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.siro.ai/openapi.json",
+ "requested_url": "https://docs.siro.ai/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 409708,
+ "sha256": "9995339a94c6891a4a83849a147fd0a99d53cdd5f2ff1f96272a4f0fbfa92926",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.929), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
