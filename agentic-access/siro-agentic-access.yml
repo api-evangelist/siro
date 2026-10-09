@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/siro-agents-api-openapi.yml, openapi/siro-audit-api-openapi.yml, openapi/siro-billing-graph-api-openapi.yml,
   openapi/siro-core-api-openapi.yml, openapi/siro-docs-api-openapi.yml, openapi/siro-folders-api-openapi.yml,
@@ -12,11 +12,11 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 213
   by_action_class:
-    acting: 116
-    connected: 97
+    acting: 110
+    connected: 103
   by_consequence:
-    write: 115
-    read: 97
+    write: 109
+    read: 103
     safety-critical: 1
   human_in_the_loop_required: 1
 operations:
@@ -326,18 +326,12 @@ operations:
   method: post
   operationId: postV1CoreRecordings
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/core/recordings/{id}/summaries
   method: get
   operationId: getV1CoreRecordingsByIdSummaries
@@ -888,18 +882,12 @@ operations:
   method: post
   operationId: postV1CoreRecordingsSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/core/recordings/{id}/transcription-language
   method: patch
   operationId: patchV1CoreRecordingsByIdTranscriptionLanguage
@@ -1828,34 +1816,22 @@ operations:
   method: post
   operationId: postV2CoreRecordingsSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/core/recordings/search/slim
   method: post
   operationId: postV2CoreRecordingsSearchSlim
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/core/recordings/list-decorations
   method: post
   operationId: postV2CoreRecordingsListDecorations
@@ -1892,18 +1868,12 @@ operations:
   method: post
   operationId: postV2CoreRecordingsUsersByUserIdList
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/core/recordings/{id}/summary
   method: get
   operationId: getV2CoreRecordingsByIdSummary
@@ -2054,18 +2024,12 @@ operations:
   method: post
   operationId: postV1CoreRecordingsSignedUrls
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/docs/swagger.json
   method: get
   operationId: getV1DocsSwaggerJson
