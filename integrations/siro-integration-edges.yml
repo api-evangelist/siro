@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/siro/integrations
 - https://n8n.io/integrations/siro/
@@ -10,7 +10,25 @@ checked:
 - https://monid.ai/tools/siro
 - https://n8n.io/integrations/siro/
 - https://zapier.com/apps/siro/integrations
+- zoom/integrations/zoom-integration-edges.yml
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/Bvst8N1nTieEUPram-cHsw
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Siro Technologies
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
 templates: []
