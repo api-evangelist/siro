@@ -16,3 +16,34 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: siro-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/expo-siro
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: expo-siro
+      version: 0.7.7
+      released: '2023-09-27'
+      released_field: modified
+      lapsed: true
+      page: https://www.npmjs.com/package/expo-siro
+      repo_leg: domain:siro.ai
+      publisher_leg: email:siro.ai
+      matched_by: domain
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null

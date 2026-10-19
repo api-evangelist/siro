@@ -6,9 +6,16 @@ source:
 - https://composio.dev/toolkits/siro
 - https://monid.ai/tools/siro
 checked:
+- https://api.nuget.org/v3
 - https://composio.dev/toolkits/siro
+- https://crates.io/api/v1
 - https://monid.ai/tools/siro
 - https://n8n.io/integrations/siro/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/apps/siro/integrations
 - zoom/integrations/zoom-integration-edges.yml
 summary: null
@@ -31,4 +38,34 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Zoom app
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/expo-siro
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: expo-siro
+      version: 0.7.7
+      released: '2023-09-27'
+      released_field: modified
+      lapsed: true
+      page: https://www.npmjs.com/package/expo-siro
+      repo_leg: domain:siro.ai
+      publisher_leg: email:siro.ai
+      matched_by: domain
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 templates: []
