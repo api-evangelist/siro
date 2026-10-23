@@ -3859,3 +3859,9 @@ externalDocs:
 x-refined-from:
 - siro-external-api-openapi.json
 - siro-openapi-original.json
+x-provenance:
+  method: harvested
+  publisher: Siro
+  source: https://docs.siro.ai/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
