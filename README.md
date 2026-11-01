@@ -64,6 +64,152 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Siro is a company surfaced as a portfolio company of crv, index-ventures and added to the API Evangelist network as a stub for enrichment. Sector: sales. This profile is a lead awaiting the enrichment pipeline.
+Siro is an AI sales coaching platform for in-person and field sales teams. Reps record their live sales conversations from the Siro mobile app, and Siro transcribes each conversation, surfaces coaching insights, generates scorecards and summaries, and extracts structured fields (budget, objections, decision makers, timelines) that are pushed back into the team's CRM. Siro publishes a documented REST API and webhook surface that enables fully bidirectional, custom CRM integrations: syncing appointments/engagements, opportunities and accounts into Siro, matching recordings to CRM entities, and pulling recording details, summaries, entity extractions and coaching scorecards back out. The platform ships prebuilt integrations for Salesforce, HubSpot, Microsoft Dynamics, Pipedrive, Zoho, SalesRabbit, Leap SalesPro, Hatch, CompanyCam and a range of dealership DMS and home-services tools. Siro is backed by CRV and Index Ventures.
 
-Backed by: crv, index-ventures — https://siro.ai/
+**Areas:** Company · Sales · Sales Coaching · Conversation Intelligence · Field Sales · CRM · Artificial Intelligence · Speech-to-Text · Webhook · Integration · A2A
+
+## Siro on APIs.io
+
+Everything profiled for Siro is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/siro/](https://apis.io/providers/siro/)** — or go straight to one of the APIs or properties below.
+
+### APIs (16)
+
+- [Siro Audit API](https://apis.io/apis/siro/siro-audit-api/) — The Audit API from Siro — 1 operation(s) for audit.
+- [Siro Core API](https://apis.io/apis/siro/siro-core-api/) — The Core API from Siro — 23 operation(s) for core.
+- [Siro Folders API](https://apis.io/apis/siro/siro-folders-api/) — The Folders API from Siro — 2 operation(s) for folders.
+- [Siro Integrations API](https://apis.io/apis/siro/siro-integrations-api/) — The Integrations API from Siro — 21 operation(s) for integrations.
+- [Siro Agents API](https://apis.io/apis/siro/siro-agents-api/) — The Agents API from Siro — 3 operation(s) for agents.
+- [Siro Billing Graph API](https://apis.io/apis/siro/siro-billing-graph-api/) — The Billing Graph API from Siro — 10 operation(s) for billing graph.
+- [Siro Docs API](https://apis.io/apis/siro/siro-docs-api/) — The Docs API from Siro — 1 operation(s) for docs.
+- [Siro Halftime API](https://apis.io/apis/siro/siro-halftime-api/) — The Halftime API from Siro — 1 operation(s) for halftime.
+- [Siro Intercom API](https://apis.io/apis/siro/siro-intercom-api/) — The Intercom API from Siro — 1 operation(s) for intercom.
+- [Siro Invoices API](https://apis.io/apis/siro/siro-invoices-api/) — The Invoices API from Siro — 1 operation(s) for invoices.
+- [Siro Jobs API](https://apis.io/apis/siro/siro-jobs-api/) — The Jobs API from Siro — 3 operation(s) for jobs.
+- [Siro Licenses API](https://apis.io/apis/siro/siro-licenses-api/) — The Licenses API from Siro — 1 operation(s) for licenses.
+- [Siro Portal API](https://apis.io/apis/siro/siro-portal-api/) — The Portal API from Siro — 1 operation(s) for portal.
+- [Siro Sessions API](https://apis.io/apis/siro/siro-sessions-api/) — The Sessions API from Siro — 4 operation(s) for sessions.
+- [Siro Subscription API](https://apis.io/apis/siro/siro-subscription-api/) — The Subscription API from Siro — 1 operation(s) for subscription.
+- [Siro Suggested Questions API](https://apis.io/apis/siro/siro-suggested-questions-api/) — The Suggested Questions API from Siro — 1 operation(s) for suggested questions.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Starter Kit](https://apis.io/servers/siro/starter-kit/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Siro Agentic Access](https://apis.io/agentic-access/siro/siro-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Swagger Audit API](https://apis.io/collections/siro/open-siro-audit-api/)
+- [Swagger Audit Core API](https://apis.io/collections/siro/open-siro-core-api/)
+- [Swagger Audit Folders API](https://apis.io/collections/siro/open-siro-folders-api/)
+- [Swagger Audit Integrations API](https://apis.io/collections/siro/open-siro-integrations-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Siro External Api Overlay](https://apis.io/overlays/siro/siro-external-api-overlay/)
+- [Siro Platform Api Overlay](https://apis.io/overlays/siro/siro-platform-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Siro Authentication](https://apis.io/security/siro/siro-authentication/)
+- [Siro Domain Security](https://apis.io/security/siro/siro-domain-security/)
+- [Siro Trust Center](https://apis.io/security/siro/siro-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Siro Plans Pricing](https://apis.io/plans/siro/siro-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Siro Rate Limits](https://apis.io/rate-limits/siro/siro-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://siro.ai/)
+- [Documentation](https://docs.siro.ai)
+- [Getting started](https://docs.siro.ai/getting-started)
+- [API reference](https://docs.siro.ai/api-references/get-recordings)
+- [Support](https://docs.siro.ai/support)
+- [Blog](https://www.siro.ai/insights)
+- [Compliance](https://trust.siro.ai/)
+- [Trust centre](https://trust.siro.ai/)
+- [Terms of service](https://www.siro.ai/terms-of-service)
+- [Privacy policy](https://www.siro.ai/privacy-policy)
+- [GitHub](https://github.com/siro-ai)
+
+## API Evangelist rating
+
+**Kin Score 56.6** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 49.2 |
+| Contract governance | 18.2 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 71.4 |
+| Access clarity | 43.4 |
+
+**Agent readiness 32.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | mostly (partial credit) |
+
+**Regulatory alignment 27.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/siro/](https://apis.io/providers/siro/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Siro: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/siro/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
